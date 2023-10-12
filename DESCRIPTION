@@ -1,0 +1,27 @@
+Package: fitOU
+Title: The Ornstein–Uhlenbeck Model
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Ivan Jacob Agaloos",
+           family = "Pesigan",
+           role = c("aut", "cre", "cph"),
+           email = "r.ijapesigan@gmail.com",
+           comment = c(ORCID = "0000-0003-4818-8420"))
+Description: Fit the Ornstein–Uhlenbeck model using the 'dynr' package.
+URL: https://github.com/ijapesigan/fitOU,
+        https://ijapesigan.github.io/fitOU/
+BugReports: https://github.com/ijapesigan/fitOU/issues
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Depends: R (>= 3.5.0)
+Imports: stats, dynr
+Suggests: knitr, rmarkdown, testthat
+RoxygenNote: 7.2.3
+NeedsCompilation: no
+Packaged: 2023-10-12 19:07:41 UTC; root
+Author: Ivan Jacob Agaloos Pesigan [aut, cre, cph]
+    (<https://orcid.org/0000-0003-4818-8420>)
+Maintainer: Ivan Jacob Agaloos Pesigan <r.ijapesigan@gmail.com>
