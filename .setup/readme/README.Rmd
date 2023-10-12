@@ -1,0 +1,56 @@
+---
+title: "fitOU"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "`r Sys.Date()`"
+output: github_document
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @RCoreTeam-2023
+  @Chow-Losardo-Park-etal-2023
+  @Ou-Hunter-Chow-2019
+  @Uhlenbeck-Ornstein-1930
+---
+
+<!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ijapesigan/fitOU/workflows/R-CMD-check/badge.svg)](https://github.com/ijapesigan/fitOU/actions)
+[![test-coverage](https://github.com/ijapesigan/fitOU/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/ijapesigan/fitOU/actions/workflows/test-coverage.yml)
+[![lint](https://github.com/ijapesigan/fitOU/actions/workflows/lint.yml/badge.svg)](https://github.com/ijapesigan/fitOU/actions/workflows/lint.yml)
+[![pkgdown](https://github.com/ijapesigan/fitOU/actions/workflows/pkgdown-gh-pages.yml/badge.svg)](https://github.com/ijapesigan/fitOU/actions/workflows/pkgdown-gh-pages.yml)
+[![codecov](https://codecov.io/gh/ijapesigan/fitOU/branch/main/graph/badge.svg)](https://codecov.io/gh/ijapesigan/fitOU)
+<!-- badges: end -->
+
+## Description
+
+Fit the Ornstein–Uhlenbeck model using the `dynr` package.
+
+## Installation
+
+You can install the released version of
+`fitOU`
+from
+[GitHub](https://github.com/ijapesigan/fitOU) with:
+
+```r
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("ijapesigan/fitOU")
+```
+
+## More Information
+
+See
+[GitHub Pages](https://ijapesigan.github.io/fitOU)
+for package documentation.
+
+## References

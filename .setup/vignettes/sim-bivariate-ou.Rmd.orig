@@ -1,0 +1,418 @@
+---
+title: "Simulated Bivariate Ornstein–Uhlenbeck Model"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "`r Sys.Date()`"
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @Chow-Losardo-Park-etal-2023
+  @Ou-Hunter-Chow-2019
+  @Uhlenbeck-Ornstein-1930
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Simulated Bivariate Ornstein–Uhlenbeck Model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- vignettes/sim-bivariate-ou.Rmd is generated from .setup/vignettes/sim-bivariate-ou.Rmd.orig. Please edit that file -->
+
+## The Ornstein–Uhlenbeck Model
+
+The measurement model is given by
+
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\nu}
+  +
+  \boldsymbol{\Lambda}
+  \boldsymbol{\eta}_{i, t} 
+  +
+  \boldsymbol{\varepsilon}_{i, t}
+  \quad
+  \mathrm{with}
+  \quad
+  \boldsymbol{\varepsilon}_{i, t}
+  \sim
+  \mathcal{N}
+  \left(
+  \mathbf{0},
+  \boldsymbol{\Theta}
+  \right)
+\end{equation}
+
+where $\mathbf{y}_{i, t}$, $\boldsymbol{\eta}_{i, t}$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+are random variables and $\boldsymbol{\nu}$,
+$\boldsymbol{\Lambda}$,
+and $\boldsymbol{\Theta}$ are model parameters.
+$\mathbf{y}_{i, t}$ is a vector of observed random variables
+at time $t$ and individual $i$,
+$\boldsymbol{\eta}_{i, t}$ is a vector of latent random variables
+at time $t$ and individual $i$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+is a vector of random measurement errors
+at time $t$ and individual $i$,
+while $\boldsymbol{\nu}$ is a vector of intercept,
+$\boldsymbol{\Lambda}$ is a matrix of factor loadings,
+and $\boldsymbol{\Theta}$ is the covariance matrix of
+$\boldsymbol{\varepsilon}$.
+
+The dynamic structure is given by
+
+\begin{equation}
+  \mathrm{d} \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\Phi}
+  \left(
+  \boldsymbol{\mu}
+  -
+  \boldsymbol{\eta}_{i, t}
+  \right)
+  \mathrm{d}t
+  +
+  \boldsymbol{\Sigma}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+
+where $\boldsymbol{\mu}$ is the long-term mean or equilibrium level,
+$\boldsymbol{\Phi}$ is the rate of mean reversion,
+determining how quickly the variable returns to its mean,
+$\boldsymbol{\Sigma}$ is the matrix of volatility
+or randomness in the process, and $\mathrm{d}\boldsymbol{W}$
+is a Wiener process or Brownian motion,
+which represents random fluctuations.
+
+## Data Generation
+
+### Notation
+
+```{r}
+#| echo = FALSE
+n <- 20
+time <- 500
+delta_t <- 0.10
+k <- p <- 2
+I <- diag(k)
+null_vec <- rep(x = 0, times = k)
+mu0 <- c(-3, 1.5)
+sigma0 <- I
+mu <- c(5.76, 5.18)
+phi <- matrix(
+  data = c(
+    0.1,
+    -0.05,
+    -0.05,
+    0.1
+  ),
+  nrow = k
+)
+beta_var1 <- as.matrix(
+  Matrix::expm(
+    -1 * phi
+  )
+)
+psi <- c(
+  2.79,
+  0.06,
+  0.06,
+  3.27
+)
+sigma <- I
+nu <- null_vec
+lambda <- I
+theta <- matrix(
+  data = c(0.5, 0, 0, 0.5),
+  nrow = k,
+  ncol = k
+)
+```
+
+Let the measurement model intecept vector $\boldsymbol{\nu}$ be given by
+
+\begin{equation}
+\boldsymbol{\nu}
+=
+\left(
+\begin{array}{c}
+  `r nu[1]` \\
+  `r nu[2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the factor loadings matrix $\boldsymbol{\Lambda}$ be given by
+
+\begin{equation}
+\boldsymbol{\Lambda}
+=
+\left(
+\begin{array}{cc}
+  `r lambda[1, 1]` & `r lambda[1, 2]` \\
+  `r lambda[2, 1]` & `r lambda[2, 2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the measurement error covariance matrix $\boldsymbol{\Theta}$ be given by
+
+\begin{equation}
+\boldsymbol{\Theta}
+=
+\left(
+\begin{array}{cc}
+  `r theta[1, 1]` & `r theta[1, 2]` \\
+  `r theta[2, 1]` & `r theta[2, 2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the initial condition
+$\boldsymbol{\eta}_{0}$
+be given by
+
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  `r mu0[1]` \\
+  `r mu0[2]` \\
+\end{array}
+\right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{cc}
+  `r sigma0[1, 1]` & `r sigma0[1, 2]` \\
+  `r sigma0[2, 1]` & `r sigma0[2, 2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the long-term mean vector $\boldsymbol{\mu}$ be given by
+
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  `r mu[1]` \\
+  `r mu[2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the rate of mean reversion matrix $\boldsymbol{\Phi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{cc}
+  `r phi[1, 1]` & `r phi[1, 2]` \\
+  `r phi[2, 1]` & `r phi[2, 2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the dynamic process noise covariance matrix $\boldsymbol{\Sigma}$ be given by
+
+\begin{equation}
+\boldsymbol{\Sigma}
+=
+\left(
+\begin{array}{cc}
+  `r sigma[1, 1]` & `r sigma[1, 2]` \\
+  `r sigma[2, 1]` & `r sigma[2, 2]` \\
+\end{array}
+\right) .
+\end{equation}
+
+### R Function Arguments
+
+```{r}
+n
+time
+delta_t
+mu0
+sigma0
+mu
+phi
+sigma
+nu
+lambda
+theta
+```
+
+### Using the simStateSpace::SimSSMVARStationary Function to Simulate Data
+
+```{r}
+#| message = FALSE,
+#| warning = FALSE
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("ijapesigan/simStateSpace")
+```
+
+```{r}
+set.seed(42)
+data <- simStateSpace::SimSSMOUStationary(
+  n = n,
+  mu0 = mu0,
+  sigma0_sqrt = chol(sigma0),
+  mu = mu,
+  phi = phi,
+  sigma_sqrt = chol(sigma),
+  nu = nu,
+  lambda = lambda,
+  theta_sqrt = chol(theta),
+  delta_t = delta_t,
+  time = time,
+  burn_in = 0
+)
+head(data)
+```
+
+## Model Fitting
+
+```{r}
+results <- fitOU::FitOU(
+  data = data,
+  observed = c("y1", "y2"),
+  id = "id",
+  time = "time",
+  verbose = FALSE
+)
+```
+
+## Summary
+
+```{r}
+summary(results)
+```
+
+```{r}
+#| echo = FALSE
+estimates <- coef(results)
+estimates_cov <- vcov(results)
+mu0_hat <- unname(
+  estimates[
+    c(
+      "mu0_1",
+      "mu0_2"
+    )
+  ]
+)
+unname(mu0_hat)
+sigma0_hat <- matrix(
+  data = estimates[
+    c(
+      "sigma0_11",
+      "sigma0_12",
+      "sigma0_12",
+      "sigma0_22"
+    )
+  ],
+  nrow = 2
+)
+mu_hat <- unname(
+  estimates[
+    c(
+      "mu_1",
+      "mu_2"
+    )
+  ]
+)
+phi_hat <- matrix(
+  data = estimates[
+    c(
+      "phi_11",
+      "phi_21",
+      "phi_12",
+      "phi_22"
+    )
+  ],
+  nrow = 2
+)
+sigma_hat <- matrix(
+  data = estimates[
+    c(
+      "sigma_11",
+      "sigma_12",
+      "sigma_12",
+      "sigma_22"
+    )
+  ],
+  nrow = 2
+)
+```
+
+### Estimated Coefficients
+
+```{r}
+mu_hat
+phi_hat
+sigma_hat
+mu0_hat
+sigma0_hat
+beta_var1_hat <- as.matrix(
+  Matrix::expm(-1 * phi_hat)
+)
+beta_var1_hat
+```
+
+### Discrepancy Between Estimated and Population Coefficients
+
+```{r}
+tol <- 0.10
+# less than two-point difference
+# note that mu values are greater tha zero and a difference of 2 is trivial
+all(
+  as.vector(
+    abs(mu - mu_hat)
+  ) <= 2 
+)
+all(
+  as.vector(
+    abs(phi - phi_hat)
+  ) <= tol
+)
+all(
+  as.vector(
+    abs(beta_var1 - beta_var1_hat)
+  ) <= tol
+)
+```
+
+```{r}
+#| echo = FALSE,
+#| eval = FALSE
+all(
+  as.vector(
+    abs(sigma - sigma_hat)
+  ) <= tol
+)
+all(
+  as.vector(
+    abs(mu0 - mu0_hat)
+  ) <= tol
+)
+all(
+  as.vector(
+    abs(sigma0 - sigma0_hat)
+  ) <= tol
+)
+```
+
+## References

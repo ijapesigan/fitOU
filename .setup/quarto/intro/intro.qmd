@@ -1,0 +1,10 @@
+---
+title: "Introduction"
+author: Ivan Jacob Agaloos Pesigan
+---
+
+```{r}
+#| include: false
+library(fitOU)
+library(printr)
+```
