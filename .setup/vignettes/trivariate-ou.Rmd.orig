@@ -98,7 +98,7 @@ The transition matrix used in this examples was taken from @Deboeck-Preacher-201
 ```{r}
 #| echo = FALSE
 set.seed(42)
-time <- 10000
+time <- 1000
 n <- 10
 delta_t <- 0.10
 k <- p <- 3
