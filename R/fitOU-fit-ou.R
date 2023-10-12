@@ -120,22 +120,22 @@
 #' @param ... Additional arguments to pass to [dynr::dynr.cook()].
 #'
 #' @references
-#' Chow, S.-M., Losardo, D., Park, J., & Molenaar, P. C. M. (2023).
-#' Continuous-time dynamic models:
-#' Connections to structural equation models and other discrete-time models.
-#' In R. H. Hoyle (Ed.), Handbook of structural equation modeling (2nd ed.).
-#' The Guilford Press.
+#'   Chow, S.-M., Losardo, D., Park, J., & Molenaar, P. C. M. (2023).
+#'   Continuous-time dynamic models:
+#'   Connections to structural equation models and other discrete-time models.
+#'   In R. H. Hoyle (Ed.), Handbook of structural equation modeling (2nd ed.).
+#'   The Guilford Press.
 #'
-#' Ou, L., Hunter, M. D., & Chow, S.-M. (2019).
-#' What's for dynr:
-#' A package for linear and nonlinear dynamic modeling in R.
-#' *The R Journal*, *11*(1), 91.
-#' \doi{10.32614/rj-2019-012}
+#'   Ou, L., Hunter, M. D., & Chow, S.-M. (2019).
+#'   What's for dynr:
+#'   A package for linear and nonlinear dynamic modeling in R.
+#'   *The R Journal*, *11*(1), 91.
+#'   \doi{10.32614/rj-2019-012}
 #'
-#' Uhlenbeck, G. E., & Ornstein, L. S. (1930).
-#' On the theory of the brownian motion.
-#' *Physical Review*, *36*(5), 823–841.
-#' \doi{doi.org/10.1103/physrev.36.823}
+#'   Uhlenbeck, G. E., & Ornstein, L. S. (1930).
+#'   On the theory of the brownian motion.
+#'   *Physical Review*, *36*(5), 823–841.
+#'   \doi{doi.org/10.1103/physrev.36.823}
 #'
 #' @examples
 #' \dontrun{
@@ -195,11 +195,6 @@ FitOU <- function(data,
     )
   )
   # measurement
-  # TODO:
-  # Should the lambda matrix of factor loadings be estimated?
-  # If estimated,
-  # should the off-diagonal elements of the lambda matrix of factor loadings be fixed to zero?
-  # Should the nu vector of measurement intercepts be estimated?
   dynr_measurement <- dynr::prep.measurement(
     values.load = I,
     params.load = matrix(data = "fixed", nrow = k, ncol = k),
@@ -248,8 +243,6 @@ FitOU <- function(data,
     isContinuousTime = TRUE
   )
   # noise
-  # TODO:
-  # Should the measurement error covariance matrix always be diagonal?
   if (is.null(sigma_start)) {
     sigma_start <- I
   }
