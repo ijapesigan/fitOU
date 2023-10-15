@@ -10,7 +10,7 @@
 #'   \boldsymbol{\nu}
 #'   +
 #'   \boldsymbol{\Lambda}
-#'   \boldsymbol{\eta}_{i, t} 
+#'   \boldsymbol{\eta}_{i, t}
 #'   +
 #'   \boldsymbol{\varepsilon}_{i, t}
 #'   \quad
@@ -69,7 +69,7 @@
 #' which represents random fluctuations.
 #'
 #' @author Ivan Jacob Agaloos Pesigan
-#' 
+#'
 #' @param data Data frame.
 #'   A data frame object of data for potentially
 #'   multiple subjects that contain
@@ -229,7 +229,7 @@ FitOU <- function(data,
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {
-    phi_start <- rep(x = 0, times = k * k)  
+    phi_start <- rep(x = 0, times = k * k)
   } else {
     dim(phi_start) <- NULL
   }
@@ -271,7 +271,7 @@ FitOU <- function(data,
     measurement = dynr_measurement,
     dynamics = dynr_dynamics,
     noise = dynr_noise,
-    outfile = paste0(tempfile(),".c")
+    outfile = paste0(tempfile(), ".c")
   )
   # fit
   return(
