@@ -122,7 +122,10 @@ psi <- c(
   0.06,
   3.27
 )
-sigma <- I
+sigma <- matrix(
+  data = c(2.79, 0.06, 0.06, 3.27),
+  nrow = p
+)
 nu <- null_vec
 lambda <- I
 theta <- matrix(
