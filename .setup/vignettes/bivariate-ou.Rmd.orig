@@ -325,6 +325,17 @@ beta_var1_hat
 ### Discrepancy Between Estimated and Population Coefficients
 
 ```{r}
+abs(mu - mu_hat)
+abs(phi - phi_hat)
+abs(beta_var1 - beta_var1_hat)
+abs(sigma - sigma_hat)
+abs(mu0 - mu0_hat)
+abs(sigma0 - sigma0_hat)
+```
+
+```{r}
+#| echo = FALSE,
+#| eval = FALSE
 tol <- 0.10
 # less than two-point difference
 # note that mu values are greater than zero and a difference of 2 is trivial

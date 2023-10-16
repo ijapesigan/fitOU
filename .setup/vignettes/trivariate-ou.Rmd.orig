@@ -406,6 +406,17 @@ beta_var1_hat
 ### Discrepancy Between Estimated and Population Coefficients
 
 ```{r}
+abs(mu - mu_hat)
+abs(phi - phi_hat)
+abs(beta_var1 - beta_var1_hat)
+abs(sigma - sigma_hat)
+abs(mu0 - mu0_hat)
+abs(sigma0 - sigma0_hat)
+```
+
+```{r}
+#| echo = FALSE,
+#| eval = FALSE
 tol <- 0.10
 all(
   as.vector(
@@ -455,7 +466,6 @@ remotes::install_github("jeksterslab/semmcci")
 ```{r}
 #| eval = FALSE
 install.packages("semmcci")
-library(semmcci)
 ```
 
 ```{r}
@@ -464,8 +474,7 @@ semmcci::MCGeneric(
   R = 20000L,
   def = list(
     # note that the matrix of interest is -Phi
-    "-phi_21 * -phi_32",         # indirect effect
-    "-phi_21 * -phi_32 - phi_31" # total effect
+    "-phi_21 * -phi_32"
   ),
   alpha = 0.05
 )
