@@ -274,7 +274,8 @@ theta
 
 ```{r}
 #| message = FALSE,
-#| warning = FALSE
+#| warning = FALSE,
+#| results = "hide"
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("ijapesigan/simStateSpace")
 ```
@@ -446,10 +447,15 @@ all(
 ## Monte Carlo Confidence Interval for Functions of Parameters
 
 ```{r}
-#| message = FALSE,
-#| warning = FALSE
+#| include = FALSE
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("jeksterslab/semmcci")
+```
+
+```{r}
+#| eval = FALSE
+install.packages("semmcci")
+library(semmcci)
 ```
 
 ```{r}

@@ -260,7 +260,8 @@ theta
 
 ```{r}
 #| message = FALSE,
-#| warning = FALSE
+#| warning = FALSE,
+#| results = "hide"
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("ijapesigan/simStateSpace")
 ```
@@ -377,7 +378,7 @@ beta_var1_hat
 ```{r}
 tol <- 0.10
 # less than two-point difference
-# note that mu values are greater tha zero and a difference of 2 is trivial
+# note that mu values are greater than zero and a difference of 2 is trivial
 all(
   as.vector(
     abs(mu - mu_hat)

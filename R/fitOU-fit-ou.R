@@ -10,7 +10,7 @@
 #'   \boldsymbol{\nu}
 #'   +
 #'   \boldsymbol{\Lambda}
-#'   \boldsymbol{\eta}_{i, t}
+#'   \boldsymbol{\eta}_{i, t} 
 #'   +
 #'   \boldsymbol{\varepsilon}_{i, t}
 #'   \quad
@@ -69,7 +69,7 @@
 #' which represents random fluctuations.
 #'
 #' @author Ivan Jacob Agaloos Pesigan
-#'
+#' 
 #' @param data Data frame.
 #'   A data frame object of data for potentially
 #'   multiple subjects that contain
@@ -164,7 +164,8 @@ FitOU <- function(data,
   y_names <- observed
   k <- length(y_names)
   eta_names <- paste0("eta_", seq_len(k))
-  I <- diag(k)
+  iden <- diag(k)
+  null_vec <- rep(x = 0, times = k)
   # data
   dynr_data <- dynr::dynr.data(
     dataframe = data,
@@ -174,10 +175,10 @@ FitOU <- function(data,
   )
   # initial
   if (is.null(mu0)) {
-    mu0 <- rep(x = 0, times = k)
+    mu0 <- null_vec
   }
   if (is.null(sigma0)) {
-    sigma0 <- I
+    sigma0 <- iden
   }
   row_idx <- rep(x = 1:k, each = k)
   col_idx <- rep(x = 1:k, times = k)
@@ -196,7 +197,7 @@ FitOU <- function(data,
   )
   # measurement
   dynr_measurement <- dynr::prep.measurement(
-    values.load = I,
+    values.load = iden,
     params.load = matrix(data = "fixed", nrow = k, ncol = k),
     state.names = eta_names,
     obs.names = y_names
@@ -225,11 +226,11 @@ FitOU <- function(data,
   }
   dim(phi_names) <- NULL
   if (is.null(mu_start)) {
-    mu_start <- rep(x = 0, times = k)
+    mu_start <- null_vec
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {
-    phi_start <- rep(x = 0, times = k * k)
+    phi_start <- rep(x = 0, times = k * k)  
   } else {
     dim(phi_start) <- NULL
   }
@@ -244,10 +245,10 @@ FitOU <- function(data,
   )
   # noise
   if (is.null(sigma_start)) {
-    sigma_start <- I
+    sigma_start <- iden
   }
   if (is.null(theta_start)) {
-    theta_start <- I
+    theta_start <- iden
   }
   theta <- matrix(data = "fixed", nrow = k, ncol = k)
   diag(theta) <- paste0("theta_", seq_len(k), seq_len(k))
@@ -271,7 +272,7 @@ FitOU <- function(data,
     measurement = dynr_measurement,
     dynamics = dynr_dynamics,
     noise = dynr_noise,
-    outfile = paste0(tempfile(), ".c")
+    outfile = paste0(tempfile(),".c")
   )
   # fit
   return(
