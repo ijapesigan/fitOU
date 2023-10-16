@@ -374,8 +374,8 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 13.61443 </span></span>
-<span><span class="co">## Backend Time: 13.60679</span></span></code></pre>
+<span><span class="co">## Total Time: 13.09225 </span></span>
+<span><span class="co">## Backend Time: 13.08332</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -462,49 +462,54 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <h3 id="discrepancy-between-estimated-and-population-coefficients">Discrepancy Between Estimated and Population Coefficients<a class="anchor" aria-label="anchor" href="#discrepancy-between-estimated-and-population-coefficients"></a>
 </h3>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tol</span> <span class="op">&lt;-</span> <span class="fl">0.10</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">&lt;=</span> <span class="va">tol</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] FALSE</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.10537598 0.14731897 0.06604271</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">&lt;=</span> <span class="va">tol</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##             [,1]       [,2]        [,3]</span></span>
+<span><span class="co">## [1,] 0.012370406 0.06124844 0.049496240</span></span>
+<span><span class="co">## [2,] 0.006200716 0.02311838 0.007030417</span></span>
+<span><span class="co">## [3,] 0.017202241 0.05825532 0.007053928</span></span></code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">&lt;=</span> <span class="va">tol</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##              [,1]         [,2]        [,3]</span></span>
+<span><span class="co">## [1,] 0.0111542696 0.0300151297 0.029499750</span></span>
+<span><span class="co">## [2,] 0.0002057101 0.0002143142 0.007502288</span></span>
+<span><span class="co">## [3,] 0.0026778299 0.0227257866 0.001332988</span></span></code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma</span> <span class="op">-</span> <span class="va">sigma_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##             [,1]        [,2]        [,3]</span></span>
+<span><span class="co">## [1,] 0.001969113 0.007748364 0.051307253</span></span>
+<span><span class="co">## [2,] 0.007748364 0.051519014 0.009762798</span></span>
+<span><span class="co">## [3,] 0.051307253 0.009762798 0.034774065</span></span></code></pre>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu0</span> <span class="op">-</span> <span class="va">mu0_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.01820144 0.30374769 0.46643522</span></span></code></pre>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma0</span> <span class="op">-</span> <span class="va">sigma0_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##           [,1]        [,2]        [,3]</span></span>
+<span><span class="co">## [1,] 0.6242570 0.334104923 0.103098270</span></span>
+<span><span class="co">## [2,] 0.3341049 0.280844342 0.007340382</span></span>
+<span><span class="co">## [3,] 0.1030983 0.007340382 0.157750942</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
 <h2 id="monte-carlo-confidence-interval-for-functions-of-parameters">Monte Carlo Confidence Interval for Functions of Parameters<a class="anchor" aria-label="anchor" href="#monte-carlo-confidence-interval-for-functions-of-parameters"></a>
 </h2>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"semmcci"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jeksterslab/semmcci" class="external-link">semmcci</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"semmcci"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">semmcci</span><span class="fu">::</span><span class="fu"><a href="https://github.com/jeksterslab/semmcci/reference/MCGeneric.html" class="external-link">MCGeneric</a></span><span class="op">(</span></span>
 <span>  object <span class="op">=</span> <span class="va">results</span>,</span>
 <span>  R <span class="op">=</span> <span class="fl">20000L</span>,</span>
 <span>  def <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="co"># note that the matrix of interest is -Phi</span></span>
-<span>    <span class="st">"-phi_21 * -phi_32"</span>,         <span class="co"># indirect effect</span></span>
-<span>    <span class="st">"-phi_21 * -phi_32 - phi_31"</span> <span class="co"># total effect</span></span>
+<span>    <span class="st">"-phi_21 * -phi_32"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                               est     se     R    2.5%  97.5%</span></span>
-<span><span class="co">## -phi_21 * -phi_32          0.5130 0.0491 20000  0.4196 0.6123</span></span>
-<span><span class="co">## -phi_21 * -phi_32 - phi_31 0.0802 0.0488 20000 -0.0155 0.1760</span></span></code></pre>
+<pre><code><span><span class="co">##                     est     se     R   2.5%  97.5%</span></span>
+<span><span class="co">## -phi_21 * -phi_32 0.513 0.0486 20000 0.4207 0.6117</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

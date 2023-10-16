@@ -353,8 +353,8 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 3.823231 </span></span>
-<span><span class="co">## Backend Time: 3.815815</span></span></code></pre>
+<span><span class="co">## Total Time: 3.733566 </span></span>
+<span><span class="co">## Backend Time: 3.72471</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -423,29 +423,31 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <h3 id="discrepancy-between-estimated-and-population-coefficients">Discrepancy Between Estimated and Population Coefficients<a class="anchor" aria-label="anchor" href="#discrepancy-between-estimated-and-population-coefficients"></a>
 </h3>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tol</span> <span class="op">&lt;-</span> <span class="fl">0.10</span></span>
-<span><span class="co"># less than two-point difference</span></span>
-<span><span class="co"># note that mu values are greater than zero and a difference of 2 is trivial</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span> </span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1.062636 1.419554</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">&lt;=</span> <span class="va">tol</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 0.01039817 0.02426082</span></span>
+<span><span class="co">## [2,] 0.01103931 0.03489538</span></span></code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">&lt;=</span> <span class="va">tol</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##             [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 0.009175669 0.02279996</span></span>
+<span><span class="co">## [2,] 0.009552919 0.03233627</span></span></code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma</span> <span class="op">-</span> <span class="va">sigma_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 0.01776649 0.03223076</span></span>
+<span><span class="co">## [2,] 0.03223076 0.03154988</span></span></code></pre>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu0</span> <span class="op">-</span> <span class="va">mu0_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.38452485 0.08004282</span></span></code></pre>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma0</span> <span class="op">-</span> <span class="va">sigma0_hat</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##           [,1]      [,2]</span></span>
+<span><span class="co">## [1,] 0.3677800 0.1320429</span></span>
+<span><span class="co">## [2,] 0.1320429 0.4729904</span></span></code></pre>
 </div>
 </div>
 <div class="section level2 unnumbered">
