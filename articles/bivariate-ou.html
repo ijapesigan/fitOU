@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2023-10-16</h4>
+            <h4 data-toc-skip class="date">2023-10-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ijapesigan/fitOU/blob/HEAD/vignettes/bivariate-ou.Rmd"><code>vignettes/bivariate-ou.Rmd</code></a></small>
       <div class="d-none name"><code>bivariate-ou.Rmd</code></div>
@@ -257,18 +257,18 @@ process or Brownian motion, which represents random fluctuations.</p>
 <span><span class="co">## Original exit flag:  3 </span></span>
 <span><span class="co">## Modified exit flag:  3 </span></span>
 <span><span class="co">## Optimization terminated successfully: ftol_rel or ftol_abs was reached. </span></span>
-<span><span class="co">## Original fitted parameters:  4.826197 4.687112 0.1295602 -0.04596403 </span></span>
-<span><span class="co">## -0.04622001 0.09327756 1.106594 0.01867597 1.191311 -0.7157053 -0.6979017 </span></span>
-<span><span class="co">## -3.318732 1.674165 0.3144561 0.06553602 0.1554004 </span></span>
+<span><span class="co">## Original fitted parameters:  4.825987 4.687066 0.1295692 -0.04595813 </span></span>
+<span><span class="co">## -0.04622497 0.09327475 1.106605 0.01867706 1.191307 -0.715713 -0.6979047 </span></span>
+<span><span class="co">## -3.318581 1.674123 0.3142606 0.0654838 0.1553629 </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Transformed fitted parameters:  4.826197 4.687112 0.1295602 -0.04596403 </span></span>
-<span><span class="co">## -0.04622001 0.09327756 3.024041 0.05647691 3.292448 0.4888472 0.4976284 </span></span>
-<span><span class="co">## -3.318732 1.674165 1.369514 0.08975252 1.174008 </span></span>
+<span><span class="co">## Transformed fitted parameters:  4.825987 4.687066 0.1295692 -0.04595813 </span></span>
+<span><span class="co">## -0.04622497 0.09327475 3.024073 0.0564808 3.292436 0.4888434 0.4976269 </span></span>
+<span><span class="co">## -3.318581 1.674123 1.369247 0.08966347 1.173953 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 4.049861 </span></span>
-<span><span class="co">## Backend Time: 4.041544</span></span></code></pre>
+<span><span class="co">## Total Time: 6.234541 </span></span>
+<span><span class="co">## Backend Time: 6.222992</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -277,91 +277,91 @@ process or Brownian motion, which represents random fluctuations.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Coefficients:</span></span>
 <span><span class="co">##           Estimate Std. Error t value ci.lower ci.upper Pr(&gt;|t|)    </span></span>
-<span><span class="co">## mu_1       4.82620    0.63517   7.598  3.58128  6.07111   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu_2       4.68711    0.86754   5.403  2.98676  6.38747   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_11     0.12956    0.01593   8.134  0.09834  0.16078   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_21    -0.04596    0.01646  -2.793 -0.07822 -0.01371   0.0026 ** </span></span>
-<span><span class="co">## phi_12    -0.04622    0.01452  -3.184 -0.07467 -0.01777   0.0007 ***</span></span>
-<span><span class="co">## phi_22     0.09328    0.01526   6.113  0.06337  0.12319   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_11   3.02404    0.11328  26.695  2.80201  3.24607   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_12   0.05648    0.07023   0.804 -0.08117  0.19412   0.2107    </span></span>
-<span><span class="co">## sigma_22   3.29245    0.11845  27.796  3.06029  3.52460   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_11   0.48885    0.01175  41.607  0.46582  0.51187   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_22   0.49763    0.01197  41.561  0.47416  0.52110   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu0_1     -3.31873    0.28594 -11.606 -3.87917 -2.75829   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu0_2      1.67416    0.26882   6.228  1.14729  2.20104   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma0_11  1.36951    0.51706   2.649  0.35610  2.38292   0.0040 ** </span></span>
-<span><span class="co">## sigma0_12  0.08975    0.34621   0.259 -0.58881  0.76831   0.3977    </span></span>
-<span><span class="co">## sigma0_22  1.17401    0.45840   2.561  0.27556  2.07245   0.0052 ** </span></span>
+<span><span class="co">## mu_1       4.82599    0.64890   7.437  3.55418  6.09780   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu_2       4.68707    0.88071   5.322  2.96090  6.41323   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_11     0.12957    0.01589   8.155  0.09843  0.16071   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_21    -0.04596    0.01642  -2.799 -0.07814 -0.01378   0.0026 ** </span></span>
+<span><span class="co">## phi_12    -0.04622    0.01450  -3.188 -0.07464 -0.01781   0.0007 ***</span></span>
+<span><span class="co">## phi_22     0.09327    0.01526   6.113  0.06337  0.12318   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_11   3.02407    0.11284  26.801  2.80292  3.24523   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_12   0.05648    0.07018   0.805 -0.08107  0.19403   0.2105    </span></span>
+<span><span class="co">## sigma_22   3.29244    0.11869  27.740  3.05981  3.52506   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_11   0.48884    0.01172  41.705  0.46587  0.51182   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_22   0.49763    0.01199  41.503  0.47413  0.52113   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_1     -3.31858    0.28620 -11.595 -3.87952 -2.75764   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_2      1.67412    0.26927   6.217  1.14636  2.20189   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma0_11  1.36925    0.53296   2.569  0.32467  2.41383   0.0051 ** </span></span>
+<span><span class="co">## sigma0_12  0.08966    0.34998   0.256 -0.59628  0.77561   0.3989    </span></span>
+<span><span class="co">## sigma0_22  1.17395    0.46855   2.505  0.25560  2.09230   0.0061 ** </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## -2 log-likelihood value at convergence = 58025.07</span></span>
 <span><span class="co">## AIC = 58057.07</span></span>
 <span><span class="co">## BIC = 58172.43</span></span></code></pre>
-<pre><code><span><span class="co">## [1] -3.318732  1.674165</span></span></code></pre>
+<pre><code><span><span class="co">## [1] -3.318581  1.674123</span></span></code></pre>
 <div class="section level3">
 <h3 id="estimated-coefficients">Estimated Coefficients<a class="anchor" aria-label="anchor" href="#estimated-coefficients"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 4.826197 4.687112</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 4.825987 4.687066</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">phi_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,]  0.12956021 -0.04622001</span></span>
-<span><span class="co">## [2,] -0.04596403  0.09327756</span></span></code></pre>
+<span><span class="co">## [1,]  0.12956919 -0.04622497</span></span>
+<span><span class="co">## [2,] -0.04595813  0.09327475</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
-<span><span class="co">## [1,] 3.02404129 0.05647691</span></span>
-<span><span class="co">## [2,] 0.05647691 3.29244840</span></span></code></pre>
+<pre><code><span><span class="co">##           [,1]      [,2]</span></span>
+<span><span class="co">## [1,] 3.0240731 0.0564808</span></span>
+<span><span class="co">## [2,] 0.0564808 3.2924361</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu0_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] -3.318732  1.674165</span></span></code></pre>
+<pre><code><span><span class="co">## [1] -3.318581  1.674123</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma0_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]</span></span>
-<span><span class="co">## [1,] 1.36951421 0.08975252</span></span>
-<span><span class="co">## [2,] 0.08975252 1.17400759</span></span></code></pre>
+<span><span class="co">## [1,] 1.36924650 0.08966347</span></span>
+<span><span class="co">## [2,] 0.08966347 1.17395331</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beta_var1_hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/expm.html" class="external-link">expm</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="va">phi_hat</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">beta_var1_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]</span></span>
-<span><span class="co">## [1,] 0.87942640 0.04136366</span></span>
-<span><span class="co">## [2,] 0.04113458 0.91189683</span></span></code></pre>
+<span><span class="co">## [1,] 0.87941848 0.04136798</span></span>
+<span><span class="co">## [2,] 0.04112918 0.91189936</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="discrepancy-between-estimated-and-population-coefficients">Discrepancy Between Estimated and Population Coefficients<a class="anchor" aria-label="anchor" href="#discrepancy-between-estimated-and-population-coefficients"></a>
 </h3>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 0.9338025 0.4928881</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 0.9340131 0.4929338</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,] 0.029560209 0.003779991</span></span>
-<span><span class="co">## [2,] 0.004035971 0.006722444</span></span></code></pre>
+<span><span class="co">## [1,] 0.029569191 0.003775028</span></span>
+<span><span class="co">## [2,] 0.004041869 0.006725247</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,] 0.026542301 0.003897060</span></span>
-<span><span class="co">## [2,] 0.004126145 0.005928127</span></span></code></pre>
+<span><span class="co">## [1,] 0.026550217 0.003892745</span></span>
+<span><span class="co">## [2,] 0.004131549 0.005930659</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma</span> <span class="op">-</span> <span class="va">sigma_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,] 0.234041287 0.003523094</span></span>
-<span><span class="co">## [2,] 0.003523094 0.022448397</span></span></code></pre>
+<span><span class="co">## [1,] 0.234073058 0.003519203</span></span>
+<span><span class="co">## [2,] 0.003519203 0.022436131</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu0</span> <span class="op">-</span> <span class="va">mu0_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 0.3187321 0.1741648</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 0.3185810 0.1741232</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma0</span> <span class="op">-</span> <span class="va">sigma0_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]</span></span>
-<span><span class="co">## [1,] 0.36951421 0.08975252</span></span>
-<span><span class="co">## [2,] 0.08975252 0.17400759</span></span></code></pre>
+<span><span class="co">## [1,] 0.36924650 0.08966347</span></span>
+<span><span class="co">## [2,] 0.08966347 0.17395331</span></span></code></pre>
 </div>
 </div>
 <div class="section level2 unnumbered">
