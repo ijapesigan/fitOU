@@ -17,7 +17,9 @@
 
 project <- "fitOU"
 
-pkg_cran <- c()
+pkg_cran <- c(
+  "pblapply"
+)
 
 pkg_github <- c(
   "ijapesigan/simStateSpace",

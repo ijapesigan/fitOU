@@ -19,9 +19,10 @@ Depends:
     R (>= 3.0.0)
 Imports:
     stats,
-    dynr
+    dynr,
+    parallel,
+    pbapply
 Suggests:
     knitr,
     rmarkdown,
     testthat
-RoxygenNote: 7.2.3

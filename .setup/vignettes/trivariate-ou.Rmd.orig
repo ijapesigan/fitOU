@@ -281,19 +281,23 @@ remotes::install_github("ijapesigan/simStateSpace")
 ```
 
 ```{r}
-data <- simStateSpace::SimSSMOUFixed(
-  n = n,
-  mu0 = mu0,
-  sigma0_sqrt = chol(sigma0),
-  mu = mu,
-  phi = phi,
-  sigma_sqrt = chol(sigma),
-  nu = nu,
-  lambda = lambda,
-  theta_sqrt = chol(theta),
-  delta_t = delta_t,
-  time = time,
-  burn_in = 0
+library(simStateSpace)
+set.seed(42)
+data <- Sim2Matrix(
+  SimSSMOUFixed(
+    n = n,
+    mu0 = mu0,
+    sigma0_sqrt = chol(sigma0),
+    mu = mu,
+    phi = phi,
+    sigma_sqrt = chol(sigma),
+    nu = nu,
+    lambda = lambda,
+    theta_sqrt = chol(theta),
+    delta_t = delta_t,
+    time = time,
+    burn_in = 0
+  )
 )
 head(data)
 ```
