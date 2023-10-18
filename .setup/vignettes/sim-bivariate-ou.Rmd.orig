@@ -93,8 +93,8 @@ which represents random fluctuations.
 
 ```{r}
 #| echo = FALSE
-n <- 20
-time <- 500
+n <- 5
+time <- 10000
 delta_t <- 0.10
 k <- p <- 2
 I <- diag(k)

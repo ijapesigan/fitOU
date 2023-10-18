@@ -99,7 +99,7 @@ The transition matrix used in this examples was taken from @Deboeck-Preacher-201
 #| echo = FALSE
 set.seed(42)
 time <- 10000
-n <- 10
+n <- 5
 delta_t <- 0.10
 k <- p <- 3
 I <- diag(k)
