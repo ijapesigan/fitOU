@@ -1,0 +1,620 @@
+---
+title: "Trivariate Ornstein–Uhlenbeck Model"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "2023-10-18"
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @Chow-Losardo-Park-etal-2023
+  @Ou-Hunter-Chow-2019
+  @Uhlenbeck-Ornstein-1930
+  @Deboeck-Preacher-2015
+  @Pesigan-Cheung-2023
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Trivariate Ornstein–Uhlenbeck Model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- vignettes/trivariate-ou.Rmd is generated from .setup/vignettes/trivariate-ou.Rmd.orig. Please edit that file -->
+
+## The Ornstein–Uhlenbeck Model
+
+The measurement model is given by
+
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\nu}
+  +
+  \boldsymbol{\Lambda}
+  \boldsymbol{\eta}_{i, t} 
+  +
+  \boldsymbol{\varepsilon}_{i, t}
+  \quad
+  \mathrm{with}
+  \quad
+  \boldsymbol{\varepsilon}_{i, t}
+  \sim
+  \mathcal{N}
+  \left(
+  \mathbf{0},
+  \boldsymbol{\Theta}
+  \right)
+\end{equation}
+
+where $\mathbf{y}_{i, t}$, $\boldsymbol{\eta}_{i, t}$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+are random variables and $\boldsymbol{\nu}$,
+$\boldsymbol{\Lambda}$,
+and $\boldsymbol{\Theta}$ are model parameters.
+$\mathbf{y}_{i, t}$ is a vector of observed random variables
+at time $t$ and individual $i$,
+$\boldsymbol{\eta}_{i, t}$ is a vector of latent random variables
+at time $t$ and individual $i$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+is a vector of random measurement errors
+at time $t$ and individual $i$,
+while $\boldsymbol{\nu}$ is a vector of intercept,
+$\boldsymbol{\Lambda}$ is a matrix of factor loadings,
+and $\boldsymbol{\Theta}$ is the covariance matrix of
+$\boldsymbol{\varepsilon}$.
+
+The dynamic structure is given by
+
+\begin{equation}
+  \mathrm{d} \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\Phi}
+  \left(
+  \boldsymbol{\mu}
+  -
+  \boldsymbol{\eta}_{i, t}
+  \right)
+  \mathrm{d}t
+  +
+  \boldsymbol{\Sigma}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+
+where $\boldsymbol{\mu}$ is the long-term mean or equilibrium level,
+$\boldsymbol{\Phi}$ is the rate of mean reversion,
+determining how quickly the variable returns to its mean,
+$\boldsymbol{\Sigma}$ is the matrix of volatility
+or randomness in the process, and $\mathrm{d}\boldsymbol{W}$
+is a Wiener process or Brownian motion,
+which represents random fluctuations.
+
+## Data Generation
+
+The transition matrix used in this examples was taken from @Deboeck-Preacher-2015.
+
+### Notation
+
+
+
+Let $t = 1000$ be the number of time points and $n = 10$ be the number of individuals.
+
+Let the measurement model intecept vector $\boldsymbol{\nu}$ be given by
+
+\begin{equation}
+\boldsymbol{\nu}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+  0 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the factor loadings matrix $\boldsymbol{\Lambda}$ be given by
+
+\begin{equation}
+\boldsymbol{\Lambda}
+=
+\left(
+\begin{array}{ccc}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the measurement error covariance matrix $\boldsymbol{\Theta}$ be given by
+
+\begin{equation}
+\boldsymbol{\Theta}
+=
+\left(
+\begin{array}{ccc}
+  0.5 & 0 & 0 \\
+  0 & 0.5 & 0 \\
+  0 & 0 & 0.5 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the initial condition
+$\boldsymbol{\eta}_{0}$
+be given by
+
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+  0 \\
+\end{array}
+\right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{ccc}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the long-term mean vector $\boldsymbol{\mu}$ be given by
+
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+  0 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the rate of mean reversion matrix $\boldsymbol{\Phi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{ccc}
+  0.357 & 0 & 0 \\
+  -0.771 & 0.511 & 0 \\
+  0.45 & -0.729 & 0.693 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the dynamic process noise covariance matrix $\boldsymbol{\Sigma}$ be given by
+
+\begin{equation}
+\boldsymbol{\Sigma}
+=
+\left(
+\begin{array}{ccc}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let $\Delta_{t} = 0.1$.
+
+### R Function Arguments
+
+
+```r
+n
+```
+
+```
+## [1] 10
+```
+
+```r
+time
+```
+
+```
+## [1] 1000
+```
+
+```r
+delta_t
+```
+
+```
+## [1] 0.1
+```
+
+```r
+mu0
+```
+
+```
+## [1] 0 0 0
+```
+
+```r
+sigma0
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1
+```
+
+```r
+mu
+```
+
+```
+## [1] 0 0 0
+```
+
+```r
+phi
+```
+
+```
+##        [,1]   [,2]  [,3]
+## [1,]  0.357  0.000 0.000
+## [2,] -0.771  0.511 0.000
+## [3,]  0.450 -0.729 0.693
+```
+
+```r
+sigma
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1
+```
+
+```r
+nu
+```
+
+```
+## [1] 0 0 0
+```
+
+```r
+lambda
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1
+```
+
+```r
+theta
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]  0.5  0.0  0.0
+## [2,]  0.0  0.5  0.0
+## [3,]  0.0  0.0  0.5
+```
+
+### Using the simStateSpace::SimSSMVARFixed Function to Simulate Data
+
+
+```r
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("ijapesigan/simStateSpace")
+```
+
+
+```r
+library(simStateSpace)
+set.seed(42)
+data <- Sim2Matrix(
+  SimSSMOUFixed(
+    n = n,
+    mu0 = mu0,
+    sigma0_sqrt = chol(sigma0),
+    mu = mu,
+    phi = phi,
+    sigma_sqrt = chol(sigma),
+    nu = nu,
+    lambda = lambda,
+    theta_sqrt = chol(theta),
+    delta_t = delta_t,
+    time = time,
+    burn_in = 0
+  )
+)
+head(data)
+```
+
+```
+##              y1        y2       y3 time id
+## [1,] -0.2452235 0.3791894 2.916196  0.0  1
+## [2,] -0.6408937 1.7824870 1.400803  0.1  1
+## [3,] -0.9755917 2.0512793 2.498214  0.2  1
+## [4,] -2.5120801 0.7969752 2.234649  0.3  1
+## [5,] -1.7204259 0.6404276 2.053562  0.4  1
+## [6,]  0.4753620 1.3252011 2.114403  0.5  1
+```
+
+## Model Fitting
+
+
+```r
+results <- fitOU::FitOU(
+  data = data,
+  observed = c("y1", "y2", "y3"),
+  id = "id",
+  time = "time",
+  verbose = FALSE
+)
+```
+
+```
+## [1] "Get ready!!!!"
+## using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+## Optimization function called.
+## Starting Hessian calculation ...
+## Finished Hessian calculation.
+## Original exit flag:  3 
+## Modified exit flag:  3 
+## Optimization terminated successfully: ftol_rel or ftol_abs was reached. 
+## Original fitted parameters:  0.105376 0.147319 0.06604271 0.3446296 -0.7647993 
+## 0.4327978 0.06124844 0.4878816 -0.6707447 -0.04949624 0.007030417 0.6859461 
+## -0.001971048 0.007763649 -0.05140848 0.05017859 -0.008906168 -0.03821611 
+## -0.6993759 -0.7428862 -0.6853091 0.01820163 0.3037477 0.4664353 0.4850505 
+## 0.2056971 -0.06347411 0.1923709 0.01144006 0.1406732 
+## 
+## Transformed fitted parameters:  0.105376 0.147319 0.06604271 0.3446296 
+## -0.7647993 0.4327978 0.06124844 0.4878816 -0.6707447 -0.04949624 0.007030417 
+## 0.6859461 0.9980309 0.007748361 -0.05130725 1.051519 -0.009762801 0.9652259 
+## 0.4968953 0.4757389 0.5039344 0.01820163 0.3037477 0.4664353 1.624257 0.334105 
+## -0.1030983 1.280844 -0.007340293 1.157751 
+## 
+## Doing end processing
+## Successful trial
+## Total Time: 19.95066 
+## Backend Time: 19.93947
+```
+
+## Summary
+
+
+```r
+summary(results)
+```
+
+```
+## Coefficients:
+##            Estimate Std. Error t value  ci.lower  ci.upper Pr(>|t|)    
+## mu_1       0.105376   0.079424   1.327 -0.050293  0.261045   0.0923 .  
+## mu_2       0.147319   0.137722   1.070 -0.122611  0.417249   0.1424    
+## mu_3       0.066043   0.104263   0.633 -0.138309  0.270394   0.2632    
+## phi_11     0.344630   0.054563   6.316  0.237687  0.451572   <2e-16 ***
+## phi_21    -0.764799   0.053323 -14.343 -0.869310 -0.660289   <2e-16 ***
+## phi_31     0.432798   0.051550   8.396  0.331761  0.533835   <2e-16 ***
+## phi_12     0.061248   0.041905   1.462 -0.020884  0.143381   0.0719 .  
+## phi_22     0.487882   0.043767  11.147  0.402099  0.573664   <2e-16 ***
+## phi_32    -0.670745   0.041771 -16.058 -0.752613 -0.588876   <2e-16 ***
+## phi_13    -0.049496   0.038559  -1.284 -0.125070  0.026078   0.0996 .  
+## phi_23     0.007030   0.040132   0.175 -0.071627  0.085688   0.4305    
+## phi_33     0.685946   0.039999  17.149  0.607549  0.764344   <2e-16 ***
+## sigma_11   0.998031   0.061285  16.285  0.877914  1.118148   <2e-16 ***
+## sigma_12   0.007748   0.037590   0.206 -0.065926  0.081422   0.4183    
+## sigma_13  -0.051307   0.036780  -1.395 -0.123394  0.020780   0.0815 .  
+## sigma_22   1.051519   0.058128  18.090  0.937590  1.165448   <2e-16 ***
+## sigma_23  -0.009763   0.035798  -0.273 -0.079926  0.060400   0.3925    
+## sigma_33   0.965226   0.054660  17.659  0.858095  1.072357   <2e-16 ***
+## theta_11   0.496895   0.009658  51.447  0.477965  0.515825   <2e-16 ***
+## theta_22   0.475739   0.009279  51.268  0.457552  0.493926   <2e-16 ***
+## theta_33   0.503934   0.009555  52.738  0.485206  0.522663   <2e-16 ***
+## mu0_1      0.018202   0.417737   0.044 -0.800548  0.836951   0.4826    
+## mu0_2      0.303748   0.388664   0.782 -0.458020  1.065515   0.2173    
+## mu0_3      0.466435   0.371855   1.254 -0.262386  1.195257   0.1049    
+## sigma0_11  1.624257   0.803870   2.021  0.048701  3.199813   0.0217 *  
+## sigma0_12  0.334105   0.521626   0.641 -0.688262  1.356472   0.2609    
+## sigma0_13 -0.103098   0.491702  -0.210 -1.066816  0.860619   0.4170    
+## sigma0_22  1.280844   0.660822   1.938 -0.014342  2.576031   0.0263 *  
+## sigma0_23 -0.007340   0.456140  -0.016 -0.901359  0.886679   0.4936    
+## sigma0_33  1.157751   0.599916   1.930 -0.018062  2.333564   0.0268 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## -2 log-likelihood value at convergence = 75975.29
+## AIC = 76035.29
+## BIC = 76251.60
+```
+
+
+```
+## [1] 0.01820163 0.30374774 0.46643530
+```
+
+### Estimated Coefficients
+
+
+```r
+mu_hat
+```
+
+```
+## [1] 0.10537597 0.14731897 0.06604271
+```
+
+```r
+phi_hat
+```
+
+```
+##            [,1]        [,2]         [,3]
+## [1,]  0.3446296  0.06124844 -0.049496242
+## [2,] -0.7647993  0.48788163  0.007030417
+## [3,]  0.4327978 -0.67074468  0.685946073
+```
+
+```r
+sigma_hat
+```
+
+```
+##              [,1]         [,2]         [,3]
+## [1,]  0.998030893  0.007748361 -0.051307254
+## [2,]  0.007748361  1.051519013 -0.009762801
+## [3,] -0.051307254 -0.009762801  0.965225939
+```
+
+```r
+mu0_hat
+```
+
+```
+## [1] 0.01820163 0.30374774 0.46643530
+```
+
+```r
+sigma0_hat
+```
+
+```
+##            [,1]         [,2]         [,3]
+## [1,]  1.6242570  0.334104956 -0.103098269
+## [2,]  0.3341050  1.280844491 -0.007340293
+## [3,] -0.1030983 -0.007340293  1.157751104
+```
+
+```r
+beta_var1_hat <- as.matrix(
+  Matrix::expm(-1 * phi_hat)
+)
+beta_var1_hat
+```
+
+```
+##            [,1]        [,2]        [,3]
+## [1,]  0.6886182 -0.03001513 0.029499750
+## [2,]  0.5002398  0.60010970 0.007502289
+## [3,] -0.1027162  0.37710984 0.498740608
+```
+
+### Discrepancy Between Estimated and Population Coefficients
+
+
+```r
+abs(mu - mu_hat)
+```
+
+```
+## [1] 0.10537597 0.14731897 0.06604271
+```
+
+```r
+abs(phi - phi_hat)
+```
+
+```
+##             [,1]       [,2]        [,3]
+## [1,] 0.012370405 0.06124844 0.049496242
+## [2,] 0.006200717 0.02311837 0.007030417
+## [3,] 0.017202239 0.05825532 0.007053927
+```
+
+```r
+abs(beta_var1 - beta_var1_hat)
+```
+
+```
+##              [,1]         [,2]        [,3]
+## [1,] 0.0111542705 0.0300151294 0.029499750
+## [2,] 0.0002057092 0.0002143142 0.007502289
+## [3,] 0.0026778307 0.0227257867 0.001332988
+```
+
+```r
+abs(sigma - sigma_hat)
+```
+
+```
+##             [,1]        [,2]        [,3]
+## [1,] 0.001969107 0.007748361 0.051307254
+## [2,] 0.007748361 0.051519013 0.009762801
+## [3,] 0.051307254 0.009762801 0.034774061
+```
+
+```r
+abs(mu0 - mu0_hat)
+```
+
+```
+## [1] 0.01820163 0.30374774 0.46643530
+```
+
+```r
+abs(sigma0 - sigma0_hat)
+```
+
+```
+##           [,1]        [,2]        [,3]
+## [1,] 0.6242570 0.334104956 0.103098269
+## [2,] 0.3341050 0.280844491 0.007340293
+## [3,] 0.1030983 0.007340293 0.157751104
+```
+
+
+
+
+
+## Monte Carlo Confidence Interval for Functions of Parameters
+
+
+
+
+```r
+install.packages("semmcci")
+```
+
+
+```r
+semmcci::MCGeneric(
+  object = results,
+  R = 20000L,
+  def = list(
+    # note that the matrix of interest is -Phi
+    "-phi_21 * -phi_32"
+  ),
+  alpha = 0.05
+)
+```
+
+```
+##                     est     se     R   2.5%  97.5%
+## -phi_21 * -phi_32 0.513 0.0482 20000 0.4213 0.6109
+```
+
+## References
