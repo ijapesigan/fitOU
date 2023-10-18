@@ -98,8 +98,8 @@ The transition matrix used in this examples was taken from @Deboeck-Preacher-201
 ```{r}
 #| echo = FALSE
 set.seed(42)
-time <- 10000
-n <- 5
+n <- 20
+time <- 500
 delta_t <- 0.10
 k <- p <- 3
 I <- diag(k)
@@ -126,12 +126,10 @@ beta_var1 <- as.matrix(
     -1 * phi
   )
 )
-psi <- I
 sigma <- I
 nu <- null_vec
 lambda <- I
-theta <- diag(k)
-diag(theta) <- 0.5
+theta <- diag(x = 0.5, nrow = k)
 ```
 
 Let $t = `r time`$ be the number of time points and $n = `r n`$ be the number of individuals.

@@ -109,23 +109,13 @@ beta_var1 <- as.matrix(
     -1 * phi
   )
 )
-psi <- c(
-  2.79,
-  0.06,
-  0.06,
-  3.27
-)
 sigma <- matrix(
   data = c(2.79, 0.06, 0.06, 3.27),
   nrow = p
 )
 nu <- null_vec
 lambda <- I
-theta <- matrix(
-  data = c(0.5, 0, 0, 0.5),
-  nrow = k,
-  ncol = k
-)
+theta <- diag(x = 0.5, nrow = k)
 ```
 
 Let the measurement model intecept vector $\boldsymbol{\nu}$ be given by
