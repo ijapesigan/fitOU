@@ -98,7 +98,7 @@ The transition matrix used in this examples was taken from @Deboeck-Preacher-201
 ```{r}
 #| echo = FALSE
 set.seed(42)
-time <- 1000
+time <- 10000
 n <- 10
 delta_t <- 0.10
 k <- p <- 3
@@ -414,6 +414,11 @@ abs(mu - mu_hat)
 abs(phi - phi_hat)
 abs(beta_var1 - beta_var1_hat)
 abs(sigma - sigma_hat)
+```
+
+```{r}
+#| echo = FALSE,
+#| eval = FALSE
 abs(mu0 - mu0_hat)
 abs(sigma0 - sigma0_hat)
 ```

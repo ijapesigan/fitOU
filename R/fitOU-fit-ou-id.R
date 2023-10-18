@@ -5,7 +5,7 @@
 #' convenient using the `dynr` package.
 #'
 #' @author Ivan Jacob Agaloos Pesigan
-#'
+#' 
 #' @inheritParams FitOU
 #' @param ncores Positive integer.
 #'   Number of cores to use.
@@ -37,10 +37,10 @@ FitOUID <- function(data,
                     ...,
                     ncores = NULL) {
   stopifnot(
-    length(unique(data[, id])) > 1
+    length(unique(data[ , id])) > 1
   )
   data <- as.data.frame(data)
-  data <- split(x = data, f = data[, id])
+  data <- split(x = data, f = data[ , id])
   if (is.null(ncores)) {
     cl <- NULL
   } else {

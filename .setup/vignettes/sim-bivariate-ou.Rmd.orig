@@ -386,6 +386,11 @@ abs(mu - mu_hat)
 abs(phi - phi_hat)
 abs(beta_var1 - beta_var1_hat)
 abs(sigma - sigma_hat)
+```
+
+```{r}
+#| echo = FALSE,
+#| eval = FALSE
 abs(mu0 - mu0_hat)
 abs(sigma0 - sigma0_hat)
 ```
