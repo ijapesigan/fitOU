@@ -10,7 +10,7 @@
 #'   \boldsymbol{\nu}
 #'   +
 #'   \boldsymbol{\Lambda}
-#'   \boldsymbol{\eta}_{i, t}
+#'   \boldsymbol{\eta}_{i, t} 
 #'   +
 #'   \boldsymbol{\varepsilon}_{i, t}
 #'   \quad
@@ -69,7 +69,7 @@
 #' which represents random fluctuations.
 #'
 #' @author Ivan Jacob Agaloos Pesigan
-#'
+#' 
 #' @param data Data frame.
 #'   A data frame object of data for potentially
 #'   multiple subjects that contain
@@ -98,7 +98,8 @@
 #'   Starting values of the `mu` vector,
 #'   that is,
 #'   the long-term mean or equilibrium level.
-#'   If `mu_start = NULL`, a vector of zeros is used.
+#'   If `mu_start = NULL`,
+#'   a vector means of the observed variables is used.
 #' @param phi_start Numeric matrx.
 #'   Starting values of the `phi` matrix,
 #'   that is,
@@ -226,11 +227,11 @@ FitOU <- function(data,
   }
   dim(phi_names) <- NULL
   if (is.null(mu_start)) {
-    mu_start <- null_vec
+    mu_start <- colMeans(data[, observed, drop = FALSE])
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {
-    phi_start <- rep(x = 0, times = k * k)
+    phi_start <- rep(x = 0, times = k * k)  
   } else {
     dim(phi_start) <- NULL
   }
@@ -272,7 +273,7 @@ FitOU <- function(data,
     measurement = dynr_measurement,
     dynamics = dynr_dynamics,
     noise = dynr_noise,
-    outfile = paste0(tempfile(), ".c")
+    outfile = paste0(tempfile(),".c")
   )
   # fit
   return(
