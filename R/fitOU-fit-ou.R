@@ -98,7 +98,8 @@
 #'   Starting values of the `mu` vector,
 #'   that is,
 #'   the long-term mean or equilibrium level.
-#'   If `mu_start = NULL`, a vector of zeros is used.
+#'   If `mu_start = NULL`,
+#'   a vector means of the observed variables is used.
 #' @param phi_start Numeric matrx.
 #'   Starting values of the `phi` matrix,
 #'   that is,
@@ -226,7 +227,7 @@ FitOU <- function(data,
   }
   dim(phi_names) <- NULL
   if (is.null(mu_start)) {
-    mu_start <- null_vec
+    mu_start <- colMeans(data[, observed, drop = FALSE])
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {

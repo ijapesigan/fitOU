@@ -54,7 +54,8 @@ If \code{sigma0 = NULL}, an identity matrix is used.}
 Starting values of the \code{mu} vector,
 that is,
 the long-term mean or equilibrium level.
-If \code{mu_start = NULL}, a vector of zeros is used.}
+If \code{mu_start = NULL},
+a vector means of the observed variables is used.}
 
 \item{phi_start}{Numeric matrx.
 Starting values of the \code{phi} matrix,
