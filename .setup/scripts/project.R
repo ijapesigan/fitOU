@@ -23,7 +23,8 @@ pkg_cran <- c(
 
 pkg_github <- c(
   "ijapesigan/simStateSpace",
-  "jeksterslab/semmcci"
+  "jeksterslab/semmcci",
+  "jeksterslab/betaDelta"
 )
 
 pkg_github_ref <- c()

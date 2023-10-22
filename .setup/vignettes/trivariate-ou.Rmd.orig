@@ -10,6 +10,7 @@ nocite: |
   @Uhlenbeck-Ornstein-1930
   @Deboeck-Preacher-2015
   @Pesigan-Cheung-2023
+  @Pesigan-Sun-Cheung-2023
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -476,13 +477,35 @@ install.packages("semmcci")
 ```
 
 ```{r}
+def <- list(
+  # note that the matrix of interest is -Phi
+  "-phi_21 * -phi_32"
+)
 semmcci::MCGeneric(
   object = results,
   R = 20000L,
-  def = list(
-    # note that the matrix of interest is -Phi
-    "-phi_21 * -phi_32"
-  ),
+  def = def,
+  alpha = 0.05
+)
+```
+
+## Delta Method Confidence Interval for Functions of Parameters
+
+```{r}
+#| include = FALSE
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("jeksterslab/betaDelta")
+```
+
+```{r}
+#| eval = FALSE
+install.packages("betaDelta")
+```
+
+```{r}
+betaDelta::DeltaGeneric(
+  object = results,
+  def = def,
   alpha = 0.05
 )
 ```
