@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2023-10-19</h4>
+            <h4 data-toc-skip class="date">2023-10-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ijapesigan/fitOU/blob/HEAD/vignettes/trivariate-ou.Rmd"><code>vignettes/trivariate-ou.Rmd</code></a></small>
       <div class="d-none name"><code>trivariate-ou.Rmd</code></div>
@@ -378,8 +378,8 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 12.97331 </span></span>
-<span><span class="co">## Backend Time: 12.96461</span></span></code></pre>
+<span><span class="co">## Total Time: 15.39308 </span></span>
+<span><span class="co">## Backend Time: 15.38366</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -494,17 +494,34 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"semmcci"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">semmcci</span><span class="fu">::</span><span class="fu"><a href="https://github.com/jeksterslab/semmcci/reference/MCGeneric.html" class="external-link">MCGeneric</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">def</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="co"># note that the matrix of interest is -Phi</span></span>
+<span>  <span class="st">"-phi_21 * -phi_32"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu">semmcci</span><span class="fu">::</span><span class="fu"><a href="https://github.com/jeksterslab/semmcci/reference/MCGeneric.html" class="external-link">MCGeneric</a></span><span class="op">(</span></span>
 <span>  object <span class="op">=</span> <span class="va">results</span>,</span>
 <span>  R <span class="op">=</span> <span class="fl">20000L</span>,</span>
-<span>  def <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="co"># note that the matrix of interest is -Phi</span></span>
-<span>    <span class="st">"-phi_21 * -phi_32"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>  def <span class="op">=</span> <span class="va">def</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                      est    se     R   2.5%  97.5%</span></span>
 <span><span class="co">## -phi_21 * -phi_32 0.5221 0.048 20000 0.4306 0.6197</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="delta-method-confidence-interval-for-functions-of-parameters">Delta Method Confidence Interval for Functions of Parameters<a class="anchor" aria-label="anchor" href="#delta-method-confidence-interval-for-functions-of-parameters"></a>
+</h2>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"betaDelta"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">betaDelta</span><span class="fu">::</span><span class="fu">DeltaGeneric</span><span class="op">(</span></span>
+<span>  object <span class="op">=</span> <span class="va">results</span>,</span>
+<span>  def <span class="op">=</span> <span class="va">def</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                         est         se        z            p      2.5%</span></span>
+<span><span class="co">## -phi_21 * -phi_32 0.5221094 0.04820858 10.83022 2.475671e-27 0.4276223</span></span>
+<span><span class="co">##                       97.5%</span></span>
+<span><span class="co">## -phi_21 * -phi_32 0.6165965</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -531,6 +548,11 @@ modeling in <span>R</span>. <em>The R Journal</em>, <em>11</em>(1), 91.
 Pesigan, I. J. A., &amp; Cheung, S. F. (2023). <span>Monte Carlo</span>
 confidence intervals for the indirect effect with missing data.
 <em>Behavior Research Methods</em>. <a href="https://doi.org/10.3758/s13428-023-02114-4" class="external-link">https://doi.org/10.3758/s13428-023-02114-4</a>
+</div>
+<div id="ref-Pesigan-Sun-Cheung-2023" class="csl-entry">
+Pesigan, I. J. A., Sun, R. W., &amp; Cheung, S. F. (2023). <span class="nocase">betaDelta</span> and <span class="nocase">betaSandwich</span>: Confidence intervals for
+standardized regression coefficients in <span>R</span>. <em>Multivariate
+Behavioral Research</em>, 1–4. <a href="https://doi.org/10.1080/00273171.2023.2201277" class="external-link">https://doi.org/10.1080/00273171.2023.2201277</a>
 </div>
 <div id="ref-Uhlenbeck-Ornstein-1930" class="csl-entry">
 Uhlenbeck, G. E., &amp; Ornstein, L. S. (1930). On the theory of the
