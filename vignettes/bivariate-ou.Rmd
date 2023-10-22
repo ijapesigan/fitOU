@@ -1,0 +1,385 @@
+---
+title: "Bivariate Ornstein–Uhlenbeck Model"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "2023-10-22"
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @Chow-Losardo-Park-etal-2023
+  @Ou-Hunter-Chow-2019
+  @Uhlenbeck-Ornstein-1930
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Bivariate Ornstein–Uhlenbeck Model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- vignettes/bivariate-ou.Rmd is generated from .setup/vignettes/bivariate-ou.Rmd.orig. Please edit that file -->
+
+## The Ornstein–Uhlenbeck Model
+
+The measurement model is given by
+
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\nu}
+  +
+  \boldsymbol{\Lambda}
+  \boldsymbol{\eta}_{i, t} 
+  +
+  \boldsymbol{\varepsilon}_{i, t}
+  \quad
+  \mathrm{with}
+  \quad
+  \boldsymbol{\varepsilon}_{i, t}
+  \sim
+  \mathcal{N}
+  \left(
+  \mathbf{0},
+  \boldsymbol{\Theta}
+  \right)
+\end{equation}
+
+where $\mathbf{y}_{i, t}$, $\boldsymbol{\eta}_{i, t}$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+are random variables and $\boldsymbol{\nu}$,
+$\boldsymbol{\Lambda}$,
+and $\boldsymbol{\Theta}$ are model parameters.
+$\mathbf{y}_{i, t}$ is a vector of observed random variables
+at time $t$ and individual $i$,
+$\boldsymbol{\eta}_{i, t}$ is a vector of latent random variables
+at time $t$ and individual $i$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+is a vector of random measurement errors
+at time $t$ and individual $i$,
+while $\boldsymbol{\nu}$ is a vector of intercept,
+$\boldsymbol{\Lambda}$ is a matrix of factor loadings,
+and $\boldsymbol{\Theta}$ is the covariance matrix of
+$\boldsymbol{\varepsilon}$.
+
+The dynamic structure is given by
+
+\begin{equation}
+  \mathrm{d} \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\Phi}
+  \left(
+  \boldsymbol{\mu}
+  -
+  \boldsymbol{\eta}_{i, t}
+  \right)
+  \mathrm{d}t
+  +
+  \boldsymbol{\Sigma}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+
+where $\boldsymbol{\mu}$ is the long-term mean or equilibrium level,
+$\boldsymbol{\Phi}$ is the rate of mean reversion,
+determining how quickly the variable returns to its mean,
+$\boldsymbol{\Sigma}$ is the matrix of volatility
+or randomness in the process, and $\mathrm{d}\boldsymbol{W}$
+is a Wiener process or Brownian motion,
+which represents random fluctuations.
+
+
+
+Let the measurement model intecept vector $\boldsymbol{\nu}$ be given by
+
+\begin{equation}
+\boldsymbol{\nu}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the factor loadings matrix $\boldsymbol{\Lambda}$ be given by
+
+\begin{equation}
+\boldsymbol{\Lambda}
+=
+\left(
+\begin{array}{cc}
+  1 & 0 \\
+  0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the measurement error covariance matrix $\boldsymbol{\Theta}$ be given by
+
+\begin{equation}
+\boldsymbol{\Theta}
+=
+\left(
+\begin{array}{cc}
+  0.5 & 0 \\
+  0 & 0.5 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the initial condition
+$\boldsymbol{\eta}_{0}$
+be given by
+
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  -3 \\
+  1.5 \\
+\end{array}
+\right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{cc}
+  1 & 0 \\
+  0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the long-term mean vector $\boldsymbol{\mu}$ be given by
+
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  5.76 \\
+  5.18 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the rate of mean reversion matrix $\boldsymbol{\Phi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{cc}
+  0.1 & -0.05 \\
+  -0.05 & 0.1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the dynamic process noise covariance matrix $\boldsymbol{\Sigma}$ be given by
+
+\begin{equation}
+\boldsymbol{\Sigma}
+=
+\left(
+\begin{array}{cc}
+  2.79 & 0.06 \\
+  0.06 & 3.27 \\
+\end{array}
+\right) .
+\end{equation}
+
+## Model Fitting
+
+
+```r
+data(bivariate_ou, package = "fitOU")
+results <- fitOU::FitOU(
+  data = bivariate_ou,
+  observed = c("y1", "y2"),
+  id = "id",
+  time = "time",
+  verbose = FALSE
+)
+```
+
+```
+## [1] "Get ready!!!!"
+## using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+## Optimization function called.
+## Starting Hessian calculation ...
+## Finished Hessian calculation.
+## Original exit flag:  3 
+## Modified exit flag:  3 
+## Optimization terminated successfully: ftol_rel or ftol_abs was reached. 
+## Original fitted parameters:  4.826139 4.686914 0.1295625 -0.04596137 
+## -0.04622189 0.09327682 1.106598 0.01867818 1.191307 -0.7157073 -0.6978992 
+## -3.318717 1.674104 0.3144501 0.06561256 0.1553845 
+## 
+## Transformed fitted parameters:  4.826139 4.686914 0.1295625 -0.04596137 
+## -0.04622189 0.09327682 3.024054 0.05648382 3.292434 0.4888462 0.4976296 
+## -3.318717 1.674104 1.369506 0.08985679 1.174003 
+## 
+## Doing end processing
+## Successful trial
+## Total Time: 4.132721 
+## Backend Time: 4.122572
+```
+
+## Summary
+
+
+```r
+summary(results)
+```
+
+```
+## Coefficients:
+##           Estimate Std. Error t value ci.lower ci.upper Pr(>|t|)    
+## mu_1       4.82614    0.65878   7.326  3.53496  6.11731   <2e-16 ***
+## mu_2       4.68691    0.88783   5.279  2.94679  6.42704   <2e-16 ***
+## phi_11     0.12956    0.01597   8.114  0.09827  0.16086   <2e-16 ***
+## phi_21    -0.04596    0.01646  -2.792 -0.07823 -0.01370   0.0026 ** 
+## phi_12    -0.04622    0.01453  -3.181 -0.07470 -0.01774   0.0007 ***
+## phi_22     0.09328    0.01529   6.102  0.06331  0.12324   <2e-16 ***
+## sigma_11   3.02405    0.11335  26.679  2.80189  3.24622   <2e-16 ***
+## sigma_12   0.05648    0.07030   0.804 -0.08129  0.19426   0.2108    
+## sigma_22   3.29243    0.11889  27.694  3.05942  3.52545   <2e-16 ***
+## theta_11   0.48885    0.01175  41.600  0.46581  0.51188   <2e-16 ***
+## theta_22   0.49763    0.01201  41.427  0.47409  0.52117   <2e-16 ***
+## mu0_1     -3.31872    0.28587 -11.609 -3.87902 -2.75842   <2e-16 ***
+## mu0_2      1.67410    0.26831   6.239  1.14822  2.19998   <2e-16 ***
+## sigma0_11  1.36951    0.51956   2.636  0.35119  2.38782   0.0042 ** 
+## sigma0_12  0.08986    0.33949   0.265 -0.57552  0.75524   0.3956    
+## sigma0_22  1.17400    0.44633   2.630  0.29921  2.04879   0.0043 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## -2 log-likelihood value at convergence = 58025.07
+## AIC = 58057.07
+## BIC = 58172.43
+```
+
+
+```
+## [1] -3.318717  1.674104
+```
+
+### Estimated Coefficients
+
+
+```r
+mu_hat
+```
+
+```
+## [1] 4.826139 4.686914
+```
+
+```r
+phi_hat
+```
+
+```
+##             [,1]        [,2]
+## [1,]  0.12956251 -0.04622189
+## [2,] -0.04596137  0.09327682
+```
+
+```r
+sigma_hat
+```
+
+```
+##            [,1]       [,2]
+## [1,] 3.02405380 0.05648382
+## [2,] 0.05648382 3.29243443
+```
+
+```r
+mu0_hat
+```
+
+```
+## [1] -3.318717  1.674104
+```
+
+```r
+sigma0_hat
+```
+
+```
+##            [,1]       [,2]
+## [1,] 1.36950599 0.08985679
+## [2,] 0.08985679 1.17400273
+```
+
+```r
+beta_var1_hat <- as.matrix(
+  Matrix::expm(-1 * phi_hat)
+)
+beta_var1_hat
+```
+
+```
+##            [,1]       [,2]
+## [1,] 0.87942436 0.04136532
+## [2,] 0.04113217 0.91189748
+```
+
+### Discrepancy Between Estimated and Population Coefficients
+
+
+```r
+abs(mu - mu_hat)
+```
+
+```
+## [1] 0.9338614 0.4930861
+```
+
+```r
+abs(phi - phi_hat)
+```
+
+```
+##             [,1]        [,2]
+## [1,] 0.029562513 0.003778108
+## [2,] 0.004038627 0.006723184
+```
+
+```r
+abs(beta_var1 - beta_var1_hat)
+```
+
+```
+##             [,1]        [,2]
+## [1,] 0.026544342 0.003895408
+## [2,] 0.004128553 0.005928784
+```
+
+```r
+abs(sigma - sigma_hat)
+```
+
+```
+##             [,1]        [,2]
+## [1,] 0.234053798 0.003516176
+## [2,] 0.003516176 0.022434435
+```
+
+
+
+
+
+
+
+## References
