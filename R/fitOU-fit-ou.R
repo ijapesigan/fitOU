@@ -227,7 +227,10 @@ FitOU <- function(data,
   }
   dim(phi_names) <- NULL
   if (is.null(mu_start)) {
-    mu_start <- colMeans(data[, observed, drop = FALSE])
+    mu_start <- colMeans(
+      data[, observed, drop = FALSE],
+      na.rm = TRUE
+    )
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {
