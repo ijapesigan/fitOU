@@ -172,7 +172,10 @@ FitOU <- function(data,
   null_vec <- rep(x = 0, times = k)
   if (center) {
     mean_center <- function(x) {
-      x - mean(x)
+      x - mean(
+        x = x,
+        na.rm = TRUE
+      )
     }
     for (i in seq_len(k)) {
       data[, y_names[i]] <- stats::ave(
