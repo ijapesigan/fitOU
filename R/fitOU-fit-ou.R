@@ -118,6 +118,8 @@
 #'   the measurement error covariance matrix
 #'   (\eqn{\boldsymbol{\Theta}}).
 #'   If `theta_start = NULL`, an identity matrix is used.
+#' @param center Logical.
+#'   If `center = TRUE`, mean center by `id`.
 #' @param ... Additional arguments to pass to [dynr::dynr.cook()].
 #'
 #' @references
@@ -161,12 +163,25 @@ FitOU <- function(data,
                   phi_start = NULL,
                   sigma_start = NULL,
                   theta_start = NULL,
+                  center = FALSE,
                   ...) {
   y_names <- observed
   k <- length(y_names)
   eta_names <- paste0("eta_", seq_len(k))
   iden <- diag(k)
   null_vec <- rep(x = 0, times = k)
+  if (center) {
+    mean_center <- function(x) {
+      x - mean(x)
+    }
+    for (i in seq_len(k)) {
+      data[, y_names[i]] <- stats::ave(
+        x = data[, y_names[i]],
+        data[, id],
+        FUN = mean_center
+      )
+    }
+  }
   # data
   dynr_data <- dynr::dynr.data(
     dataframe = data,

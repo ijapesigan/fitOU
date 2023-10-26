@@ -15,6 +15,7 @@ FitOU(
   phi_start = NULL,
   sigma_start = NULL,
   theta_start = NULL,
+  center = FALSE,
   ...
 )
 }
@@ -76,6 +77,9 @@ that is,
 the measurement error covariance matrix
 (\eqn{\boldsymbol{\Theta}}).
 If \code{theta_start = NULL}, an identity matrix is used.}
+
+\item{center}{Logical.
+If \code{center = TRUE}, mean center by \code{id}.}
 
 \item{...}{Additional arguments to pass to \code{\link[dynr:dynr.cook]{dynr::dynr.cook()}}.}
 }
