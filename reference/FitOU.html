@@ -71,6 +71,7 @@ convenient using the <code>dynr</code> package.</p>
 <span>  phi_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sigma_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theta_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -153,6 +154,11 @@ that is,
 the measurement error covariance matrix
 (\(\boldsymbol{\Theta}\)).
 If <code>theta_start = NULL</code>, an identity matrix is used.</p></dd>
+
+
+<dt>center</dt>
+<dd><p>Logical.
+If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
 
 
 <dt>...</dt>
