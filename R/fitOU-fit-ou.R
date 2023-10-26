@@ -10,7 +10,7 @@
 #'   \boldsymbol{\nu}
 #'   +
 #'   \boldsymbol{\Lambda}
-#'   \boldsymbol{\eta}_{i, t}
+#'   \boldsymbol{\eta}_{i, t} 
 #'   +
 #'   \boldsymbol{\varepsilon}_{i, t}
 #'   \quad
@@ -69,7 +69,7 @@
 #' which represents random fluctuations.
 #'
 #' @author Ivan Jacob Agaloos Pesigan
-#'
+#' 
 #' @param data Data frame.
 #'   A data frame object of data for potentially
 #'   multiple subjects that contain
@@ -118,6 +118,8 @@
 #'   the measurement error covariance matrix
 #'   (\eqn{\boldsymbol{\Theta}}).
 #'   If `theta_start = NULL`, an identity matrix is used.
+#' @param center Logical.
+#'   If `center = TRUE`, mean center by `id`.
 #' @param ... Additional arguments to pass to [dynr::dynr.cook()].
 #'
 #' @references
@@ -161,12 +163,25 @@ FitOU <- function(data,
                   phi_start = NULL,
                   sigma_start = NULL,
                   theta_start = NULL,
+                  center = FALSE,
                   ...) {
   y_names <- observed
   k <- length(y_names)
   eta_names <- paste0("eta_", seq_len(k))
   iden <- diag(k)
   null_vec <- rep(x = 0, times = k)
+  if (center) {
+    mean_center <- function(x) {
+      x - mean(x)
+    }
+    for (i in seq_len(k)) {
+      data[, y_names[i]] <- stats::ave(
+        x = data[, y_names[i]],
+        data[, id],
+        FUN = mean_center
+      )
+    }
+  }
   # data
   dynr_data <- dynr::dynr.data(
     dataframe = data,
@@ -234,7 +249,7 @@ FitOU <- function(data,
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {
-    phi_start <- rep(x = 0, times = k * k)
+    phi_start <- rep(x = 0, times = k * k)  
   } else {
     dim(phi_start) <- NULL
   }
@@ -276,7 +291,7 @@ FitOU <- function(data,
     measurement = dynr_measurement,
     dynamics = dynr_dynamics,
     noise = dynr_noise,
-    outfile = paste0(tempfile(), ".c")
+    outfile = paste0(tempfile(),".c")
   )
   # fit
   return(
