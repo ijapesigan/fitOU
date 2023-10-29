@@ -118,6 +118,9 @@
 #'   the measurement error covariance matrix
 #'   (\eqn{\boldsymbol{\Theta}}).
 #'   If `theta_start = NULL`, an identity matrix is used.
+#' @param sigma_diag Logical.
+#'   If `sigma_diag = TRUE`,
+#'   estimate only the diagonals of \eqn{\boldsymbol{\Sigma}}.
 #' @param center Logical.
 #'   If `center = TRUE`, mean center by `id`.
 #' @param ub Numeric vector.
@@ -169,6 +172,7 @@ FitOU <- function(data,
                   phi_start = NULL,
                   sigma_start = NULL,
                   theta_start = NULL,
+                  sigma_diag = FALSE,
                   center = FALSE,
                   lb = NULL,
                   ub = NULL,
@@ -280,18 +284,39 @@ FitOU <- function(data,
   if (is.null(theta_start)) {
     theta_start <- iden
   }
-  theta <- matrix(data = "fixed", nrow = k, ncol = k)
-  diag(theta) <- paste0("theta_", seq_len(k), seq_len(k))
-  dynr_noise <- dynr::prep.noise(
-    values.latent = sigma_start,
-    params.latent = matrix(
+  if (sigma_diag) {
+    sigma_params <- matrix(
+      data = "fixed",
+      nrow = k,
+      ncol = k
+    )
+    diag(sigma_params) <- paste0(
+      "sigma_",
+      1:k,
+      1:k
+    )
+    sigma_start_diag <- diag(sigma_start)
+    sigma_start <- matrix(
+      data = 0,
+      nrow = k,
+      ncol = k
+    )
+    diag(sigma_start) <- sigma_start_diag
+  } else {
+    sigma_params <- matrix(
       data = paste0(
         "sigma_",
         pmin(row_idx, col_idx),
         pmax(row_idx, col_idx)
       ),
       nrow = k
-    ),
+    )
+  }
+  theta <- matrix(data = "fixed", nrow = k, ncol = k)
+  diag(theta) <- paste0("theta_", seq_len(k), seq_len(k))
+  dynr_noise <- dynr::prep.noise(
+    values.latent = sigma_start,
+    params.latent = sigma_params,
     values.observed = theta_start,
     params.observed = theta
   )

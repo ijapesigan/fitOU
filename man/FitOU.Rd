@@ -15,6 +15,7 @@ FitOU(
   phi_start = NULL,
   sigma_start = NULL,
   theta_start = NULL,
+  sigma_diag = FALSE,
   center = FALSE,
   lb = NULL,
   ub = NULL,
@@ -79,6 +80,10 @@ that is,
 the measurement error covariance matrix
 (\eqn{\boldsymbol{\Theta}}).
 If \code{theta_start = NULL}, an identity matrix is used.}
+
+\item{sigma_diag}{Logical.
+If \code{sigma_diag = TRUE},
+estimate only the diagonals of \eqn{\boldsymbol{\Sigma}}.}
 
 \item{center}{Logical.
 If \code{center = TRUE}, mean center by \code{id}.}
