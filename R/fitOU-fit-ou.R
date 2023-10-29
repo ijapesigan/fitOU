@@ -10,7 +10,7 @@
 #'   \boldsymbol{\nu}
 #'   +
 #'   \boldsymbol{\Lambda}
-#'   \boldsymbol{\eta}_{i, t}
+#'   \boldsymbol{\eta}_{i, t} 
 #'   +
 #'   \boldsymbol{\varepsilon}_{i, t}
 #'   \quad
@@ -69,7 +69,7 @@
 #' which represents random fluctuations.
 #'
 #' @author Ivan Jacob Agaloos Pesigan
-#'
+#' 
 #' @param data Data frame.
 #'   A data frame object of data for potentially
 #'   multiple subjects that contain
@@ -120,6 +120,12 @@
 #'   If `theta_start = NULL`, an identity matrix is used.
 #' @param center Logical.
 #'   If `center = TRUE`, mean center by `id`.
+#' @param ub Numeric vector.
+#'   Optional.
+#'   The upper bounds for \eqn{\boldsymbol{\Phi}}.
+#' @param lb Numeric vector.
+#'   Optional.
+#'   The lower bounds for \eqn{\boldsymbol{\Phi}}.
 #' @param ... Additional arguments to pass to [dynr::dynr.cook()].
 #'
 #' @references
@@ -164,6 +170,8 @@ FitOU <- function(data,
                   sigma_start = NULL,
                   theta_start = NULL,
                   center = FALSE,
+                  lb = NULL,
+                  ub = NULL,
                   ...) {
   y_names <- observed
   k <- length(y_names)
@@ -252,7 +260,7 @@ FitOU <- function(data,
   }
   names(mu_start) <- mu_names
   if (is.null(phi_start)) {
-    phi_start <- rep(x = 0, times = k * k)
+    phi_start <- rep(x = 0, times = k * k)  
   } else {
     dim(phi_start) <- NULL
   }
@@ -294,8 +302,14 @@ FitOU <- function(data,
     measurement = dynr_measurement,
     dynamics = dynr_dynamics,
     noise = dynr_noise,
-    outfile = paste0(tempfile(), ".c")
+    outfile = paste0(tempfile(),".c")
   )
+  if (!is.null(lb)) {
+    model$lb[phi_names] <- lb
+  }
+  if (!is.null(ub)) {
+    model$ub[phi_names] <- ub
+  }
   # fit
   return(
     dynr::dynr.cook(

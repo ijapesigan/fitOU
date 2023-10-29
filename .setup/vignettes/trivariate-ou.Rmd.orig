@@ -99,7 +99,7 @@ The transition matrix used in this examples was taken from @Deboeck-Preacher-201
 ```{r}
 #| echo = FALSE
 set.seed(42)
-n <- 20
+n <- 5
 time <- 500
 delta_t <- 0.10
 k <- p <- 3
@@ -309,6 +309,8 @@ results <- fitOU::FitOU(
   observed = c("y1", "y2", "y3"),
   id = "id",
   time = "time",
+  lb = -1.00,
+  ub = 1.00,
   verbose = FALSE
 )
 ```
