@@ -71,6 +71,7 @@ convenient using the <code>dynr</code> package.</p>
 <span>  phi_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sigma_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theta_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sigma_diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lb <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ub <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -156,6 +157,12 @@ that is,
 the measurement error covariance matrix
 (\(\boldsymbol{\Theta}\)).
 If <code>theta_start = NULL</code>, an identity matrix is used.</p></dd>
+
+
+<dt>sigma_diag</dt>
+<dd><p>Logical.
+If <code>sigma_diag = TRUE</code>,
+estimate only the diagonals of \(\boldsymbol{\Sigma}\).</p></dd>
 
 
 <dt>center</dt>
