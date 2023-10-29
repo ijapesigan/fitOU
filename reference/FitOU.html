@@ -72,6 +72,8 @@ convenient using the <code>dynr</code> package.</p>
 <span>  sigma_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theta_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  lb <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ub <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -159,6 +161,18 @@ If <code>theta_start = NULL</code>, an identity matrix is used.</p></dd>
 <dt>center</dt>
 <dd><p>Logical.
 If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
+
+
+<dt>lb</dt>
+<dd><p>Numeric vector.
+Optional.
+The lower bounds for \(\boldsymbol{\Phi}\).</p></dd>
+
+
+<dt>ub</dt>
+<dd><p>Numeric vector.
+Optional.
+The upper bounds for \(\boldsymbol{\Phi}\).</p></dd>
 
 
 <dt>...</dt>
