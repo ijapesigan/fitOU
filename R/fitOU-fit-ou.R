@@ -120,6 +120,12 @@
 #'   If `theta_start = NULL`, an identity matrix is used.
 #' @param center Logical.
 #'   If `center = TRUE`, mean center by `id`.
+#' @param ub Numeric vector.
+#'   Optional.
+#'   The upper bounds for \eqn{\boldsymbol{\Phi}}.
+#' @param lb Numeric vector.
+#'   Optional.
+#'   The lower bounds for \eqn{\boldsymbol{\Phi}}.
 #' @param ... Additional arguments to pass to [dynr::dynr.cook()].
 #'
 #' @references
@@ -164,6 +170,8 @@ FitOU <- function(data,
                   sigma_start = NULL,
                   theta_start = NULL,
                   center = FALSE,
+                  lb = NULL,
+                  ub = NULL,
                   ...) {
   y_names <- observed
   k <- length(y_names)
@@ -296,6 +304,12 @@ FitOU <- function(data,
     noise = dynr_noise,
     outfile = paste0(tempfile(), ".c")
   )
+  if (!is.null(lb)) {
+    model$lb[phi_names] <- lb
+  }
+  if (!is.null(ub)) {
+    model$ub[phi_names] <- ub
+  }
   # fit
   return(
     dynr::dynr.cook(

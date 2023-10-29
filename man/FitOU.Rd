@@ -16,6 +16,8 @@ FitOU(
   sigma_start = NULL,
   theta_start = NULL,
   center = FALSE,
+  lb = NULL,
+  ub = NULL,
   ...
 )
 }
@@ -80,6 +82,14 @@ If \code{theta_start = NULL}, an identity matrix is used.}
 
 \item{center}{Logical.
 If \code{center = TRUE}, mean center by \code{id}.}
+
+\item{lb}{Numeric vector.
+Optional.
+The lower bounds for \eqn{\boldsymbol{\Phi}}.}
+
+\item{ub}{Numeric vector.
+Optional.
+The upper bounds for \eqn{\boldsymbol{\Phi}}.}
 
 \item{...}{Additional arguments to pass to \code{\link[dynr:dynr.cook]{dynr::dynr.cook()}}.}
 }
