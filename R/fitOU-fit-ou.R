@@ -163,6 +163,7 @@
 #'   verbose = FALSE
 #' )
 #' }
+#' @import stats
 #' @import dynr
 #' @family Fit Ornstein–Uhlenbeck Model Functions
 #' @keywords fitOU fit
@@ -351,7 +352,7 @@ FitOU <- function(data,
       i <- 0
       while (i < rerun) {
         # wiggle starting values
-        coef(model) <- coef(model) + stats::runif(
+        coef(model) <- coef(model) + runif(
           n = length(coef(fit)),
           min = -0.2,
           max = 0.2
