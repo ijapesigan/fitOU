@@ -342,8 +342,8 @@ FitOU <- function(data,
   )
   if (fit$exitcode %in% c(5, 6)) {
     # wiggle starting values
-    dynr::coef.dynrModel(model) <- dynr::coef.dynrModel(model) + stats::runif(
-      n = length(dynr::coef.dynrCook(fit)),
+    dynr:::coef.dynrModel(model) <- dynr:::coef.dynrModel(model) + stats::runif(
+      n = length(dynr:::coef.dynrCook(fit)),
       min = -0.2,
       max = 0.2
     )
