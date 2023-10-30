@@ -336,10 +336,21 @@ FitOU <- function(data,
     model$ub[phi_names] <- ub
   }
   # fit
-  return(
-    dynr::dynr.cook(
+  fit <- dynr::dynr.cook(
+    dynrModel = model,
+    ...
+  )
+  if (fit$exitcode %in% c(5, 6)) {
+    # wiggle starting values
+    dynr:::coef.dynrModel(model) <- dynr:::coef.dynrModel(model) + stats::runif(
+      n = length(dynr:::coef.dynrCook(fit)),
+      min = -0.2,
+      max = 0.2
+    )
+    fit <- dynr::dynr.cook(
       dynrModel = model,
       ...
     )
-  )
+  }
+  return(fit)
 }
