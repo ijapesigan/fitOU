@@ -159,6 +159,7 @@
 #'   verbose = FALSE
 #' )
 #' }
+#' @import dynr
 #' @family Fit Ornstein–Uhlenbeck Model Functions
 #' @keywords fitOU fit
 #' @export
