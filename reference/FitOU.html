@@ -75,6 +75,7 @@ convenient using the <code>dynr</code> package.</p>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lb <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ub <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rerun <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -180,6 +181,13 @@ The lower bounds for \(\boldsymbol{\Phi}\).</p></dd>
 <dd><p>Numeric vector.
 Optional.
 The upper bounds for \(\boldsymbol{\Phi}\).</p></dd>
+
+
+<dt>rerun</dt>
+<dd><p>Positive integer.
+Number of times to rerun model fitting
+with a slight change to starting values
+when exit code is 2 to 6.</p></dd>
 
 
 <dt>...</dt>
