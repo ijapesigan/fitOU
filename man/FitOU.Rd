@@ -19,7 +19,6 @@ FitOU(
   center = FALSE,
   lb = NULL,
   ub = NULL,
-  rerun = NULL,
   ...
 )
 }
@@ -96,11 +95,6 @@ The lower bounds for \eqn{\boldsymbol{\Phi}}.}
 \item{ub}{Numeric vector.
 Optional.
 The upper bounds for \eqn{\boldsymbol{\Phi}}.}
-
-\item{rerun}{Positive integer.
-Number of times to rerun model fitting
-with a slight change to starting values
-when exit code is 2 to 6.}
 
 \item{...}{Additional arguments to pass to \code{\link[dynr:dynr.cook]{dynr::dynr.cook()}}.}
 }

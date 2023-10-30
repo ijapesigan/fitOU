@@ -2,5 +2,3 @@
 
 export(FitOU)
 export(FitOUID)
-import(dynr)
-import(stats)
