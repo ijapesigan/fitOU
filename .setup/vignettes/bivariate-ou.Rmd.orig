@@ -236,7 +236,7 @@ results <- fitOU::FitOU(
   id = "id",
   time = "time",
   verbose = FALSE
-)
+)$fit
 ```
 
 ## Summary
