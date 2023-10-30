@@ -176,7 +176,6 @@ FitOU <- function(data,
                   center = FALSE,
                   lb = NULL,
                   ub = NULL,
-                  rerun = NULL,
                   ...) {
   y_names <- observed
   k <- length(y_names)
