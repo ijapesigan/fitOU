@@ -129,6 +129,10 @@
 #' @param lb Numeric vector.
 #'   Optional.
 #'   The lower bounds for \eqn{\boldsymbol{\Phi}}.
+#' @param rerun Positive integer.
+#'   Number of times to rerun model fitting
+#'   with a slight change to starting values
+#'   when exit code is 2 to 6.
 #' @param ... Additional arguments to pass to [dynr::dynr.cook()].
 #'
 #' @references
@@ -177,6 +181,7 @@ FitOU <- function(data,
                   center = FALSE,
                   lb = NULL,
                   ub = NULL,
+                  rerun = NULL,
                   ...) {
   y_names <- observed
   k <- length(y_names)
@@ -199,7 +204,7 @@ FitOU <- function(data,
     }
   }
   # data
-  dynr_data <- dynr::dynr.data(
+  dynr_data <- dynr.data(
     dataframe = data,
     id = id,
     time = time,
@@ -214,7 +219,7 @@ FitOU <- function(data,
   }
   row_idx <- rep(x = 1:k, each = k)
   col_idx <- rep(x = 1:k, times = k)
-  dynr_initial <- dynr::prep.initial(
+  dynr_initial <- prep.initial(
     values.inistate = mu0,
     params.inistate = paste0("mu0_", seq_len(k)),
     values.inicov = sigma0,
@@ -228,7 +233,7 @@ FitOU <- function(data,
     )
   )
   # measurement
-  dynr_measurement <- dynr::prep.measurement(
+  dynr_measurement <- prep.measurement(
     values.load = iden,
     params.load = matrix(data = "fixed", nrow = k, ncol = k),
     state.names = eta_names,
@@ -270,7 +275,7 @@ FitOU <- function(data,
     dim(phi_start) <- NULL
   }
   names(phi_start) <- phi_names
-  dynr_dynamics <- dynr::prep.formulaDynamics(
+  dynr_dynamics <- prep.formulaDynamics(
     formula = formula_list,
     startval = c(
       mu_start,
@@ -315,14 +320,14 @@ FitOU <- function(data,
   }
   theta <- matrix(data = "fixed", nrow = k, ncol = k)
   diag(theta) <- paste0("theta_", seq_len(k), seq_len(k))
-  dynr_noise <- dynr::prep.noise(
+  dynr_noise <- prep.noise(
     values.latent = sigma_start,
     params.latent = sigma_params,
     values.observed = theta_start,
     params.observed = theta
   )
   # model
-  model <- dynr::dynr.model(
+  model <- dynr.model(
     data = dynr_data,
     initial = dynr_initial,
     measurement = dynr_measurement,
@@ -337,21 +342,30 @@ FitOU <- function(data,
     model$ub[phi_names] <- ub
   }
   # fit
-  fit <- dynr::dynr.cook(
+  fit <- dynr.cook(
     dynrModel = model,
     ...
   )
-  if (fit$exitflag %in% c(5, 6)) {
-    # wiggle starting values
-    dynr:::coef.dynrModel(model) <- dynr:::coef.dynrModel(model) + stats::runif(
-      n = length(dynr:::coef.dynrCook(fit)),
-      min = -0.2,
-      max = 0.2
-    )
-    fit <- dynr::dynr.cook(
-      dynrModel = model,
-      ...
-    )
+  if (fit$exitflag %in% 2:6) {
+    if (!is.null(rerun)) {
+      i <- 0
+      while (i < rerun) {
+        # wiggle starting values
+        coef(model) <- coef(model) + stats::runif(
+          n = length(coef(fit)),
+          min = -0.2,
+          max = 0.2
+        )
+        fit <- dynr.cook(
+          dynrModel = model,
+          ...
+        )
+        if (fit$exitflag == 1) {
+          return(fit)
+        }
+        i <- i + 1
+      }
+    }
   }
   return(fit)
 }
