@@ -1,0 +1,518 @@
+---
+title: "Simulated Bivariate Ornstein–Uhlenbeck Model"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "2023-10-30"
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @Chow-Losardo-Park-etal-2023
+  @Ou-Hunter-Chow-2019
+  @Uhlenbeck-Ornstein-1930
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Simulated Bivariate Ornstein–Uhlenbeck Model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- vignettes/sim-bivariate-ou.Rmd is generated from .setup/vignettes/sim-bivariate-ou.Rmd.orig. Please edit that file -->
+
+## The Ornstein–Uhlenbeck Model
+
+The measurement model is given by
+
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\nu}
+  +
+  \boldsymbol{\Lambda}
+  \boldsymbol{\eta}_{i, t} 
+  +
+  \boldsymbol{\varepsilon}_{i, t}
+  \quad
+  \mathrm{with}
+  \quad
+  \boldsymbol{\varepsilon}_{i, t}
+  \sim
+  \mathcal{N}
+  \left(
+  \mathbf{0},
+  \boldsymbol{\Theta}
+  \right)
+\end{equation}
+
+where $\mathbf{y}_{i, t}$, $\boldsymbol{\eta}_{i, t}$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+are random variables and $\boldsymbol{\nu}$,
+$\boldsymbol{\Lambda}$,
+and $\boldsymbol{\Theta}$ are model parameters.
+$\mathbf{y}_{i, t}$ is a vector of observed random variables
+at time $t$ and individual $i$,
+$\boldsymbol{\eta}_{i, t}$ is a vector of latent random variables
+at time $t$ and individual $i$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+is a vector of random measurement errors
+at time $t$ and individual $i$,
+while $\boldsymbol{\nu}$ is a vector of intercept,
+$\boldsymbol{\Lambda}$ is a matrix of factor loadings,
+and $\boldsymbol{\Theta}$ is the covariance matrix of
+$\boldsymbol{\varepsilon}$.
+
+The dynamic structure is given by
+
+\begin{equation}
+  \mathrm{d} \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\Phi}
+  \left(
+  \boldsymbol{\mu}
+  -
+  \boldsymbol{\eta}_{i, t}
+  \right)
+  \mathrm{d}t
+  +
+  \boldsymbol{\Sigma}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+
+where $\boldsymbol{\mu}$ is the long-term mean or equilibrium level,
+$\boldsymbol{\Phi}$ is the rate of mean reversion,
+determining how quickly the variable returns to its mean,
+$\boldsymbol{\Sigma}$ is the matrix of volatility
+or randomness in the process, and $\mathrm{d}\boldsymbol{W}$
+is a Wiener process or Brownian motion,
+which represents random fluctuations.
+
+## Data Generation
+
+### Notation
+
+
+
+Let the measurement model intecept vector $\boldsymbol{\nu}$ be given by
+
+\begin{equation}
+\boldsymbol{\nu}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the factor loadings matrix $\boldsymbol{\Lambda}$ be given by
+
+\begin{equation}
+\boldsymbol{\Lambda}
+=
+\left(
+\begin{array}{cc}
+  1 & 0 \\
+  0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the measurement error covariance matrix $\boldsymbol{\Theta}$ be given by
+
+\begin{equation}
+\boldsymbol{\Theta}
+=
+\left(
+\begin{array}{cc}
+  0.5 & 0 \\
+  0 & 0.5 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the initial condition
+$\boldsymbol{\eta}_{0}$
+be given by
+
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  -3 \\
+  1.5 \\
+\end{array}
+\right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{cc}
+  1 & 0 \\
+  0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the long-term mean vector $\boldsymbol{\mu}$ be given by
+
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  5.76 \\
+  5.18 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the rate of mean reversion matrix $\boldsymbol{\Phi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{cc}
+  0.1 & -0.05 \\
+  -0.05 & 0.1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the dynamic process noise covariance matrix $\boldsymbol{\Sigma}$ be given by
+
+\begin{equation}
+\boldsymbol{\Sigma}
+=
+\left(
+\begin{array}{cc}
+  2.79 & 0.06 \\
+  0.06 & 3.27 \\
+\end{array}
+\right) .
+\end{equation}
+
+### R Function Arguments
+
+
+```r
+n
+```
+
+```
+## [1] 5
+```
+
+```r
+time
+```
+
+```
+## [1] 500
+```
+
+```r
+delta_t
+```
+
+```
+## [1] 0.1
+```
+
+```r
+mu0
+```
+
+```
+## [1] -3.0  1.5
+```
+
+```r
+sigma0
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+```
+
+```r
+mu
+```
+
+```
+## [1] 5.76 5.18
+```
+
+```r
+phi
+```
+
+```
+##       [,1]  [,2]
+## [1,]  0.10 -0.05
+## [2,] -0.05  0.10
+```
+
+```r
+sigma
+```
+
+```
+##      [,1] [,2]
+## [1,] 2.79 0.06
+## [2,] 0.06 3.27
+```
+
+```r
+nu
+```
+
+```
+## [1] 0 0
+```
+
+```r
+lambda
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+```
+
+```r
+theta
+```
+
+```
+##      [,1] [,2]
+## [1,]  0.5  0.0
+## [2,]  0.0  0.5
+```
+
+### Using the simStateSpace::SimSSMVARFixed Function to Simulate Data
+
+
+```r
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("ijapesigan/simStateSpace")
+```
+
+
+```r
+library(simStateSpace)
+set.seed(42)
+data <- Sim2Matrix(
+  SimSSMOUFixed(
+    n = n,
+    mu0 = mu0,
+    sigma0_sqrt = chol(sigma0),
+    mu = mu,
+    phi = phi,
+    sigma_sqrt = chol(sigma),
+    nu = nu,
+    lambda = lambda,
+    theta_sqrt = chol(theta),
+    delta_t = delta_t,
+    time = time,
+    burn_in = 0
+  )
+)
+head(data)
+```
+
+```
+##             y1       y2 time id
+## [1,] -1.963528 2.532490  0.0  1
+## [2,] -2.551147 2.860833  0.1  1
+## [3,] -3.267033 2.904142  0.2  1
+## [4,] -4.042884 5.179311  0.3  1
+## [5,] -3.788725 3.874309  0.4  1
+## [6,] -3.209223 4.531096  0.5  1
+```
+
+## Model Fitting
+
+
+```r
+results <- fitOU::FitOU(
+  data = data,
+  observed = c("y1", "y2"),
+  id = "id",
+  time = "time",
+  verbose = FALSE
+)
+```
+
+```
+## [1] "Get ready!!!!"
+```
+
+```
+## Warning in file(file, ifelse(append, "a", "w")): cannot open file
+## '/tmp/RtmpEuVp/file70d32fd49e4.c': No such file or directory
+```
+
+```
+## Error in file(file, ifelse(append, "a", "w")): cannot open the connection
+```
+
+## Summary
+
+
+```r
+summary(results)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'results' not found
+```
+
+
+```
+## Error in eval(expr, envir, enclos): object 'results' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'results' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'estimates' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'mu0_hat' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'estimates' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'estimates' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'estimates' not found
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'estimates' not found
+```
+
+### Estimated Coefficients
+
+
+```r
+mu_hat
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'mu_hat' not found
+```
+
+```r
+phi_hat
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'phi_hat' not found
+```
+
+```r
+sigma_hat
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'sigma_hat' not found
+```
+
+```r
+mu0_hat
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'mu0_hat' not found
+```
+
+```r
+sigma0_hat
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'sigma0_hat' not found
+```
+
+```r
+beta_var1_hat <- as.matrix(
+  Matrix::expm(-1 * phi_hat)
+)
+```
+
+```
+## Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'expm': object 'phi_hat' not found
+```
+
+```r
+beta_var1_hat
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'beta_var1_hat' not found
+```
+
+### Discrepancy Between Estimated and Population Coefficients
+
+
+```r
+abs(mu - mu_hat)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'mu_hat' not found
+```
+
+```r
+abs(phi - phi_hat)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'phi_hat' not found
+```
+
+```r
+abs(beta_var1 - beta_var1_hat)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'beta_var1_hat' not found
+```
+
+```r
+abs(sigma - sigma_hat)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'sigma_hat' not found
+```
+
+
+
+
+
+
+
+## References
