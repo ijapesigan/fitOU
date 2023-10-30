@@ -337,68 +337,112 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span>  id <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  time <span class="op">=</span> <span class="st">"time"</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "Get ready!!!!"</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in file(file, ifelse(append, "a", "w")): cannot open file</span></span>
-<span><span class="co">## '/tmp/RtmpEuVp/file70d32fd49e4.c': No such file or directory</span></span></code></pre>
-<pre><code><span><span class="co">## Error in file(file, ifelse(append, "a", "w")): cannot open the connection</span></span></code></pre>
+<span><span class="op">)</span><span class="op">$</span><span class="va">fit</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Get ready!!!!"</span></span>
+<span><span class="co">## using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’</span></span>
+<span><span class="co">## Optimization function called.</span></span>
+<span><span class="co">## Starting Hessian calculation ...</span></span>
+<span><span class="co">## Finished Hessian calculation.</span></span>
+<span><span class="co">## Original exit flag:  3 </span></span>
+<span><span class="co">## Modified exit flag:  3 </span></span>
+<span><span class="co">## Optimization terminated successfully: ftol_rel or ftol_abs was reached. </span></span>
+<span><span class="co">## Original fitted parameters:  6.709055 6.467322 0.1134668 -0.02238154 -0.1021229 </span></span>
+<span><span class="co">## 0.06046921 0.9762117 0.022699 1.298896 -0.7015955 -0.7479789 -2.508313 2.076807 </span></span>
+<span><span class="co">## 0.318909 -0.2958228 0.6088539 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Transformed fitted parameters:  6.709055 6.467322 0.1134668 -0.02238154 </span></span>
+<span><span class="co">## -0.1021229 0.06046921 2.654382 0.06025181 3.666615 0.4957936 0.4733222 </span></span>
+<span><span class="co">## -2.508313 2.076807 1.375626 -0.4069415 1.958706 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Doing end processing</span></span>
+<span><span class="co">## Successful trial</span></span>
+<span><span class="co">## Total Time: 1.221672 </span></span>
+<span><span class="co">## Backend Time: 1.210217</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'results' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'results' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'results' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'estimates' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'mu0_hat' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'estimates' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'estimates' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'estimates' not found</span></span></code></pre>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'estimates' not found</span></span></code></pre>
+<pre><code><span><span class="co">## Coefficients:</span></span>
+<span><span class="co">##             Estimate Std. Error t value   ci.lower   ci.upper Pr(&gt;|t|)    </span></span>
+<span><span class="co">## mu_1       6.7090549  3.8684459   1.734 -0.8729598 14.2910696   0.0415 *  </span></span>
+<span><span class="co">## mu_2       6.4673217  3.8741880   1.669 -1.1259472 14.0605906   0.0476 *  </span></span>
+<span><span class="co">## phi_11     0.1134668  0.0276020   4.111  0.0593679  0.1675658   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_21    -0.0223815  0.0320047  -0.699 -0.0851097  0.0403466   0.2422    </span></span>
+<span><span class="co">## phi_12    -0.1021229  0.0260145  -3.926 -0.1531104 -0.0511355   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_22     0.0604692  0.0306762   1.971  0.0003449  0.1205935   0.0244 *  </span></span>
+<span><span class="co">## sigma_11   2.6543815  0.2006675  13.228  2.2610804  3.0476826   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_12   0.0602518  0.1387373   0.434 -0.2116682  0.3321718   0.3321    </span></span>
+<span><span class="co">## sigma_22   3.6666149  0.2610940  14.043  3.1548800  4.1783497   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_11   0.4957936  0.0226655  21.874  0.4513701  0.5402172   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_22   0.4733222  0.0243865  19.409  0.4255256  0.5211189   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_1     -2.5083132  0.5723104  -4.383 -3.6300210 -1.3866055   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_2      2.0768068  0.6688487   3.105  0.7658875  3.3877261   0.0010 ***</span></span>
+<span><span class="co">## sigma0_11  1.3756261  1.0480919   1.313 -0.6785964  3.4298485   0.0947 .  </span></span>
+<span><span class="co">## sigma0_12 -0.4069415  0.8870109  -0.459 -2.1454510  1.3315680   0.3232    </span></span>
+<span><span class="co">## sigma0_22  1.9587059  1.4324363   1.367 -0.8488176  4.7662295   0.0858 .  </span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## -2 log-likelihood value at convergence = 14456.05</span></span>
+<span><span class="co">## AIC = 14488.05</span></span>
+<span><span class="co">## BIC = 14581.23</span></span></code></pre>
+<pre><code><span><span class="co">## [1] -2.508313  2.076807</span></span></code></pre>
 <div class="section level3">
 <h3 id="estimated-coefficients">Estimated Coefficients<a class="anchor" aria-label="anchor" href="#estimated-coefficients"></a>
 </h3>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'mu_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 6.709055 6.467322</span></span></code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">phi_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'phi_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##             [,1]        [,2]</span></span>
+<span><span class="co">## [1,]  0.11346683 -0.10212295</span></span>
+<span><span class="co">## [2,] -0.02238154  0.06046921</span></span></code></pre>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'sigma_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 2.65438152 0.06025181</span></span>
+<span><span class="co">## [2,] 0.06025181 3.66661487</span></span></code></pre>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu0_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'mu0_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] -2.508313  2.076807</span></span></code></pre>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma0_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'sigma0_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,]  1.3756261 -0.4069415</span></span>
+<span><span class="co">## [2,] -0.4069415  1.9587059</span></span></code></pre>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beta_var1_hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/expm.html" class="external-link">expm</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="va">phi_hat</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'expm': object 'phi_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">beta_var1_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'beta_var1_hat' not found</span></span></code></pre>
+<span><span class="op">)</span></span>
+<span><span class="va">beta_var1_hat</span></span></code></pre></div>
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 0.89377252 0.09366339</span></span>
+<span><span class="co">## [2,] 0.02052752 0.94237997</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="discrepancy-between-estimated-and-population-coefficients">Discrepancy Between Estimated and Population Coefficients<a class="anchor" aria-label="anchor" href="#discrepancy-between-estimated-and-population-coefficients"></a>
 </h3>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'mu_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 0.9490549 1.2873217</span></span></code></pre>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'phi_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 0.01346683 0.05212295</span></span>
+<span><span class="co">## [2,] 0.02761846 0.03953079</span></span></code></pre>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'beta_var1_hat' not found</span></span></code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] 0.01219618 0.04840266</span></span>
+<span><span class="co">## [2,] 0.02473320 0.03641127</span></span></code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma</span> <span class="op">-</span> <span class="va">sigma_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in eval(expr, envir, enclos): object 'sigma_hat' not found</span></span></code></pre>
+<pre><code><span><span class="co">##              [,1]         [,2]</span></span>
+<span><span class="co">## [1,] 0.1356184810 0.0002518097</span></span>
+<span><span class="co">## [2,] 0.0002518097 0.3966148689</span></span></code></pre>
 </div>
 </div>
 <div class="section level2 unnumbered">
