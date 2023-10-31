@@ -1,7 +1,7 @@
 fitOU
 ================
 Ivan Jacob Agaloos Pesigan
-2023-10-30
+2023-10-31
 
 <!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
 <!-- badges: start -->
