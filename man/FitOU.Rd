@@ -17,6 +17,7 @@ FitOU(
   theta_start = NULL,
   sigma_diag = FALSE,
   center = FALSE,
+  scale = FALSE,
   lb = NULL,
   ub = NULL,
   ...
@@ -87,6 +88,9 @@ estimate only the diagonals of \eqn{\boldsymbol{\Sigma}}.}
 
 \item{center}{Logical.
 If \code{center = TRUE}, mean center by \code{id}.}
+
+\item{scale}{Logical.
+If \code{scale = TRUE}, standardize by \code{id}.}
 
 \item{lb}{Numeric vector.
 Optional.

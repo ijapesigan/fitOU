@@ -123,6 +123,8 @@
 #'   estimate only the diagonals of \eqn{\boldsymbol{\Sigma}}.
 #' @param center Logical.
 #'   If `center = TRUE`, mean center by `id`.
+#' @param scale Logical.
+#'   If `scale = TRUE`, standardize by `id`.
 #' @param ub Numeric vector.
 #'   Optional.
 #'   The upper bounds for \eqn{\boldsymbol{\Phi}}.
@@ -174,6 +176,7 @@ FitOU <- function(data,
                   theta_start = NULL,
                   sigma_diag = FALSE,
                   center = FALSE,
+                  scale = FALSE,
                   lb = NULL,
                   ub = NULL,
                   ...) {
@@ -182,18 +185,32 @@ FitOU <- function(data,
   eta_names <- paste0("eta_", seq_len(k))
   iden <- diag(k)
   null_vec <- rep(x = 0, times = k)
-  if (center) {
-    mean_center <- function(x) {
-      x - mean(
-        x = x,
-        na.rm = TRUE
-      )
+  if (center | scale) {
+    if (scale) {
+      foo <- function(x) {
+        (
+          x - mean(
+            x = x,
+            na.rm = TRUE
+          )
+        ) / sd(
+          x = x,
+          na.rm = TRUE
+        )
+      }
+    } else {
+      foo <- function(x) {
+        x - mean(
+          x = x,
+          na.rm = TRUE
+        )
+      }
     }
     for (i in seq_len(k)) {
       data[, y_names[i]] <- stats::ave(
         x = data[, y_names[i]],
         data[, id],
-        FUN = mean_center
+        FUN = foo
       )
     }
   }
