@@ -73,6 +73,7 @@ convenient using the <code>dynr</code> package.</p>
 <span>  theta_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sigma_diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lb <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ub <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -168,6 +169,11 @@ estimate only the diagonals of \(\boldsymbol{\Sigma}\).</p></dd>
 <dt>center</dt>
 <dd><p>Logical.
 If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
+
+
+<dt>scale</dt>
+<dd><p>Logical.
+If <code>scale = TRUE</code>, standardize by <code>id</code>.</p></dd>
 
 
 <dt>lb</dt>
