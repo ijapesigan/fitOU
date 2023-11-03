@@ -281,16 +281,40 @@ data <- Sim2Matrix(
 head(data)
 ```
 
-## Model Fitting
+## Prepare Data
 
 ```{r}
-results <- fitOU::FitOU(
+data <- fitOU::DataOU(
   data = data,
   observed = c("y1", "y2"),
   id = "id",
   time = "time",
+  center = FALSE,
+  scale = FALSE
+)
+summary(data)
+```
+
+## Specify Model
+
+```{r}
+model <- fitOU::ModelOU(
+  data = data,
+  observed = c("y1", "y2"),
+  id = "id",
+  time = "time"
+)
+str(model)
+```
+
+## Model Fitting
+
+```{r}
+results <- fitOU::FitOU(
+  model = model,
+  retry = 100,
   verbose = FALSE
-)$fit
+)
 ```
 
 ## Summary

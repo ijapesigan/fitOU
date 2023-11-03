@@ -226,17 +226,40 @@ Let the dynamic process noise covariance matrix $\boldsymbol{\Sigma}$ be given b
 \right) .
 \end{equation}
 
-## Model Fitting
+## Prepare Data
 
 ```{r}
-data(bivariate_ou, package = "fitOU")
-results <- fitOU::FitOU(
+data("bivariate_ou", package = "fitOU")
+data <- fitOU::DataOU(
   data = bivariate_ou,
   observed = c("y1", "y2"),
   id = "id",
   time = "time",
+  center = FALSE,
+  scale = FALSE
+)
+summary(data)
+```
+
+## Specify Model
+
+```{r}
+model <- fitOU::ModelOU(
+  data = data,
+  observed = c("y1", "y2"),
+  id = "id",
+  time = "time"
+)
+str(model)
+```
+
+## Model Fitting
+
+```{r}
+results <- fitOU::FitOU(
+  model = model,
   verbose = FALSE
-)$fit
+)
 ```
 
 ## Summary
