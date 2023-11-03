@@ -2,9 +2,10 @@
                     id,
                     time,
                     observed) {
+  data <- as.matrix(data)
   data <- data[order(data[, time]), , drop = FALSE]
   data <- data[order(data[, id]), , drop = FALSE]
-  out <- cbind(
+  data <- cbind(
     id = data[, id],
     time = data[, time],
     data[
@@ -14,7 +15,7 @@
     ]
   )
   ids <- unique(data[, id])
-  out <- lapply(
+  data <- lapply(
     X = ids,
     FUN = function(id) {
       return(
@@ -26,7 +27,7 @@
     }
   )
   return(
-    out
+    data
   )
 }
 
@@ -58,7 +59,7 @@
           varnames <- colnames(i)
           varnames <- varnames[!(varnames %in% c("id", "time"))]
           colnames(observed) <- varnames
-          out <- rbind(
+          data <- rbind(
             i,
             cbind(
               id = unique(i[, "id"]),
@@ -66,9 +67,9 @@
               observed
             )
           )
-          out <- out[order(out[, "time"]), , drop = FALSE]
+          data <- data[order(data[, "time"]), , drop = FALSE]
           return(
-            out
+            data
           )
         } else {
           return(i)
@@ -79,7 +80,7 @@
 }
 
 .InitialNA <- function(data) {
-  out <- lapply(
+  data <- lapply(
     X = data,
     FUN = function(i) {
       has_na <- any(
@@ -107,8 +108,8 @@
       return(i)
     }
   )
-  out[sapply(out, is.null)] <- NULL
-  return(out)
+  data[sapply(data, is.null)] <- NULL
+  return(data)
 }
 
 .ScaleID <- function(data,
@@ -122,17 +123,17 @@
                      scale) {
         varnames <- colnames(i)
         varnames <- varnames[!(varnames %in% c("id", "time"))]
-        out <- scale(
+        data <- scale(
           x = i[, varnames, drop = FALSE],
           center = center,
           scale = scale
         )
-        colnames(out) <- varnames
+        colnames(data) <- varnames
         return(
           cbind(
             id = i[, "id"],
             time = i[, "time"],
-            out
+            data
           )
         )
       },
@@ -189,7 +190,7 @@ DataOU <- function(data,
                    time,
                    center = TRUE,
                    scale = TRUE) {
-  out <- .ScaleID(
+  data <- .ScaleID(
     data = .InitialNA(
       data = .InsertNA(
         data = .Subset(
@@ -207,7 +208,7 @@ DataOU <- function(data,
     as.data.frame(
       do.call(
         what = "rbind",
-        args = out
+        args = data
       )
     )
   )
