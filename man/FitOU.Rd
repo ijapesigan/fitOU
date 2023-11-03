@@ -4,101 +4,13 @@
 \alias{FitOU}
 \title{Fit the Ornstein–Uhlenbeck Model}
 \usage{
-FitOU(
-  data,
-  observed,
-  id,
-  time,
-  mu0 = NULL,
-  sigma0 = NULL,
-  mu_start = NULL,
-  phi_start = NULL,
-  sigma_start = NULL,
-  theta_start = NULL,
-  sigma_diag = FALSE,
-  center = FALSE,
-  scale = FALSE,
-  lb = NULL,
-  ub = NULL,
-  ...
-)
+FitOU(model, retry = NULL, ...)
 }
 \arguments{
-\item{data}{Data frame.
-A data frame object of data for potentially
-multiple subjects that contain
-a column of subject ID numbers
-(i.e., an ID variable),
-a column indicating subject-specific measurement occasions
-(i.e., a TIME variable),
-at least one column of observed values.}
+\item{model}{Output of \code{\link[=ModelOU]{ModelOU()}}.}
 
-\item{observed}{Character vector.
-A vector of character strings
-of the names of the observed variables in the data.}
-
-\item{id}{Character string.
-A character string of the name of the ID variable in the data.}
-
-\item{time}{Character string.
-A character string of the name of the TIME variable in the data.}
-
-\item{mu0}{Numeric vector.
-Mean of initial latent variable values
-(\eqn{\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}}).
-If \code{mu0 = NULL}, a vector of zeros is used.}
-
-\item{sigma0}{Numeric matrix.
-Covariance matrix
-of initial latent variable values
-(\eqn{\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}}).
-If \code{sigma0 = NULL}, an identity matrix is used.}
-
-\item{mu_start}{Numeric vector.
-Starting values of the \code{mu} vector,
-that is,
-the long-term mean or equilibrium level.
-If \code{mu_start = NULL},
-a vector means of the observed variables is used.}
-
-\item{phi_start}{Numeric matrx.
-Starting values of the \code{phi} matrix,
-that is,
-the rate of mean reversion,
-determining how quickly the variable returns to its mean.
-If \code{phi_start = NULL}, a matrix of zeros is used.}
-
-\item{sigma_start}{Numeric matrx.
-Starting values of the \code{sigma} matrix,
-that is,
-the matrix of volatility
-or randomness in the process.
-If \code{sigma_start = NULL}, an identity matrix is used.}
-
-\item{theta_start}{Numeric matrx.
-Starting values of the \code{theta} matrix,
-that is,
-the measurement error covariance matrix
-(\eqn{\boldsymbol{\Theta}}).
-If \code{theta_start = NULL}, an identity matrix is used.}
-
-\item{sigma_diag}{Logical.
-If \code{sigma_diag = TRUE},
-estimate only the diagonals of \eqn{\boldsymbol{\Sigma}}.}
-
-\item{center}{Logical.
-If \code{center = TRUE}, mean center by \code{id}.}
-
-\item{scale}{Logical.
-If \code{scale = TRUE}, standardize by \code{id}.}
-
-\item{lb}{Numeric vector.
-Optional.
-The lower bounds for \eqn{\boldsymbol{\Phi}}.}
-
-\item{ub}{Numeric vector.
-Optional.
-The upper bounds for \eqn{\boldsymbol{\Phi}}.}
+\item{retry}{Positive integer.
+Maximum number of reruns.}
 
 \item{...}{Additional arguments to pass to \code{\link[dynr:dynr.cook]{dynr::dynr.cook()}}.}
 }
@@ -174,11 +86,20 @@ which represents random fluctuations.
 }
 \examples{
 \dontrun{
-FitOU(
+data <- DataOU(
   data = bivariate_ou,
   observed = c("y1", "y2"),
   id = "id",
-  time = "time",
+  time = "time"
+)
+model <- ModelOU(
+  data = data,
+  observed = c("y1", "y2"),
+  id = "id",
+  time = "time"
+)
+FitOU(
+  model = model,
   verbose = FALSE
 )
 }
@@ -203,7 +124,8 @@ On the theory of the brownian motion.
 }
 \seealso{
 Other Fit Ornstein–Uhlenbeck Model Functions: 
-\code{\link{FitOUID}()}
+\code{\link{DataOU}()},
+\code{\link{ModelOU}()}
 }
 \author{
 Ivan Jacob Agaloos Pesigan
