@@ -34,10 +34,13 @@
     <loc>https://github.com/ijapesigan/fitOU/news/index.html</loc>
   </url>
   <url>
+    <loc>https://github.com/ijapesigan/fitOU/reference/DataOU.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/ijapesigan/fitOU/reference/FitOU.html</loc>
   </url>
   <url>
-    <loc>https://github.com/ijapesigan/fitOU/reference/FitOUID.html</loc>
+    <loc>https://github.com/ijapesigan/fitOU/reference/ModelOU.html</loc>
   </url>
   <url>
     <loc>https://github.com/ijapesigan/fitOU/reference/bivariate_ou.html</loc>

@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2023-10-30</h4>
+            <h4 data-toc-skip class="date">2023-11-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ijapesigan/fitOU/blob/HEAD/vignettes/bivariate-ou.Rmd"><code>vignettes/bivariate-ou.Rmd</code></a></small>
       <div class="d-none name"><code>bivariate-ou.Rmd</code></div>
@@ -238,17 +238,230 @@ process or Brownian motion, which represents random fluctuations.</p>
 \end{equation}\]</span></p>
 </div>
 <div class="section level2">
-<h2 id="model-fitting">Model Fitting<a class="anchor" aria-label="anchor" href="#model-fitting"></a>
+<h2 id="prepare-data">Prepare Data<a class="anchor" aria-label="anchor" href="#prepare-data"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bivariate_ou</span>, package <span class="op">=</span> <span class="st">"fitOU"</span><span class="op">)</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fitOU</span><span class="fu">::</span><span class="fu"><a href="../reference/FitOU.html">FitOU</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"bivariate_ou"</span>, package <span class="op">=</span> <span class="st">"fitOU"</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fitOU</span><span class="fu">::</span><span class="fu"><a href="../reference/DataOU.html">DataOU</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">bivariate_ou</span>,</span>
 <span>  observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,</span>
 <span>  id <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  time <span class="op">=</span> <span class="st">"time"</span>,</span>
+<span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  scale <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##        id             time             y1                 y2          </span></span>
+<span><span class="co">##  Min.   : 1.00   Min.   : 0.00   Min.   :-9.38679   Min.   :-15.6376  </span></span>
+<span><span class="co">##  1st Qu.: 5.75   1st Qu.:12.47   1st Qu.: 0.05093   1st Qu.:  0.6164  </span></span>
+<span><span class="co">##  Median :10.50   Median :24.95   Median : 3.08874   Median :  3.5348  </span></span>
+<span><span class="co">##  Mean   :10.50   Mean   :24.95   Mean   : 2.97662   Mean   :  3.3015  </span></span>
+<span><span class="co">##  3rd Qu.:15.25   3rd Qu.:37.42   3rd Qu.: 5.85255   3rd Qu.:  6.2228  </span></span>
+<span><span class="co">##  Max.   :20.00   Max.   :49.90   Max.   :16.11338   Max.   : 16.6516</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="specify-model">Specify Model<a class="anchor" aria-label="anchor" href="#specify-model"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">fitOU</span><span class="fu">::</span><span class="fu"><a href="../reference/ModelOU.html">ModelOU</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  time <span class="op">=</span> <span class="st">"time"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Formal class 'dynrModel' [package "dynr"] with 17 slots</span></span>
+<span><span class="co">##   ..@ dynamics      :Formal class 'dynrDynamicsFormula' [package "dynr"] with 13 slots</span></span>
+<span><span class="co">##   .. .. ..@ c.string            : chr "void function_dx_dt(double t, size_t regime, const gsl_vector *x, double *param, size_t n_param, const gsl_vect"| __truncated__</span></span>
+<span><span class="co">##   .. .. ..@ startval            : Named num [1:6] 2.98 3.3 0.1 0.1 0.1 ...</span></span>
+<span><span class="co">##   .. .. .. ..- attr(*, "names")= chr [1:6] "mu_1" "mu_2" "phi_11" "phi_21" ...</span></span>
+<span><span class="co">##   .. .. ..@ paramnames          : chr [1:6] "mu_1" "mu_2" "phi_11" "phi_21" ...</span></span>
+<span><span class="co">##   .. .. ..@ formula             :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ :List of 2</span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ param[2] * (param[0] - eta_1) + param[4] * (param[1] - eta_2)</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf9bb6d8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ param[3] * (param[0] - eta_1) + param[5] * (param[1] - eta_2)</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf9bb6d8&gt; </span></span>
+<span><span class="co">##   .. .. ..@ jacobian            :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ :List of 4</span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -param[2]</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf9ca7f8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -param[4]</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf9ca7f8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -param[3]</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf9ca7f8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -param[5]</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf9ca7f8&gt; </span></span>
+<span><span class="co">##   .. .. ..@ formulaOriginal     :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ :List of 2</span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ phi_11 * (mu_1 - eta_1) + phi_12 * (mu_2 - eta_2)</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bed11bb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ phi_21 * (mu_1 - eta_1) + phi_22 * (mu_2 - eta_2)</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bed11bb0&gt; </span></span>
+<span><span class="co">##   .. .. ..@ jacobianOriginal    :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ :List of 4</span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -phi_11</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf63d170&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -phi_12</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf63d170&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -phi_21</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf63d170&gt; </span></span>
+<span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -phi_22</span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55b1bf63d170&gt; </span></span>
+<span><span class="co">##   .. .. ..@ random.names        : chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ theta.formula       : list()</span></span>
+<span><span class="co">##   .. .. ..@ isContinuousTime    : logi TRUE</span></span>
+<span><span class="co">##   .. .. ..@ saem                : logi(0) </span></span>
+<span><span class="co">##   .. .. ..@ random.params.inicov: num[0 , 0 ] </span></span>
+<span><span class="co">##   .. .. ..@ random.values.inicov: num[0 , 0 ] </span></span>
+<span><span class="co">##   ..@ measurement   :Formal class 'dynrMeasurement' [package "dynr"] with 12 slots</span></span>
+<span><span class="co">##   .. .. ..@ c.string   : chr "void function_measurement(size_t t, size_t regime, double *param, const gsl_vector *eta, const gsl_vector *co_v"| __truncated__</span></span>
+<span><span class="co">##   .. .. ..@ startval   : num(0) </span></span>
+<span><span class="co">##   .. .. ..@ paramnames : chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ values.load:List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 1 0 0 1</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : chr [1:2] "y1" "y2"</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : chr [1:2] "eta_1" "eta_2"</span></span>
+<span><span class="co">##   .. .. ..@ params.load:List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : int [1:2, 1:2] 0 0 0 0</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : chr [1:2] "y1" "y2"</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : chr [1:2] "eta_1" "eta_2"</span></span>
+<span><span class="co">##   .. .. ..@ values.exo : list()</span></span>
+<span><span class="co">##   .. .. ..@ params.exo : list()</span></span>
+<span><span class="co">##   .. .. ..@ values.int : list()</span></span>
+<span><span class="co">##   .. .. ..@ params.int : list()</span></span>
+<span><span class="co">##   .. .. ..@ state.names: chr [1:2] "eta_1" "eta_2"</span></span>
+<span><span class="co">##   .. .. ..@ obs.names  : chr [1:2] "y1" "y2"</span></span>
+<span><span class="co">##   .. .. ..@ exo.names  : chr(0) </span></span>
+<span><span class="co">##   ..@ noise         :Formal class 'dynrNoise' [package "dynr"] with 9 slots</span></span>
+<span><span class="co">##   .. .. ..@ c.string               : chr "void function_noise_cov(size_t t, size_t regime, double *param, gsl_matrix *y_noise_cov, gsl_matrix *eta_noise_"| __truncated__</span></span>
+<span><span class="co">##   .. .. ..@ startval               : num [1:5] 0 0 0 0 0</span></span>
+<span><span class="co">##   .. .. ..@ paramnames             : chr [1:5] "sigma_11" "sigma_12" "sigma_22" "theta_11" ...</span></span>
+<span><span class="co">##   .. .. ..@ values.latent          :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 1 0 0 1</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ params.latent          :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : int [1:2, 1:2] 7 8 8 9</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ values.observed        :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 1 0 0 1</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ params.observed        :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : int [1:2, 1:2] 10 0 0 11</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ values.latent.inv.ldl  :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 0 0 0 0</span></span>
+<span><span class="co">##   .. .. ..@ values.observed.inv.ldl:List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 0 0 0 0</span></span>
+<span><span class="co">##   ..@ initial       :Formal class 'dynrInitial' [package "dynr"] with 13 slots</span></span>
+<span><span class="co">##   .. .. ..@ c.string             : chr "void function_initial_condition(double *param, gsl_vector **co_variate, gsl_vector **pr_0, gsl_vector **eta_0, "| __truncated__</span></span>
+<span><span class="co">##   .. .. ..@ startval             : num [1:5] 0 0 0 0 0</span></span>
+<span><span class="co">##   .. .. ..@ paramnames           : chr [1:5] "mu0_1" "mu0_2" "sigma0_11" "sigma0_12" ...</span></span>
+<span><span class="co">##   .. .. ..@ values.inistate      :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1] 0 0</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ params.inistate      :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : int [1:2, 1] 12 13</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ values.inicov        :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 1 0 0 1</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ values.inicov.inv.ldl:List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : num [1:2, 1:2] 0 0 0 0</span></span>
+<span><span class="co">##   .. .. ..@ params.inicov        :List of 1</span></span>
+<span><span class="co">##   .. .. .. ..$ : int [1:2, 1:2] 14 15 15 16</span></span>
+<span><span class="co">##   .. .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ values.regimep       : num [1, 1] 1</span></span>
+<span><span class="co">##   .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ params.regimep       : int [1, 1] 0</span></span>
+<span><span class="co">##   .. .. .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">##   .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. .. .. ..$ : NULL</span></span>
+<span><span class="co">##   .. .. ..@ covariates           : chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ deviation            : logi FALSE</span></span>
+<span><span class="co">##   .. .. ..@ refRow               : num(0) </span></span>
+<span><span class="co">##   ..@ regimes       :Formal class 'dynrRegimes' [package "dynr"] with 8 slots</span></span>
+<span><span class="co">##   .. .. ..@ c.string  : chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ startval  : num(0) </span></span>
+<span><span class="co">##   .. .. ..@ paramnames: chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ values    : num[0 , 0 ] </span></span>
+<span><span class="co">##   .. .. ..@ params    : num[0 , 0 ] </span></span>
+<span><span class="co">##   .. .. ..@ covariates: chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ deviation : logi(0) </span></span>
+<span><span class="co">##   .. .. ..@ refRow    : num(0) </span></span>
+<span><span class="co">##   ..@ transform     :Formal class 'dynrTrans' [package "dynr"] with 9 slots</span></span>
+<span><span class="co">##   .. .. ..@ c.string     : chr "/**\n * This function modifies some of the parameters so that it satisfies the model constraint.\n * Do not inc"| __truncated__</span></span>
+<span><span class="co">##   .. .. ..@ startval     : num(0) </span></span>
+<span><span class="co">##   .. .. ..@ paramnames   : chr(0) </span></span>
+<span><span class="co">##   .. .. ..@ tfun         :function (vec)  </span></span>
+<span><span class="co">##   .. .. ..@ inv.tfun     :function (vec)  </span></span>
+<span><span class="co">##   .. .. ..@ inv.tfun.full:function (vec)  </span></span>
+<span><span class="co">##   .. .. ..@ formula.trans: list()</span></span>
+<span><span class="co">##   .. .. ..@ formula.inv  : list()</span></span>
+<span><span class="co">##   .. .. ..@ transCcode   : logi FALSE</span></span>
+<span><span class="co">##   ..@ data          :List of 8</span></span>
+<span><span class="co">##   .. ..$ id            : num [1:10000] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##   .. ..$ tstart        : int [1:21] 0 500 1000 1500 2000 2500 3000 3500 4000 4500 ...</span></span>
+<span><span class="co">##   .. ..$ time          : num [1:10000] 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 ...</span></span>
+<span><span class="co">##   .. ..$ observed      :'data.frame':    10000 obs. of  2 variables:</span></span>
+<span><span class="co">##   .. .. ..$ obs1: num [1:10000] -5.14 -4.29 -5.47 -3.42 -3.58 ...</span></span>
+<span><span class="co">##   .. .. ..$ obs2: num [1:10000] 0.0518 0.3432 -0.5894 1.0821 0.6689 ...</span></span>
+<span><span class="co">##   .. ..$ observed.names: chr [1:2] "y1" "y2"</span></span>
+<span><span class="co">##   .. ..$ original.data :'data.frame':    10000 obs. of  4 variables:</span></span>
+<span><span class="co">##   .. .. ..$ id  : num [1:10000] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##   .. .. ..$ time: num [1:10000] 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 ...</span></span>
+<span><span class="co">##   .. .. ..$ y1  : num [1:10000] -5.14 -4.29 -5.47 -3.42 -3.58 ...</span></span>
+<span><span class="co">##   .. .. ..$ y2  : num [1:10000] 0.0518 0.3432 -0.5894 1.0821 0.6689 ...</span></span>
+<span><span class="co">##   .. ..$ idVar         : chr "id"</span></span>
+<span><span class="co">##   .. ..$ timeVar       : chr "time"</span></span>
+<span><span class="co">##   ..@ num_regime    : int 1</span></span>
+<span><span class="co">##   ..@ dim_latent_var: int 2</span></span>
+<span><span class="co">##   ..@ outfile       : chr "/tmp/RtmpJ3C7oj/file6fe5eab2df9.c"</span></span>
+<span><span class="co">##   ..@ verbose       : logi TRUE</span></span>
+<span><span class="co">##   ..@ compileLib    : logi TRUE</span></span>
+<span><span class="co">##   ..@ xstart        : Named num [1:16] 2.98 3.3 0.1 0.1 0.1 ...</span></span>
+<span><span class="co">##   .. ..- attr(*, "names")= chr [1:16] "mu_1" "mu_2" "phi_11" "phi_21" ...</span></span>
+<span><span class="co">##   ..@ ub            : Named num [1:16] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##   .. ..- attr(*, "names")= chr [1:16] "mu_1" "mu_2" "phi_11" "phi_21" ...</span></span>
+<span><span class="co">##   ..@ lb            : Named num [1:16] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##   .. ..- attr(*, "names")= chr [1:16] "mu_1" "mu_2" "phi_11" "phi_21" ...</span></span>
+<span><span class="co">##   ..@ options       :List of 6</span></span>
+<span><span class="co">##   .. ..$ xtol_rel: num 1e-07</span></span>
+<span><span class="co">##   .. ..$ stopval : num -9999</span></span>
+<span><span class="co">##   .. ..$ ftol_rel: num 1e-10</span></span>
+<span><span class="co">##   .. ..$ ftol_abs: num -1</span></span>
+<span><span class="co">##   .. ..$ maxeval : int 500</span></span>
+<span><span class="co">##   .. ..$ maxtime : num -1</span></span>
+<span><span class="co">##   ..@ param.names   : chr [1:16] "mu_1" "mu_2" "phi_11" "phi_21" ...</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="model-fitting">Model Fitting<a class="anchor" aria-label="anchor" href="#model-fitting"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fitOU</span><span class="fu">::</span><span class="fu"><a href="../reference/FitOU.html">FitOU</a></span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="va">model</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span><span class="op">$</span><span class="va">fit</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Get ready!!!!"</span></span>
 <span><span class="co">## using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’</span></span>
 <span><span class="co">## Optimization function called.</span></span>
@@ -257,103 +470,103 @@ process or Brownian motion, which represents random fluctuations.</p>
 <span><span class="co">## Original exit flag:  3 </span></span>
 <span><span class="co">## Modified exit flag:  3 </span></span>
 <span><span class="co">## Optimization terminated successfully: ftol_rel or ftol_abs was reached. </span></span>
-<span><span class="co">## Original fitted parameters:  4.826016 4.686955 0.1295648 -0.04596157 </span></span>
-<span><span class="co">## -0.04622211 0.09327644 1.106598 0.01867877 1.191308 -0.7157098 -0.6979024 </span></span>
-<span><span class="co">## -3.318679 1.674147 0.3144139 0.06555172 0.155351 </span></span>
+<span><span class="co">## Original fitted parameters:  4.826068 4.687015 0.1295642 -0.04596229 </span></span>
+<span><span class="co">## -0.04622233 0.09327675 1.106597 0.01867618 1.19131 -0.7157082 -0.6979015 </span></span>
+<span><span class="co">## -3.318639 1.674174 0.3144041 0.06555254 0.1553236 </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Transformed fitted parameters:  4.826016 4.686955 0.1295648 -0.04596157 </span></span>
-<span><span class="co">## -0.04622211 0.09327644 3.024053 0.0564856 3.292438 0.488845 0.497628 -3.318679 </span></span>
-<span><span class="co">## 1.674147 1.369456 0.08977023 1.173952 </span></span>
+<span><span class="co">## Transformed fitted parameters:  4.826068 4.687015 0.1295642 -0.04596229 </span></span>
+<span><span class="co">## -0.04622233 0.09327675 3.02405 0.0564777 3.292445 0.4888458 0.4976285 -3.318639 </span></span>
+<span><span class="co">## 1.674174 1.369443 0.08977047 1.173921 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 5.48155 </span></span>
-<span><span class="co">## Backend Time: 5.469951</span></span></code></pre>
+<span><span class="co">## Total Time: 3.517086 </span></span>
+<span><span class="co">## Backend Time: 3.508425</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Coefficients:</span></span>
 <span><span class="co">##           Estimate Std. Error t value ci.lower ci.upper Pr(&gt;|t|)    </span></span>
-<span><span class="co">## mu_1       4.82602    0.65206   7.401  3.54801  6.10402   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu_2       4.68696    0.88640   5.288  2.94965  6.42426   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_11     0.12956    0.01595   8.126  0.09831  0.16082   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_21    -0.04596    0.01645  -2.793 -0.07821 -0.01371   0.0026 ** </span></span>
+<span><span class="co">## mu_1       4.82607    0.65809   7.333  3.53624  6.11590   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu_2       4.68702    0.88471   5.298  2.95301  6.42102   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_11     0.12956    0.01598   8.110  0.09825  0.16088   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_21    -0.04596    0.01646  -2.793 -0.07822 -0.01371   0.0026 ** </span></span>
 <span><span class="co">## phi_12    -0.04622    0.01452  -3.183 -0.07469 -0.01776   0.0007 ***</span></span>
 <span><span class="co">## phi_22     0.09328    0.01527   6.110  0.06336  0.12320   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_11   3.02405    0.11305  26.750  2.80248  3.24563   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_12   0.05649    0.07027   0.804 -0.08123  0.19421   0.2107    </span></span>
-<span><span class="co">## sigma_22   3.29244    0.11872  27.732  3.05974  3.52513   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_11   0.48885    0.01174  41.651  0.46584  0.51185   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_22   0.49763    0.01200  41.476  0.47411  0.52114   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu0_1     -3.31868    0.28547 -11.625 -3.87820 -2.75916   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu0_2      1.67415    0.26760   6.256  1.14966  2.19863   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma0_11  1.36946    0.48852   2.803  0.41198  2.32693   0.0025 ** </span></span>
-<span><span class="co">## sigma0_12  0.08977    0.33817   0.265 -0.57302  0.75256   0.3953    </span></span>
-<span><span class="co">## sigma0_22  1.17395    0.44922   2.613  0.29350  2.05441   0.0045 ** </span></span>
+<span><span class="co">## sigma_11   3.02405    0.11318  26.718  2.80222  3.24588   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_12   0.05648    0.07027   0.804 -0.08124  0.19420   0.2108    </span></span>
+<span><span class="co">## sigma_22   3.29245    0.11859  27.764  3.06002  3.52487   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_11   0.48885    0.01174  41.640  0.46584  0.51186   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_22   0.49763    0.01198  41.521  0.47414  0.52112   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_1     -3.31864    0.28612 -11.599 -3.87943 -2.75785   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_2      1.67417    0.27062   6.186  1.14377  2.20458   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma0_11  1.36944    0.52283   2.619  0.34472  2.39417   0.0044 ** </span></span>
+<span><span class="co">## sigma0_12  0.08977    0.34284   0.262 -0.58218  0.76172   0.3967    </span></span>
+<span><span class="co">## sigma0_22  1.17392    0.46084   2.547  0.27069  2.07715   0.0054 ** </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## -2 log-likelihood value at convergence = 58025.07</span></span>
 <span><span class="co">## AIC = 58057.07</span></span>
 <span><span class="co">## BIC = 58172.43</span></span></code></pre>
-<pre><code><span><span class="co">## [1] -3.318679  1.674147</span></span></code></pre>
+<pre><code><span><span class="co">## [1] -3.318639  1.674174</span></span></code></pre>
 <div class="section level3">
 <h3 id="estimated-coefficients">Estimated Coefficients<a class="anchor" aria-label="anchor" href="#estimated-coefficients"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 4.826016 4.686955</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 4.826068 4.687015</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">phi_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,]  0.12956480 -0.04622211</span></span>
-<span><span class="co">## [2,] -0.04596157  0.09327644</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<span><span class="co">## [1,]  0.12956425 -0.04622233</span></span>
+<span><span class="co">## [2,] -0.04596229  0.09327675</span></span></code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##           [,1]      [,2]</span></span>
-<span><span class="co">## [1,] 3.0240530 0.0564856</span></span>
-<span><span class="co">## [2,] 0.0564856 3.2924380</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<span><span class="co">## [1,] 3.0240504 0.0564777</span></span>
+<span><span class="co">## [2,] 0.0564777 3.2924452</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu0_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] -3.318679  1.674147</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] -3.318639  1.674174</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma0_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]</span></span>
-<span><span class="co">## [1,] 1.36945646 0.08977023</span></span>
-<span><span class="co">## [2,] 0.08977023 1.17395247</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<span><span class="co">## [1,] 1.36944302 0.08977047</span></span>
+<span><span class="co">## [2,] 0.08977047 1.17392056</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beta_var1_hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/expm.html" class="external-link">expm</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="va">phi_hat</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">beta_var1_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]</span></span>
-<span><span class="co">## [1,] 0.87942235 0.04136547</span></span>
-<span><span class="co">## [2,] 0.04113231 0.91189784</span></span></code></pre>
+<span><span class="co">## [1,] 0.87942286 0.04136568</span></span>
+<span><span class="co">## [2,] 0.04113295 0.91189757</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="discrepancy-between-estimated-and-population-coefficients">Discrepancy Between Estimated and Population Coefficients<a class="anchor" aria-label="anchor" href="#discrepancy-between-estimated-and-population-coefficients"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 0.933984 0.493045</span></span></code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 0.9339321 0.4929849</span></span></code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,] 0.029564801 0.003777893</span></span>
-<span><span class="co">## [2,] 0.004038429 0.006723560</span></span></code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<span><span class="co">## [1,] 0.029564248 0.003777666</span></span>
+<span><span class="co">## [2,] 0.004037713 0.006723251</span></span></code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,] 0.026546345 0.003895254</span></span>
-<span><span class="co">## [2,] 0.004128415 0.005929135</span></span></code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<span><span class="co">## [1,] 0.026545839 0.003895046</span></span>
+<span><span class="co">## [2,] 0.004127769 0.005928873</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma</span> <span class="op">-</span> <span class="va">sigma_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]</span></span>
-<span><span class="co">## [1,] 0.234052971 0.003514401</span></span>
-<span><span class="co">## [2,] 0.003514401 0.022438027</span></span></code></pre>
+<span><span class="co">## [1,] 0.234050384 0.003522302</span></span>
+<span><span class="co">## [2,] 0.003522302 0.022445213</span></span></code></pre>
 </div>
 </div>
 <div class="section level2 unnumbered">

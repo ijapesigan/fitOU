@@ -60,132 +60,18 @@ convenient using the <code>dynr</code> package.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FitOU</span><span class="op">(</span></span>
-<span>  <span class="va">data</span>,</span>
-<span>  <span class="va">observed</span>,</span>
-<span>  <span class="va">id</span>,</span>
-<span>  <span class="va">time</span>,</span>
-<span>  mu0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sigma0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  mu_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  phi_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sigma_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  theta_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sigma_diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  lb <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ub <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FitOU</span><span class="op">(</span><span class="va">model</span>, retry <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>data</dt>
-<dd><p>Data frame.
-A data frame object of data for potentially
-multiple subjects that contain
-a column of subject ID numbers
-(i.e., an ID variable),
-a column indicating subject-specific measurement occasions
-(i.e., a TIME variable),
-at least one column of observed values.</p></dd>
+    <dl><dt>model</dt>
+<dd><p>Output of <code><a href="ModelOU.html">ModelOU()</a></code>.</p></dd>
 
 
-<dt>observed</dt>
-<dd><p>Character vector.
-A vector of character strings
-of the names of the observed variables in the data.</p></dd>
-
-
-<dt>id</dt>
-<dd><p>Character string.
-A character string of the name of the ID variable in the data.</p></dd>
-
-
-<dt>time</dt>
-<dd><p>Character string.
-A character string of the name of the TIME variable in the data.</p></dd>
-
-
-<dt>mu0</dt>
-<dd><p>Numeric vector.
-Mean of initial latent variable values
-(\(\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}\)).
-If <code>mu0 = NULL</code>, a vector of zeros is used.</p></dd>
-
-
-<dt>sigma0</dt>
-<dd><p>Numeric matrix.
-Covariance matrix
-of initial latent variable values
-(\(\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}\)).
-If <code>sigma0 = NULL</code>, an identity matrix is used.</p></dd>
-
-
-<dt>mu_start</dt>
-<dd><p>Numeric vector.
-Starting values of the <code>mu</code> vector,
-that is,
-the long-term mean or equilibrium level.
-If <code>mu_start = NULL</code>,
-a vector means of the observed variables is used.</p></dd>
-
-
-<dt>phi_start</dt>
-<dd><p>Numeric matrx.
-Starting values of the <code>phi</code> matrix,
-that is,
-the rate of mean reversion,
-determining how quickly the variable returns to its mean.
-If <code>phi_start = NULL</code>, a matrix of zeros is used.</p></dd>
-
-
-<dt>sigma_start</dt>
-<dd><p>Numeric matrx.
-Starting values of the <code>sigma</code> matrix,
-that is,
-the matrix of volatility
-or randomness in the process.
-If <code>sigma_start = NULL</code>, an identity matrix is used.</p></dd>
-
-
-<dt>theta_start</dt>
-<dd><p>Numeric matrx.
-Starting values of the <code>theta</code> matrix,
-that is,
-the measurement error covariance matrix
-(\(\boldsymbol{\Theta}\)).
-If <code>theta_start = NULL</code>, an identity matrix is used.</p></dd>
-
-
-<dt>sigma_diag</dt>
-<dd><p>Logical.
-If <code>sigma_diag = TRUE</code>,
-estimate only the diagonals of \(\boldsymbol{\Sigma}\).</p></dd>
-
-
-<dt>center</dt>
-<dd><p>Logical.
-If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
-
-
-<dt>scale</dt>
-<dd><p>Logical.
-If <code>scale = TRUE</code>, standardize by <code>id</code>.</p></dd>
-
-
-<dt>lb</dt>
-<dd><p>Numeric vector.
-Optional.
-The lower bounds for \(\boldsymbol{\Phi}\).</p></dd>
-
-
-<dt>ub</dt>
-<dd><p>Numeric vector.
-Optional.
-The upper bounds for \(\boldsymbol{\Phi}\).</p></dd>
+<dt>retry</dt>
+<dd><p>Positive integer.
+Maximum number of reruns.</p></dd>
 
 
 <dt>...</dt>
@@ -275,7 +161,8 @@ On the theory of the brownian motion.
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Fit Ornstein–Uhlenbeck Model Functions: 
-<code><a href="FitOUID.html">FitOUID</a>()</code></p></div>
+<code><a href="DataOU.html">DataOU</a>()</code>,
+<code><a href="ModelOU.html">ModelOU</a>()</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -285,11 +172,20 @@ On the theory of the brownian motion.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">FitOU</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="DataOU.html">DataOU</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">bivariate_ou</span>,</span></span>
 <span class="r-in"><span>  observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="st">"id"</span>,</span></span>
-<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"time"</span>,</span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"time"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="ModelOU.html">ModelOU</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">data</span>,</span></span>
+<span class="r-in"><span>  observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  id <span class="op">=</span> <span class="st">"id"</span>,</span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"time"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">FitOU</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  model <span class="op">=</span> <span class="va">model</span>,</span></span>
 <span class="r-in"><span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
