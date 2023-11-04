@@ -4,7 +4,16 @@
 \alias{DataOU}
 \title{Preliminary Data Preparation}
 \usage{
-DataOU(data, observed, id, time, center = TRUE, scale = TRUE)
+DataOU(
+  data,
+  observed,
+  id,
+  time,
+  insert_na = FALSE,
+  initial_na = TRUE,
+  center = FALSE,
+  scale = FALSE
+)
 }
 \arguments{
 \item{data}{Data frame.
@@ -26,6 +35,13 @@ A character string of the name of the ID variable in the data.}
 \item{time}{Character string.
 A character string of the name of the TIME variable in the data.}
 
+\item{insert_na}{Logical.
+Insert \code{NA} to \code{observed} variables for existing \code{time} points.}
+
+\item{initial_na}{Logical.
+Iteratively remove rows where any observed variable
+for the first time point has \code{NA}.}
+
 \item{center}{Logical.
 If \code{center = TRUE}, mean center by \code{id}.}
 
@@ -33,13 +49,7 @@ If \code{center = TRUE}, mean center by \code{id}.}
 If \code{scale = TRUE}, standardize by \code{id}.}
 }
 \description{
-This function performs the following:
-\enumerate{
-\item Insert \code{NA} to \code{observed} variables for existing \code{time} points.
-\item Iteratively remove rows where any observed variable
-for the first time point has \code{NA}.
-\item Scale the data by \code{id}.
-}
+Preliminary Data Preparation
 }
 \examples{
 DataOU(
