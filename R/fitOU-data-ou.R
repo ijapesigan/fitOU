@@ -14,7 +14,7 @@
       drop = FALSE
     ]
   )
-  ids <- unique(data[, id])
+  ids <- unique(data[, "id"])
   data <- lapply(
     X = ids,
     FUN = function(id) {
@@ -145,14 +145,13 @@
 
 #' Preliminary Data Preparation
 #'
-#' This function performs the following:
-#' 1. Insert `NA` to `observed` variables for existing `time` points.
-#' 1. Iteratively remove rows where any observed variable
-#'    for the first time point has `NA`.
-#' 1. Scale the data by `id`.
-#'
 #' @author Ivan Jacob Agaloos Pesigan
 #'
+#' @param insert_na Logical.
+#'   Insert `NA` to `observed` variables for existing `time` points.
+#' @param initial_na Logical.
+#'   Iteratively remove rows where any observed variable
+#'   for the first time point has `NA`.
 #' @param data Data frame.
 #'   A data frame object of data for potentially
 #'   multiple subjects that contain
@@ -188,22 +187,33 @@ DataOU <- function(data,
                    observed,
                    id,
                    time,
-                   center = TRUE,
-                   scale = TRUE) {
-  data <- .ScaleID(
-    data = .InitialNA(
-      data = .InsertNA(
-        data = .Subset(
-          data = data,
-          id = id,
-          time = time,
-          observed = observed
-        )
-      )
-    ),
-    center = center,
-    scale = scale
+                   insert_na = FALSE,
+                   initial_na = TRUE,
+                   center = FALSE,
+                   scale = FALSE) {
+  data <- .Subset(
+    data = data,
+    id = id,
+    time = time,
+    observed = observed
   )
+  if (insert_na) {
+    data <- .InsertNA(
+      data = data
+    )
+  }
+  if (initial_na) {
+    data <- .InitialNA(
+      data = data
+    )
+  }
+  if (center | scale) {
+    data <- .ScaleID(
+      data = data,
+      center = center,
+      scale = scale
+    )
+  }
   return(
     as.data.frame(
       do.call(
