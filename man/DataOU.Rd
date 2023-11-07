@@ -52,12 +52,13 @@ If \code{scale = TRUE}, standardize by \code{id}.}
 Preliminary Data Preparation
 }
 \examples{
-DataOU(
+data <- DataOU(
   data = bivariate_ou,
   observed = c("y1", "y2"),
   id = "id",
   time = "time"
 )
+summary(data)
 
 }
 \seealso{
