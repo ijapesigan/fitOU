@@ -10,9 +10,9 @@ DataOU(
   id,
   time,
   insert_na = FALSE,
-  initial_na = TRUE,
   center = FALSE,
-  scale = FALSE
+  scale = FALSE,
+  initial_na = TRUE
 )
 }
 \arguments{
@@ -38,15 +38,15 @@ A character string of the name of the TIME variable in the data.}
 \item{insert_na}{Logical.
 Insert \code{NA} to \code{observed} variables for existing \code{time} points.}
 
-\item{initial_na}{Logical.
-Iteratively remove rows where any observed variable
-for the first time point has \code{NA}.}
-
 \item{center}{Logical.
 If \code{center = TRUE}, mean center by \code{id}.}
 
 \item{scale}{Logical.
 If \code{scale = TRUE}, standardize by \code{id}.}
+
+\item{initial_na}{Logical.
+Iteratively remove rows where any observed variable
+for the first time point has \code{NA}.}
 }
 \description{
 Preliminary Data Preparation

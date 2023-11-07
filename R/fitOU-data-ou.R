@@ -18,17 +18,15 @@
   data <- lapply(
     X = ids,
     FUN = function(id) {
-      return(
-        data[
-          which(data[, "id"] == id), ,
-          drop = FALSE
-        ]
-      )
+      data <- data[
+        which(data[, "id"] == id), ,
+        drop = FALSE
+      ]
+      data[is.nan(data)] <- NA
+      return(data)
     }
   )
-  return(
-    data
-  )
+  return(data)
 }
 
 .InsertNA <- function(data) {
@@ -162,6 +160,7 @@
           center = center,
           scale = scale
         )
+        data[is.nan(data)] <- NA
         colnames(data) <- varnames
         return(
           cbind(
@@ -183,6 +182,10 @@
 #'
 #' @param insert_na Logical.
 #'   Insert `NA` to `observed` variables for existing `time` points.
+#' @param center Logical.
+#'   If `center = TRUE`, mean center by `id`.
+#' @param scale Logical.
+#'   If `scale = TRUE`, standardize by `id`.
 #' @param initial_na Logical.
 #'   Iteratively remove rows where any observed variable
 #'   for the first time point has `NA`.
@@ -201,10 +204,6 @@
 #'   A character string of the name of the ID variable in the data.
 #' @param time Character string.
 #'   A character string of the name of the TIME variable in the data.
-#' @param center Logical.
-#'   If `center = TRUE`, mean center by `id`.
-#' @param scale Logical.
-#'   If `scale = TRUE`, standardize by `id`.
 #'
 #' @examples
 #' data <- DataOU(
@@ -223,9 +222,9 @@ DataOU <- function(data,
                    id,
                    time,
                    insert_na = FALSE,
-                   initial_na = TRUE,
                    center = FALSE,
-                   scale = FALSE) {
+                   scale = FALSE,
+                   initial_na = TRUE) {
   data <- .Subset(
     data = data,
     id = id,
@@ -237,19 +236,19 @@ DataOU <- function(data,
       data = data
     )
   }
+  if (center | scale) {
+    data <- .ScaleID(
+      data = data,
+      center = center,
+      scale = scale
+    )
+  }
   if (initial_na) {
     data <- .InitialNA(
       data = data
     )
     data <- .InitialNAN(
       data = data
-    )
-  }
-  if (center | scale) {
-    data <- .ScaleID(
-      data = data,
-      center = center,
-      scale = scale
     )
   }
   return(
