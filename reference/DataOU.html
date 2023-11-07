@@ -63,9 +63,9 @@
 <span>  <span class="va">id</span>,</span>
 <span>  <span class="va">time</span>,</span>
 <span>  insert_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  initial_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  scale <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  initial_na <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -103,12 +103,6 @@ A character string of the name of the TIME variable in the data.</p></dd>
 Insert <code>NA</code> to <code>observed</code> variables for existing <code>time</code> points.</p></dd>
 
 
-<dt>initial_na</dt>
-<dd><p>Logical.
-Iteratively remove rows where any observed variable
-for the first time point has <code>NA</code>.</p></dd>
-
-
 <dt>center</dt>
 <dd><p>Logical.
 If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
@@ -117,6 +111,12 @@ If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
 <dt>scale</dt>
 <dd><p>Logical.
 If <code>scale = TRUE</code>, standardize by <code>id</code>.</p></dd>
+
+
+<dt>initial_na</dt>
+<dd><p>Logical.
+Iteratively remove rows where any observed variable
+for the first time point has <code>NA</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
