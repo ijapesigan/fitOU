@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2023-11-04</h4>
+            <h4 data-toc-skip class="date">2023-11-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ijapesigan/fitOU/blob/HEAD/vignettes/trivariate-ou.Rmd"><code>vignettes/trivariate-ou.Rmd</code></a></small>
       <div class="d-none name"><code>trivariate-ou.Rmd</code></div>
@@ -392,59 +392,59 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">##   .. .. ..@ formula             :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 3</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ param[3] * (param[0] - eta_1) + param[6] * (param[1] - eta_2) +      param[9] * (param[2] - eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a1157d3970&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5384b60&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ param[4] * (param[0] - eta_1) + param[7] * (param[1] - eta_2) +      param[10] * (param[2] - eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a1157d3970&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5384b60&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ param[5] * (param[0] - eta_1) + param[8] * (param[1] - eta_2) +      param[11] * (param[2] - eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a1157d3970&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5384b60&gt; </span></span>
 <span><span class="co">##   .. .. ..@ jacobian            :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 9</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -param[3]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -param[6]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_3 ~ -param[9]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -param[4]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -param[7]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_3 ~ -param[10]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_1 ~ -param[5]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_2 ~ -param[8]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_3 ~ -param[11]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a11572eb30&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b5360ce8&gt; </span></span>
 <span><span class="co">##   .. .. ..@ formulaOriginal     :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 3</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ phi_11 * (mu_1 - eta_1) + phi_12 * (mu_2 - eta_2) + phi_13 * (mu_3 -      eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a1160eadf8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b845d938&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ phi_21 * (mu_1 - eta_1) + phi_22 * (mu_2 - eta_2) + phi_23 * (mu_3 -      eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a1160eadf8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b845d938&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ phi_31 * (mu_1 - eta_1) + phi_32 * (mu_2 - eta_2) + phi_33 * (mu_3 -      eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a1160eadf8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b845d938&gt; </span></span>
 <span><span class="co">##   .. .. ..@ jacobianOriginal    :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 9</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -phi_11</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -phi_12</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_3 ~ -phi_13</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -phi_21</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -phi_22</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_3 ~ -phi_23</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_1 ~ -phi_31</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_2 ~ -phi_32</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_3 ~ -phi_33</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55a115b63ac8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55d4b8172510&gt; </span></span>
 <span><span class="co">##   .. .. ..@ random.names        : chr(0) </span></span>
 <span><span class="co">##   .. .. ..@ theta.formula       : list()</span></span>
 <span><span class="co">##   .. .. ..@ isContinuousTime    : logi TRUE</span></span>
@@ -575,7 +575,7 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">##   .. ..$ timeVar       : chr "time"</span></span>
 <span><span class="co">##   ..@ num_regime    : int 1</span></span>
 <span><span class="co">##   ..@ dim_latent_var: int 3</span></span>
-<span><span class="co">##   ..@ outfile       : chr "/tmp/RtmpQCV0O0/file7e960b07ceb.c"</span></span>
+<span><span class="co">##   ..@ outfile       : chr "/tmp/RtmpR5XuKs/file7106018cc3f.c"</span></span>
 <span><span class="co">##   ..@ verbose       : logi TRUE</span></span>
 <span><span class="co">##   ..@ compileLib    : logi TRUE</span></span>
 <span><span class="co">##   ..@ xstart        : Named num [1:30] -0.06393 -0.0417 -0.00834 0.1 0.1 ...</span></span>
@@ -624,8 +624,8 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 2.111474 </span></span>
-<span><span class="co">## Backend Time: 2.103855</span></span></code></pre>
+<span><span class="co">## Total Time: 4.356734 </span></span>
+<span><span class="co">## Backend Time: 4.345136</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
