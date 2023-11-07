@@ -98,7 +98,7 @@
         }
         has_na <- any(
           is.na(
-            i[1, , drop = FALSE]
+            i[1, ] # i[1, , drop = FALSE]
           )
         )
         if (has_na & nrow(i) == 1) {
@@ -111,6 +111,40 @@
   data[sapply(data, is.null)] <- NULL
   return(data)
 }
+
+.InitialNAN <- function(data) {
+  data <- lapply(
+    X = data,
+    FUN = function(i) {
+      has_nan <- any(
+        is.nan(
+          i[1, ] # i[1, , drop = FALSE]
+        )
+      )
+      if (has_nan & nrow(i) <= 1) {
+        return(NULL)
+      }
+      while (has_nan) {
+        i <- i[-1, , drop = FALSE]
+        if (nrow(i) <= 1) {
+          return(NULL)
+        }
+        has_nan <- any(
+          is.nan(
+            i[1, ]
+          )
+        )
+        if (has_nan & nrow(i) == 1) {
+          return(NULL)
+        }
+      }
+      return(i)
+    }
+  )
+  data[sapply(data, is.null)] <- NULL
+  return(data)
+}
+
 
 .ScaleID <- function(data,
                      center = TRUE,
@@ -173,12 +207,13 @@
 #'   If `scale = TRUE`, standardize by `id`.
 #'
 #' @examples
-#' DataOU(
+#' data <- DataOU(
 #'   data = bivariate_ou,
 #'   observed = c("y1", "y2"),
 #'   id = "id",
 #'   time = "time"
 #' )
+#' summary(data)
 #'
 #' @family Fit Ornstein–Uhlenbeck Model Functions
 #' @keywords fitOU fit
@@ -204,6 +239,9 @@ DataOU <- function(data,
   }
   if (initial_na) {
     data <- .InitialNA(
+      data = data
+    )
+    data <- .InitialNAN(
       data = data
     )
   }
