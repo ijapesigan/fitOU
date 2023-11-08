@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2023-11-07</h4>
+            <h4 data-toc-skip class="date">2023-11-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ijapesigan/fitOU/blob/HEAD/vignettes/bivariate-ou.Rmd"><code>vignettes/bivariate-ou.Rmd</code></a></small>
       <div class="d-none name"><code>bivariate-ou.Rmd</code></div>
@@ -279,35 +279,35 @@ process or Brownian motion, which represents random fluctuations.</p>
 <span><span class="co">##   .. .. ..@ formula             :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 2</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ param[2] * (param[0] - eta_1) + param[4] * (param[1] - eta_2)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f172101b8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf0ff2290&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ param[3] * (param[0] - eta_1) + param[5] * (param[1] - eta_2)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f172101b8&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf0ff2290&gt; </span></span>
 <span><span class="co">##   .. .. ..@ jacobian            :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 4</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -param[2]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f17224d18&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf1004028&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -param[4]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f17224d18&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf1004028&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -param[3]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f17224d18&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf1004028&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -param[5]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f17224d18&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf1004028&gt; </span></span>
 <span><span class="co">##   .. .. ..@ formulaOriginal     :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 2</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ phi_11 * (mu_1 - eta_1) + phi_12 * (mu_2 - eta_2)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f16aa2190&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf087e7e0&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ phi_21 * (mu_1 - eta_1) + phi_22 * (mu_2 - eta_2)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f16aa2190&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf087e7e0&gt; </span></span>
 <span><span class="co">##   .. .. ..@ jacobianOriginal    :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 4</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -phi_11</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f16b613b0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf0942260&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -phi_12</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f16b613b0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf0942260&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -phi_21</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f16b613b0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf0942260&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -phi_22</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x562f16b613b0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x55bcf0942260&gt; </span></span>
 <span><span class="co">##   .. .. ..@ random.names        : chr(0) </span></span>
 <span><span class="co">##   .. .. ..@ theta.formula       : list()</span></span>
 <span><span class="co">##   .. .. ..@ isContinuousTime    : logi TRUE</span></span>
@@ -436,7 +436,7 @@ process or Brownian motion, which represents random fluctuations.</p>
 <span><span class="co">##   .. ..$ timeVar       : chr "time"</span></span>
 <span><span class="co">##   ..@ num_regime    : int 1</span></span>
 <span><span class="co">##   ..@ dim_latent_var: int 2</span></span>
-<span><span class="co">##   ..@ outfile       : chr "/tmp/RtmpEHfYCT/file7e94e488fdd.c"</span></span>
+<span><span class="co">##   ..@ outfile       : chr "/tmp/Rtmp5u119R/file7ea5c1ac06d.c"</span></span>
 <span><span class="co">##   ..@ verbose       : logi TRUE</span></span>
 <span><span class="co">##   ..@ compileLib    : logi TRUE</span></span>
 <span><span class="co">##   ..@ xstart        : Named num [1:16] 2.98 3.3 0.1 0.1 0.1 ...</span></span>
@@ -480,8 +480,8 @@ process or Brownian motion, which represents random fluctuations.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 2.66076 </span></span>
-<span><span class="co">## Backend Time: 2.653544</span></span></code></pre>
+<span><span class="co">## Total Time: 2.580611 </span></span>
+<span><span class="co">## Backend Time: 2.573414</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>

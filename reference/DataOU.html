@@ -65,6 +65,7 @@
 <span>  insert_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  scale_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial_na <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -111,6 +112,12 @@ If <code>center = TRUE</code>, mean center by <code>id</code>.</p></dd>
 <dt>scale</dt>
 <dd><p>Logical.
 If <code>scale = TRUE</code>, standardize by <code>id</code>.</p></dd>
+
+
+<dt>scale_vars</dt>
+<dd><p>Character vector.
+A vector of character strings
+of the names of the observed variables to center/scale.</p></dd>
 
 
 <dt>initial_na</dt>
