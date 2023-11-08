@@ -96,7 +96,7 @@
         }
         has_na <- any(
           is.na(
-            i[1, ] # i[1, , drop = FALSE]
+            i[1, ]
           )
         )
         if (has_na & nrow(i) == 1) {
@@ -116,7 +116,7 @@
     FUN = function(i) {
       has_nan <- any(
         is.nan(
-          i[1, ] # i[1, , drop = FALSE]
+          i[1, ]
         )
       )
       if (has_nan & nrow(i) <= 1) {
@@ -157,10 +157,14 @@
                      scale_vars) {
         varnames <- colnames(i)
         if (is.null(scale_vars)) {
-          scale_vars <- varnames[!(varnames %in% c("id", "time"))]
+          scale_vars <- varnames[
+            !(varnames %in% c("id", "time"))
+          ]
           not_scale_vars <- NULL
         } else {
-          not_scale_vars <- varnames[!(varnames %in% c("id", "time", scale_vars))]
+          not_scale_vars <- varnames[
+            !(varnames %in% c("id", "time", scale_vars))
+          ]
           if (length(not_scale_vars == 0)) {
             not_scale_vars <- NULL
           }
@@ -260,7 +264,7 @@ DataOU <- function(data,
       data = data
     )
   }
-  if (center | scale) {
+  if (center || scale) {
     data <- .ScaleID(
       data = data,
       center = center,
