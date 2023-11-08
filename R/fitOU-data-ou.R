@@ -152,11 +152,11 @@
       X = data,
       FUN = function(i,
                      center,
-                     scale) {
+                     scale,
+                     scale_vars) {
         varnames <- colnames(i)
-        varnames <- varnames[!(varnames %in% c("id", "time"))]
         data <- scale(
-          x = i[, varnames, drop = FALSE],
+          x = i[, scale_vars, drop = FALSE],
           center = center,
           scale = scale
         )
@@ -186,6 +186,9 @@
 #'   If `center = TRUE`, mean center by `id`.
 #' @param scale Logical.
 #'   If `scale = TRUE`, standardize by `id`.
+#' @param scale_vars Character vector.
+#'   A vector of character strings
+#'   of the names of the observed variables to center/scale.
 #' @param initial_na Logical.
 #'   Iteratively remove rows where any observed variable
 #'   for the first time point has `NA`.
@@ -224,6 +227,7 @@ DataOU <- function(data,
                    insert_na = FALSE,
                    center = FALSE,
                    scale = FALSE,
+                   scale_vars,
                    initial_na = TRUE) {
   data <- .Subset(
     data = data,
@@ -240,7 +244,8 @@ DataOU <- function(data,
     data <- .ScaleID(
       data = data,
       center = center,
-      scale = scale
+      scale = scale,
+      scale_vars = scale_vars
     )
   }
   if (initial_na) {
