@@ -12,6 +12,7 @@ DataOU(
   insert_na = FALSE,
   center = FALSE,
   scale = FALSE,
+  scale_vars = NULL,
   initial_na = TRUE
 )
 }
@@ -43,6 +44,10 @@ If \code{center = TRUE}, mean center by \code{id}.}
 
 \item{scale}{Logical.
 If \code{scale = TRUE}, standardize by \code{id}.}
+
+\item{scale_vars}{Character vector.
+A vector of character strings
+of the names of the observed variables to center/scale.}
 
 \item{initial_na}{Logical.
 Iteratively remove rows where any observed variable

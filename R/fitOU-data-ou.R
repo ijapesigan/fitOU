@@ -146,32 +146,52 @@
 
 .ScaleID <- function(data,
                      center = TRUE,
-                     scale = TRUE) {
+                     scale = TRUE,
+                     scale_vars = NULL) {
   return(
     lapply(
       X = data,
       FUN = function(i,
                      center,
-                     scale) {
+                     scale,
+                     scale_vars) {
         varnames <- colnames(i)
-        varnames <- varnames[!(varnames %in% c("id", "time"))]
-        data <- scale(
-          x = i[, varnames, drop = FALSE],
+        if (is.null(scale_vars)) {
+          scale_vars <- varnames[!(varnames %in% c("id", "time"))]
+          not_scale_vars <- NULL
+        } else {
+          not_scale_vars <- varnames[!(varnames %in% c("id", "time", scale_vars))]
+          if (length(not_scale_vars == 0)) {
+            not_scale_vars <- NULL
+          }
+        }
+        scaled_data <- scale(
+          x = i[, scale_vars, drop = FALSE],
           center = center,
           scale = scale
         )
-        data[is.nan(data)] <- NA
-        colnames(data) <- varnames
-        return(
-          cbind(
+        colnames(scaled_data) <- scale_vars
+        if (is.null(not_scale_vars)) {
+          data <- cbind(
             id = i[, "id"],
             time = i[, "time"],
-            data
+            scaled_data
           )
-        )
+        } else {
+          data <- cbind(
+            id = i[, "id"],
+            time = i[, "time"],
+            scaled_data,
+            i[, not_scale_vars]
+          )
+        }
+        data <- data[, varnames]
+        data[is.nan(data)] <- NA
+        return(data)
       },
       center = center,
-      scale = scale
+      scale = scale,
+      scale_vars = scale_vars
     )
   )
 }
@@ -186,6 +206,9 @@
 #'   If `center = TRUE`, mean center by `id`.
 #' @param scale Logical.
 #'   If `scale = TRUE`, standardize by `id`.
+#' @param scale_vars Character vector.
+#'   A vector of character strings
+#'   of the names of the observed variables to center/scale.
 #' @param initial_na Logical.
 #'   Iteratively remove rows where any observed variable
 #'   for the first time point has `NA`.
@@ -224,6 +247,7 @@ DataOU <- function(data,
                    insert_na = FALSE,
                    center = FALSE,
                    scale = FALSE,
+                   scale_vars = NULL,
                    initial_na = TRUE) {
   data <- .Subset(
     data = data,
@@ -240,7 +264,8 @@ DataOU <- function(data,
     data <- .ScaleID(
       data = data,
       center = center,
-      scale = scale
+      scale = scale,
+      scale_vars = scale_vars
     )
   }
   if (initial_na) {
