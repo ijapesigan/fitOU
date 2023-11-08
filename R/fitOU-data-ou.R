@@ -146,14 +146,15 @@
 
 .ScaleID <- function(data,
                      center = TRUE,
-                     scale = TRUE) {
+                     scale = TRUE,
+                     scale_vars = NULL) {
   return(
     lapply(
       X = data,
       FUN = function(i,
                      center,
                      scale,
-                     scale_vars = NULL) {
+                     scale_vars) {
         varnames <- colnames(i)
         if (is.null(scale_vars)) {
           scale_vars <- varnames[!(varnames %in% c("id", "time"))]
@@ -189,7 +190,8 @@
         return(data)
       },
       center = center,
-      scale = scale
+      scale = scale,
+      scale_vars = scale_vars
     )
   )
 }
