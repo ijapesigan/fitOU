@@ -153,22 +153,40 @@
       FUN = function(i,
                      center,
                      scale,
-                     scale_vars) {
+                     scale_vars = NULL) {
         varnames <- colnames(i)
-        data <- scale(
+        if (is.null(scale_vars)) {
+          scale_vars <- varnames[!(varnames %in% c("id", "time"))]
+          not_scale_vars <- NULL
+        } else {
+          not_scale_vars <- varnames[!(varnames %in% c("id", "time", scale_vars))]
+          if (length(not_scale_vars == 0)) {
+            not_scale_vars <- NULL
+          }
+        }
+        scaled_data <- scale(
           x = i[, scale_vars, drop = FALSE],
           center = center,
           scale = scale
         )
-        data[is.nan(data)] <- NA
-        colnames(data) <- varnames
-        return(
-          cbind(
+        colnames(scaled_data) <- scale_vars
+        if (is.null(not_scale_vars)) {
+          data <-  cbind(
             id = i[, "id"],
             time = i[, "time"],
-            data
+            scaled_data
           )
-        )
+        } else {
+          data <- cbind(
+            id = i[, "id"],
+            time = i[, "time"],
+            scaled_data,
+            i[, not_scale_vars]
+          )
+        }
+        data <- data[, varnames]
+        data[is.nan(data)] <- NA
+        return(data)
       },
       center = center,
       scale = scale
@@ -227,7 +245,7 @@ DataOU <- function(data,
                    insert_na = FALSE,
                    center = FALSE,
                    scale = FALSE,
-                   scale_vars,
+                   scale_vars = NULL,
                    initial_na = TRUE) {
   data <- .Subset(
     data = data,
