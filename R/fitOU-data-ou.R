@@ -147,35 +147,64 @@
 .ScaleID <- function(data,
                      center = TRUE,
                      scale = TRUE,
-                     scale_vars = NULL) {
+                     skip = NULL) {
   return(
     lapply(
       X = data,
       FUN = function(i,
                      center,
                      scale,
-                     scale_vars) {
+                     skip) {
         varnames <- colnames(i)
-        if (is.null(scale_vars)) {
-          scale_vars <- varnames[
-            !(varnames %in% c("id", "time"))
+        if (is.null(skip)) {
+          scale_data <- i[
+            ,
+            varnames[
+              !(varnames %in% c("id", "time"))
+            ]
           ]
-          not_scale_vars <- NULL
         } else {
-          not_scale_vars <- varnames[
-            !(varnames %in% c("id", "time", scale_vars))
+          stopifnot(
+            skip %in% varnames
+          )
+          skip_data <- i[, skip, drop = FALSE]
+          scale_data <- i[
+            ,
+            varnames[
+              !(varnames %in% c("id", "time", skip))
+            ]
           ]
-          if (length(not_scale_vars == 0)) {
-            not_scale_vars <- NULL
-          }
         }
-        scaled_data <- scale(
-          x = i[, scale_vars, drop = FALSE],
-          center = center,
-          scale = scale
-        )
-        colnames(scaled_data) <- scale_vars
-        if (is.null(not_scale_vars)) {
+        if (center) {
+          scaled_data <- apply(
+            X = scale_data,
+            MARGIN = 2,
+            FUN = function(y) {
+              y - mean(y, na.rm = TRUE)
+            }
+          )
+        }
+        if (scale) {
+          # prevent NaN
+          scaled_data <- apply(
+            X = scale_data,
+            MARGIN = 2,
+            FUN = function(y) {
+              (
+                y - mean(y, na.rm = TRUE)
+              ) / sd(
+                y,
+                na.rm = TRUE
+              )^as.logical(
+                sd(
+                  y,
+                  na.rm = TRUE
+                )
+              )
+            }
+          )
+        }
+        if (is.null(skip)) {
           data <- cbind(
             id = i[, "id"],
             time = i[, "time"],
@@ -186,16 +215,14 @@
             id = i[, "id"],
             time = i[, "time"],
             scaled_data,
-            i[, not_scale_vars]
+            skip_data
           )
         }
-        data <- data[, varnames]
-        data[is.nan(data)] <- NA
         return(data)
       },
       center = center,
       scale = scale,
-      scale_vars = scale_vars
+      skip = skip
     )
   )
 }
@@ -210,9 +237,9 @@
 #'   If `center = TRUE`, mean center by `id`.
 #' @param scale Logical.
 #'   If `scale = TRUE`, standardize by `id`.
-#' @param scale_vars Character vector.
+#' @param skip Character vector.
 #'   A vector of character strings
-#'   of the names of the observed variables to center/scale.
+#'   of the names of the observed variables to skip centering/scaling.
 #' @param initial_na Logical.
 #'   Iteratively remove rows where any observed variable
 #'   for the first time point has `NA`.
@@ -251,7 +278,7 @@ DataOU <- function(data,
                    insert_na = FALSE,
                    center = FALSE,
                    scale = FALSE,
-                   scale_vars = NULL,
+                   skip = NULL,
                    initial_na = TRUE) {
   data <- .Subset(
     data = data,
@@ -264,12 +291,12 @@ DataOU <- function(data,
       data = data
     )
   }
-  if (center || scale) {
+  if (any(c(center, scale))) {
     data <- .ScaleID(
       data = data,
       center = center,
       scale = scale,
-      scale_vars = scale_vars
+      skip = skip
     )
   }
   if (initial_na) {
@@ -280,12 +307,22 @@ DataOU <- function(data,
       data = data
     )
   }
+  data <- do.call(
+    what = "rbind",
+    args = data
+  )
+  data <- data[
+    ,
+    c(
+      "id",
+      "time",
+      observed
+    ),
+    drop = FALSE
+  ]
   return(
     as.data.frame(
-      do.call(
-        what = "rbind",
-        args = data
-      )
+      data
     )
   )
 }
