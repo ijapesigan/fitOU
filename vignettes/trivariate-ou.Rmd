@@ -1,0 +1,885 @@
+---
+title: "Trivariate Ornstein–Uhlenbeck Model"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "2023-11-08"
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @Chow-Losardo-Park-etal-2023
+  @Ou-Hunter-Chow-2019
+  @Uhlenbeck-Ornstein-1930
+  @Deboeck-Preacher-2015
+  @Pesigan-Cheung-2023
+  @Pesigan-Sun-Cheung-2023
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Trivariate Ornstein–Uhlenbeck Model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- vignettes/trivariate-ou.Rmd is generated from .setup/vignettes/trivariate-ou.Rmd.orig. Please edit that file -->
+
+## The Ornstein–Uhlenbeck Model
+
+The measurement model is given by
+
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\nu}
+  +
+  \boldsymbol{\Lambda}
+  \boldsymbol{\eta}_{i, t} 
+  +
+  \boldsymbol{\varepsilon}_{i, t}
+  \quad
+  \mathrm{with}
+  \quad
+  \boldsymbol{\varepsilon}_{i, t}
+  \sim
+  \mathcal{N}
+  \left(
+  \mathbf{0},
+  \boldsymbol{\Theta}
+  \right)
+\end{equation}
+
+where $\mathbf{y}_{i, t}$, $\boldsymbol{\eta}_{i, t}$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+are random variables and $\boldsymbol{\nu}$,
+$\boldsymbol{\Lambda}$,
+and $\boldsymbol{\Theta}$ are model parameters.
+$\mathbf{y}_{i, t}$ is a vector of observed random variables
+at time $t$ and individual $i$,
+$\boldsymbol{\eta}_{i, t}$ is a vector of latent random variables
+at time $t$ and individual $i$,
+and $\boldsymbol{\varepsilon}_{i, t}$
+is a vector of random measurement errors
+at time $t$ and individual $i$,
+while $\boldsymbol{\nu}$ is a vector of intercept,
+$\boldsymbol{\Lambda}$ is a matrix of factor loadings,
+and $\boldsymbol{\Theta}$ is the covariance matrix of
+$\boldsymbol{\varepsilon}$.
+
+The dynamic structure is given by
+
+\begin{equation}
+  \mathrm{d} \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\Phi}
+  \left(
+  \boldsymbol{\mu}
+  -
+  \boldsymbol{\eta}_{i, t}
+  \right)
+  \mathrm{d}t
+  +
+  \boldsymbol{\Sigma}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+
+where $\boldsymbol{\mu}$ is the long-term mean or equilibrium level,
+$\boldsymbol{\Phi}$ is the rate of mean reversion,
+determining how quickly the variable returns to its mean,
+$\boldsymbol{\Sigma}$ is the matrix of volatility
+or randomness in the process, and $\mathrm{d}\boldsymbol{W}$
+is a Wiener process or Brownian motion,
+which represents random fluctuations.
+
+## Data Generation
+
+The transition matrix used in this examples was taken from @Deboeck-Preacher-2015.
+
+### Notation
+
+
+
+Let $t = 500$ be the number of time points and $n = 5$ be the number of individuals.
+
+Let the measurement model intecept vector $\boldsymbol{\nu}$ be given by
+
+\begin{equation}
+\boldsymbol{\nu}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+  0 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the factor loadings matrix $\boldsymbol{\Lambda}$ be given by
+
+\begin{equation}
+\boldsymbol{\Lambda}
+=
+\left(
+\begin{array}{ccc}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the measurement error covariance matrix $\boldsymbol{\Theta}$ be given by
+
+\begin{equation}
+\boldsymbol{\Theta}
+=
+\left(
+\begin{array}{ccc}
+  0.5 & 0 & 0 \\
+  0 & 0.5 & 0 \\
+  0 & 0 & 0.5 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the initial condition
+$\boldsymbol{\eta}_{0}$
+be given by
+
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+  0 \\
+\end{array}
+\right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{ccc}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the long-term mean vector $\boldsymbol{\mu}$ be given by
+
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  0 \\
+  0 \\
+  0 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the rate of mean reversion matrix $\boldsymbol{\Phi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{ccc}
+  0.357 & 0 & 0 \\
+  -0.771 & 0.511 & 0 \\
+  0.45 & -0.729 & 0.693 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the dynamic process noise covariance matrix $\boldsymbol{\Sigma}$ be given by
+
+\begin{equation}
+\boldsymbol{\Sigma}
+=
+\left(
+\begin{array}{ccc}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{array}
+\right) .
+\end{equation}
+
+Let $\Delta_{t} = 0.1$.
+
+### R Function Arguments
+
+
+```r
+n
+```
+
+```
+## [1] 5
+```
+
+```r
+time
+```
+
+```
+## [1] 500
+```
+
+```r
+delta_t
+```
+
+```
+## [1] 0.1
+```
+
+```r
+mu0
+```
+
+```
+## [1] 0 0 0
+```
+
+```r
+sigma0
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1
+```
+
+```r
+mu
+```
+
+```
+## [1] 0 0 0
+```
+
+```r
+phi
+```
+
+```
+##        [,1]   [,2]  [,3]
+## [1,]  0.357  0.000 0.000
+## [2,] -0.771  0.511 0.000
+## [3,]  0.450 -0.729 0.693
+```
+
+```r
+sigma
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1
+```
+
+```r
+nu
+```
+
+```
+## [1] 0 0 0
+```
+
+```r
+lambda
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    0    1    0
+## [3,]    0    0    1
+```
+
+```r
+theta
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]  0.5  0.0  0.0
+## [2,]  0.0  0.5  0.0
+## [3,]  0.0  0.0  0.5
+```
+
+### Using the simStateSpace::SimSSMVARFixed Function to Simulate Data
+
+
+```r
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("ijapesigan/simStateSpace")
+```
+
+
+```r
+library(simStateSpace)
+set.seed(42)
+data <- Sim2Matrix(
+  SimSSMOUFixed(
+    n = n,
+    mu0 = mu0,
+    sigma0_sqrt = chol(sigma0),
+    mu = mu,
+    phi = phi,
+    sigma_sqrt = chol(sigma),
+    nu = nu,
+    lambda = lambda,
+    theta_sqrt = chol(theta),
+    delta_t = delta_t,
+    time = time,
+    burn_in = 0
+  )
+)
+head(data)
+```
+
+```
+##              y1        y2       y3 time id
+## [1,] -0.2452235 0.3791894 2.916196  0.0  1
+## [2,] -0.6408937 1.7824870 1.400803  0.1  1
+## [3,] -0.9755917 2.0512793 2.498214  0.2  1
+## [4,] -2.5120801 0.7969752 2.234649  0.3  1
+## [5,] -1.7204259 0.6404276 2.053562  0.4  1
+## [6,]  0.4753620 1.3252011 2.114403  0.5  1
+```
+
+## Prepare Data
+
+
+```r
+data <- fitOU::DataOU(
+  data = data,
+  observed = c("y1", "y2", "y3"),
+  id = "id",
+  time = "time",
+  scale = TRUE
+)
+summary(data)
+```
+
+```
+##        id         time             y1                 y2            
+##  Min.   :1   Min.   : 0.00   Min.   :-3.14116   Min.   :-2.7969773  
+##  1st Qu.:2   1st Qu.:12.47   1st Qu.:-0.70902   1st Qu.:-0.7031893  
+##  Median :3   Median :24.95   Median :-0.02825   Median :-0.0007837  
+##  Mean   :3   Mean   :24.95   Mean   : 0.00000   Mean   : 0.0000000  
+##  3rd Qu.:4   3rd Qu.:37.42   3rd Qu.: 0.71067   3rd Qu.: 0.6679882  
+##  Max.   :5   Max.   :49.90   Max.   : 3.37182   Max.   : 3.0945399  
+##        y3          
+##  Min.   :-3.46428  
+##  1st Qu.:-0.69862  
+##  Median : 0.01772  
+##  Mean   : 0.00000  
+##  3rd Qu.: 0.72016  
+##  Max.   : 2.95714
+```
+
+## Specify Model
+
+
+```r
+model <- fitOU::ModelOU(
+  data = data,
+  observed = c("y1", "y2", "y3"),
+  id = "id",
+  time = "time"
+)
+str(model)
+```
+
+```
+## Formal class 'dynrModel' [package "dynr"] with 17 slots
+##   ..@ dynamics      :Formal class 'dynrDynamicsFormula' [package "dynr"] with 13 slots
+##   .. .. ..@ c.string            : chr "void function_dx_dt(double t, size_t regime, const gsl_vector *x, double *param, size_t n_param, const gsl_vect"| __truncated__
+##   .. .. ..@ startval            : Named num [1:12] -2.06e-18 7.32e-18 -4.31e-18 1.00e-01 1.00e-01 ...
+##   .. .. .. ..- attr(*, "names")= chr [1:12] "mu_1" "mu_2" "mu_3" "phi_11" ...
+##   .. .. ..@ paramnames          : chr [1:12] "mu_1" "mu_2" "mu_3" "phi_11" ...
+##   .. .. ..@ formula             :List of 1
+##   .. .. .. ..$ :List of 3
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ param[3] * (param[0] - eta_1) + param[6] * (param[1] - eta_2) +      param[9] * (param[2] - eta_3)
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x56363023bf88> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ param[4] * (param[0] - eta_1) + param[7] * (param[1] - eta_2) +      param[10] * (param[2] - eta_3)
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x56363023bf88> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ param[5] * (param[0] - eta_1) + param[8] * (param[1] - eta_2) +      param[11] * (param[2] - eta_3)
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x56363023bf88> 
+##   .. .. ..@ jacobian            :List of 1
+##   .. .. .. ..$ :List of 9
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -param[3]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -param[6]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_3 ~ -param[9]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -param[4]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -param[7]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_3 ~ -param[10]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_1 ~ -param[5]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_2 ~ -param[8]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_3 ~ -param[11]
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x5636301bffb0> 
+##   .. .. ..@ formulaOriginal     :List of 1
+##   .. .. .. ..$ :List of 3
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ phi_11 * (mu_1 - eta_1) + phi_12 * (mu_2 - eta_2) + phi_13 * (mu_3 -      eta_3)
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x56363337f288> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ phi_21 * (mu_1 - eta_1) + phi_22 * (mu_2 - eta_2) + phi_23 * (mu_3 -      eta_3)
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x56363337f288> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ phi_31 * (mu_1 - eta_1) + phi_32 * (mu_2 - eta_2) + phi_33 * (mu_3 -      eta_3)
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x56363337f288> 
+##   .. .. ..@ jacobianOriginal    :List of 1
+##   .. .. .. ..$ :List of 9
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -phi_11
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -phi_12
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_3 ~ -phi_13
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -phi_21
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -phi_22
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_3 ~ -phi_23
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_1 ~ -phi_31
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_2 ~ -phi_32
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_3 ~ -phi_33
+##   .. .. .. .. .. .. ..- attr(*, ".Environment")=<environment: 0x563632e79718> 
+##   .. .. ..@ random.names        : chr(0) 
+##   .. .. ..@ theta.formula       : list()
+##   .. .. ..@ isContinuousTime    : logi TRUE
+##   .. .. ..@ saem                : logi(0) 
+##   .. .. ..@ random.params.inicov: num[0 , 0 ] 
+##   .. .. ..@ random.values.inicov: num[0 , 0 ] 
+##   ..@ measurement   :Formal class 'dynrMeasurement' [package "dynr"] with 12 slots
+##   .. .. ..@ c.string   : chr "void function_measurement(size_t t, size_t regime, double *param, const gsl_vector *eta, const gsl_vector *co_v"| __truncated__
+##   .. .. ..@ startval   : num(0) 
+##   .. .. ..@ paramnames : chr(0) 
+##   .. .. ..@ values.load:List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 1 0 0 0 1 0 0 0 1
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : chr [1:3] "y1" "y2" "y3"
+##   .. .. .. .. .. ..$ : chr [1:3] "eta_1" "eta_2" "eta_3"
+##   .. .. ..@ params.load:List of 1
+##   .. .. .. ..$ : int [1:3, 1:3] 0 0 0 0 0 0 0 0 0
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : chr [1:3] "y1" "y2" "y3"
+##   .. .. .. .. .. ..$ : chr [1:3] "eta_1" "eta_2" "eta_3"
+##   .. .. ..@ values.exo : list()
+##   .. .. ..@ params.exo : list()
+##   .. .. ..@ values.int : list()
+##   .. .. ..@ params.int : list()
+##   .. .. ..@ state.names: chr [1:3] "eta_1" "eta_2" "eta_3"
+##   .. .. ..@ obs.names  : chr [1:3] "y1" "y2" "y3"
+##   .. .. ..@ exo.names  : chr(0) 
+##   ..@ noise         :Formal class 'dynrNoise' [package "dynr"] with 9 slots
+##   .. .. ..@ c.string               : chr "void function_noise_cov(size_t t, size_t regime, double *param, gsl_matrix *y_noise_cov, gsl_matrix *eta_noise_"| __truncated__
+##   .. .. ..@ startval               : num [1:9] 0 0 0 0 0 0 0 0 0
+##   .. .. ..@ paramnames             : chr [1:9] "sigma_11" "sigma_12" "sigma_13" "sigma_22" ...
+##   .. .. ..@ values.latent          :List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 1 0 0 0 1 0 0 0 1
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ params.latent          :List of 1
+##   .. .. .. ..$ : int [1:3, 1:3] 13 14 15 14 16 17 15 17 18
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ values.observed        :List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 1 0 0 0 1 0 0 0 1
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ params.observed        :List of 1
+##   .. .. .. ..$ : int [1:3, 1:3] 19 0 0 0 20 0 0 0 21
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ values.latent.inv.ldl  :List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 0 0 0 0 0 0 0 0 0
+##   .. .. ..@ values.observed.inv.ldl:List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 0 0 0 0 0 0 0 0 0
+##   ..@ initial       :Formal class 'dynrInitial' [package "dynr"] with 13 slots
+##   .. .. ..@ c.string             : chr "void function_initial_condition(double *param, gsl_vector **co_variate, gsl_vector **pr_0, gsl_vector **eta_0, "| __truncated__
+##   .. .. ..@ startval             : num [1:9] 0 0 0 0 0 0 0 0 0
+##   .. .. ..@ paramnames           : chr [1:9] "mu0_1" "mu0_2" "mu0_3" "sigma0_11" ...
+##   .. .. ..@ values.inistate      :List of 1
+##   .. .. .. ..$ : num [1:3, 1] 0 0 0
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ params.inistate      :List of 1
+##   .. .. .. ..$ : int [1:3, 1] 22 23 24
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ values.inicov        :List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 1 0 0 0 1 0 0 0 1
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ values.inicov.inv.ldl:List of 1
+##   .. .. .. ..$ : num [1:3, 1:3] 0 0 0 0 0 0 0 0 0
+##   .. .. ..@ params.inicov        :List of 1
+##   .. .. .. ..$ : int [1:3, 1:3] 25 26 27 26 28 29 27 29 30
+##   .. .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. .. .. .. ..$ : NULL
+##   .. .. ..@ values.regimep       : num [1, 1] 1
+##   .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. ..$ : NULL
+##   .. .. .. .. ..$ : NULL
+##   .. .. ..@ params.regimep       : int [1, 1] 0
+##   .. .. .. ..- attr(*, "dimnames")=List of 2
+##   .. .. .. .. ..$ : NULL
+##   .. .. .. .. ..$ : NULL
+##   .. .. ..@ covariates           : chr(0) 
+##   .. .. ..@ deviation            : logi FALSE
+##   .. .. ..@ refRow               : num(0) 
+##   ..@ regimes       :Formal class 'dynrRegimes' [package "dynr"] with 8 slots
+##   .. .. ..@ c.string  : chr(0) 
+##   .. .. ..@ startval  : num(0) 
+##   .. .. ..@ paramnames: chr(0) 
+##   .. .. ..@ values    : num[0 , 0 ] 
+##   .. .. ..@ params    : num[0 , 0 ] 
+##   .. .. ..@ covariates: chr(0) 
+##   .. .. ..@ deviation : logi(0) 
+##   .. .. ..@ refRow    : num(0) 
+##   ..@ transform     :Formal class 'dynrTrans' [package "dynr"] with 9 slots
+##   .. .. ..@ c.string     : chr "/**\n * This function modifies some of the parameters so that it satisfies the model constraint.\n * Do not inc"| __truncated__
+##   .. .. ..@ startval     : num(0) 
+##   .. .. ..@ paramnames   : chr(0) 
+##   .. .. ..@ tfun         :function (vec)  
+##   .. .. ..@ inv.tfun     :function (vec)  
+##   .. .. ..@ inv.tfun.full:function (vec)  
+##   .. .. ..@ formula.trans: list()
+##   .. .. ..@ formula.inv  : list()
+##   .. .. ..@ transCcode   : logi FALSE
+##   ..@ data          :List of 8
+##   .. ..$ id            : num [1:2500] 1 1 1 1 1 1 1 1 1 1 ...
+##   .. ..$ tstart        : int [1:6] 0 500 1000 1500 2000 2500
+##   .. ..$ time          : num [1:2500] 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 ...
+##   .. ..$ observed      :'data.frame':	2500 obs. of  3 variables:
+##   .. .. ..$ obs1: num [1:2500] 0.2614 -0.0895 -0.3863 -1.7489 -1.0469 ...
+##   .. .. ..$ obs2: num [1:2500] 0.781 1.676 1.847 1.048 0.948 ...
+##   .. .. ..$ obs3: num [1:2500] 2.18 1.17 1.9 1.73 1.61 ...
+##   .. ..$ observed.names: chr [1:3] "y1" "y2" "y3"
+##   .. ..$ original.data :'data.frame':	2500 obs. of  5 variables:
+##   .. .. ..$ id  : num [1:2500] 1 1 1 1 1 1 1 1 1 1 ...
+##   .. .. ..$ time: num [1:2500] 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 ...
+##   .. .. ..$ y1  : num [1:2500] 0.2614 -0.0895 -0.3863 -1.7489 -1.0469 ...
+##   .. .. ..$ y2  : num [1:2500] 0.781 1.676 1.847 1.048 0.948 ...
+##   .. .. ..$ y3  : num [1:2500] 2.18 1.17 1.9 1.73 1.61 ...
+##   .. ..$ idVar         : chr "id"
+##   .. ..$ timeVar       : chr "time"
+##   ..@ num_regime    : int 1
+##   ..@ dim_latent_var: int 3
+##   ..@ outfile       : chr "/tmp/Rtmpn0gf3F/file71b2e5a475b.c"
+##   ..@ verbose       : logi TRUE
+##   ..@ compileLib    : logi TRUE
+##   ..@ xstart        : Named num [1:30] -2.06e-18 7.32e-18 -4.31e-18 1.00e-01 1.00e-01 ...
+##   .. ..- attr(*, "names")= chr [1:30] "mu_1" "mu_2" "mu_3" "phi_11" ...
+##   ..@ ub            : Named num [1:30] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..- attr(*, "names")= chr [1:30] "mu_1" "mu_2" "mu_3" "phi_11" ...
+##   ..@ lb            : Named num [1:30] NA NA NA NA NA NA NA NA NA NA ...
+##   .. ..- attr(*, "names")= chr [1:30] "mu_1" "mu_2" "mu_3" "phi_11" ...
+##   ..@ options       :List of 6
+##   .. ..$ xtol_rel: num 1e-07
+##   .. ..$ stopval : num -9999
+##   .. ..$ ftol_rel: num 1e-10
+##   .. ..$ ftol_abs: num -1
+##   .. ..$ maxeval : int 500
+##   .. ..$ maxtime : num -1
+##   ..@ param.names   : chr [1:30] "mu_1" "mu_2" "mu_3" "phi_11" ...
+```
+
+
+## Model Fitting
+
+
+```r
+results <- fitOU::FitOU(
+  model = model,
+  retry = 100,
+  verbose = FALSE
+)
+```
+
+```
+## [1] "Get ready!!!!"
+## using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+## Optimization function called.
+## Starting Hessian calculation ...
+## Finished Hessian calculation.
+## Original exit flag:  3 
+## Modified exit flag:  3 
+## Optimization terminated successfully: ftol_rel or ftol_abs was reached. 
+## Original fitted parameters:  0.0004379577 0.01441749 -0.0001232218 0.6173223 
+## -0.5302659 0.3832594 0.007924459 0.4692759 -0.7381519 0.02746771 0.05964942 
+## 0.6847355 -0.2562998 -0.02483386 -0.1080333 -0.7944983 -0.1415563 -0.6766126 
+## -0.9918082 -1.443941 -1.262779 0.003718148 -0.1016923 0.8071665 -0.1437084 
+## -0.4936282 0.1650513 -0.3476991 0.09845753 -0.6657819 
+## 
+## Transformed fitted parameters:  0.0004379577 0.01441749 -0.0001232218 0.6173223 
+## -0.5302659 0.3832594 0.007924459 0.4692759 -0.7381519 0.02746771 0.05964942 
+## 0.6847355 0.7739099 -0.01921917 -0.083608 0.4522852 -0.06187994 0.5264219 
+## 0.3709054 0.2359958 0.2828668 0.003718148 -0.1016923 0.8071665 0.8661403 
+## -0.4275513 0.1429575 0.9173628 -0.001026201 0.5443138 
+## 
+## Doing end processing
+## Successful trial
+## Total Time: 2.918194 
+## Backend Time: 2.909105
+```
+
+## Summary
+
+
+```r
+summary(results)
+```
+
+```
+## Coefficients:
+##             Estimate Std. Error t value   ci.lower   ci.upper Pr(>|t|)    
+## mu_1       0.0004380  0.0885593   0.005 -0.1731351  0.1740110   0.4980    
+## mu_2       0.0144175  0.1194742   0.121 -0.2197477  0.2485826   0.4520    
+## mu_3      -0.0001232  0.1036323  -0.001 -0.2032388  0.2029923   0.4995    
+## phi_11     0.6173223  0.1282184   4.815  0.3660188  0.8686258   <2e-16 ***
+## phi_21    -0.5302659  0.0944381  -5.615 -0.7153612 -0.3451707   <2e-16 ***
+## phi_31     0.3832594  0.1009640   3.796  0.1853737  0.5811452   0.0001 ***
+## phi_12     0.0079245  0.1073591   0.074 -0.2024955  0.2183444   0.4706    
+## phi_22     0.4692759  0.0874072   5.369  0.2979610  0.6405908   <2e-16 ***
+## phi_32    -0.7381519  0.0900430  -8.198 -0.9146329 -0.5616709   <2e-16 ***
+## phi_13     0.0274677  0.0962564   0.285 -0.1611914  0.2161268   0.3877    
+## phi_23     0.0596494  0.0757132   0.788 -0.0887458  0.2080446   0.2154    
+## phi_33     0.6847355  0.0853966   8.018  0.5173613  0.8521097   <2e-16 ***
+## sigma_11   0.7739099  0.0988683   7.828  0.5801316  0.9676882   <2e-16 ***
+## sigma_12  -0.0192192  0.0466238  -0.412 -0.1106001  0.0721617   0.3401    
+## sigma_13  -0.0836080  0.0499341  -1.674 -0.1814770  0.0142610   0.0471 *  
+## sigma_22   0.4522852  0.0562172   8.045  0.3421016  0.5624687   <2e-16 ***
+## sigma_23  -0.0618799  0.0379439  -1.631 -0.1362487  0.0124888   0.0515 .  
+## sigma_33   0.5264219  0.0651789   8.077  0.3986736  0.6541702   <2e-16 ***
+## theta_11   0.3709054  0.0145843  25.432  0.3423208  0.3994900   <2e-16 ***
+## theta_22   0.2359958  0.0092720  25.452  0.2178230  0.2541686   <2e-16 ***
+## theta_33   0.2828668  0.0110438  25.613  0.2612213  0.3045123   <2e-16 ***
+## mu0_1      0.0037181  0.4584483   0.008 -0.8948240  0.9022603   0.4968    
+## mu0_2     -0.1016923  0.4550793  -0.223 -0.9936314  0.7902467   0.4116    
+## mu0_3      0.8071665  0.3636604   2.220  0.0944053  1.5199277   0.0133 *  
+## sigma0_11  0.8661403  0.6420502   1.349 -0.3922549  2.1245355   0.0887 .  
+## sigma0_12 -0.4275513  0.4882472  -0.876 -1.3844981  0.5293956   0.1906    
+## sigma0_13  0.1429575  0.3736756   0.383 -0.5894332  0.8753483   0.3510    
+## sigma0_22  0.9173628  0.6479921   1.416 -0.3526784  2.1874039   0.0785 .  
+## sigma0_23 -0.0010262  0.3664452  -0.003 -0.7192456  0.7171932   0.4989    
+## sigma0_33  0.5443138  0.4246690   1.282 -0.2880221  1.3766497   0.1000 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## -2 log-likelihood value at convergence = 14935.85
+## AIC = 14995.85
+## BIC = 15170.57
+```
+
+
+```
+## [1]  0.003718148 -0.101692318  0.807166477
+```
+
+### Estimated Coefficients
+
+
+```r
+mu_hat
+```
+
+```
+## [1]  0.0004379577  0.0144174939 -0.0001232218
+```
+
+```r
+phi_hat
+```
+
+```
+##            [,1]         [,2]       [,3]
+## [1,]  0.6173223  0.007924459 0.02746771
+## [2,] -0.5302659  0.469275891 0.05964942
+## [3,]  0.3832594 -0.738151900 0.68473547
+```
+
+```r
+sigma_hat
+```
+
+```
+##             [,1]        [,2]        [,3]
+## [1,]  0.77390990 -0.01921917 -0.08360800
+## [2,] -0.01921917  0.45228516 -0.06187994
+## [3,] -0.08360800 -0.06187994  0.52642187
+```
+
+```r
+mu0_hat
+```
+
+```
+## [1]  0.003718148 -0.101692318  0.807166477
+```
+
+```r
+sigma0_hat
+```
+
+```
+##            [,1]         [,2]         [,3]
+## [1,]  0.8661403 -0.427551269  0.142957545
+## [2,] -0.4275513  0.917362768 -0.001026201
+## [3,]  0.1429575 -0.001026201  0.544313802
+```
+
+```r
+beta_var1_hat <- as.matrix(
+  Matrix::expm(-1 * phi_hat)
+)
+beta_var1_hat
+```
+
+```
+##             [,1]        [,2]        [,3]
+## [1,]  0.53996489 -0.01018005 -0.01409553
+## [2,]  0.31253339  0.61037874 -0.03736024
+## [3,] -0.09031585  0.41334956  0.49404194
+```
+
+### Discrepancy Between Estimated and Population Coefficients
+
+
+```r
+abs(mu - mu_hat)
+```
+
+```
+## [1] 0.0004379577 0.0144174939 0.0001232218
+```
+
+```r
+abs(phi - phi_hat)
+```
+
+```
+##            [,1]        [,2]        [,3]
+## [1,] 0.26032230 0.007924459 0.027467711
+## [2,] 0.24073407 0.041724109 0.059649418
+## [3,] 0.06674055 0.009151900 0.008264526
+```
+
+```r
+abs(beta_var1 - beta_var1_hat)
+```
+
+```
+##             [,1]       [,2]        [,3]
+## [1,] 0.159807611 0.01018005 0.014095525
+## [2,] 0.187500738 0.01048335 0.037360243
+## [3,] 0.009722529 0.01351394 0.006031657
+```
+
+```r
+abs(sigma - sigma_hat)
+```
+
+```
+##            [,1]       [,2]       [,3]
+## [1,] 0.22609010 0.01921917 0.08360800
+## [2,] 0.01921917 0.54771484 0.06187994
+## [3,] 0.08360800 0.06187994 0.47357813
+```
+
+
+
+
+
+
+
+## Monte Carlo Confidence Interval for Functions of Parameters
+
+
+
+
+```r
+install.packages("semmcci")
+```
+
+
+```r
+def <- list(
+  # note that the matrix of interest is -Phi
+  "-phi_21 * -phi_32"
+)
+semmcci::MCGeneric(
+  object = results,
+  R = 20000L,
+  def = def,
+  alpha = 0.05
+)
+```
+
+```
+##                      est     se     R   2.5% 97.5%
+## -phi_21 * -phi_32 0.3914 0.0884 20000 0.2319 0.577
+```
+
+## Delta Method Confidence Interval for Functions of Parameters
+
+
+
+
+```r
+install.packages("betaDelta")
+```
+
+
+```r
+betaDelta::DeltaGeneric(
+  object = results,
+  def = def,
+  alpha = 0.05
+)
+```
+
+```
+## Call:
+## betaDelta::DeltaGeneric(object = results, def = def, alpha = 0.05)
+##                      est     se      z p   2.5%  97.5%
+## -phi_21 * -phi_32 0.3914 0.0872 4.4901 0 0.2206 0.5623
+```
+
+## References

@@ -205,13 +205,13 @@
           )
         }
         if (is.null(skip)) {
-          data <-  cbind(
+          data <- cbind(
             id = i[, "id"],
             time = i[, "time"],
             scaled_data
           )
         } else {
-          data <-  cbind(
+          data <- cbind(
             id = i[, "id"],
             time = i[, "time"],
             scaled_data,
