@@ -176,7 +176,7 @@
         )
         colnames(scaled_data) <- scale_vars
         if (is.null(not_scale_vars)) {
-          data <-  cbind(
+          data <- cbind(
             id = i[, "id"],
             time = i[, "time"],
             scaled_data
