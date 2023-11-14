@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2023-11-08</h4>
+            <h4 data-toc-skip class="date">2023-11-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ijapesigan/fitOU/blob/HEAD/vignettes/trivariate-ou.Rmd"><code>vignettes/trivariate-ou.Rmd</code></a></small>
       <div class="d-none name"><code>trivariate-ou.Rmd</code></div>
@@ -386,65 +386,65 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <pre><code><span><span class="co">## Formal class 'dynrModel' [package "dynr"] with 17 slots</span></span>
 <span><span class="co">##   ..@ dynamics      :Formal class 'dynrDynamicsFormula' [package "dynr"] with 13 slots</span></span>
 <span><span class="co">##   .. .. ..@ c.string            : chr "void function_dx_dt(double t, size_t regime, const gsl_vector *x, double *param, size_t n_param, const gsl_vect"| __truncated__</span></span>
-<span><span class="co">##   .. .. ..@ startval            : Named num [1:12] -2.06e-18 7.32e-18 -4.31e-18 1.00e-01 1.00e-01 ...</span></span>
+<span><span class="co">##   .. .. ..@ startval            : Named num [1:12] 1.34e-17 1.21e-17 -3.01e-18 1.00e-01 1.00e-01 ...</span></span>
 <span><span class="co">##   .. .. .. ..- attr(*, "names")= chr [1:12] "mu_1" "mu_2" "mu_3" "phi_11" ...</span></span>
 <span><span class="co">##   .. .. ..@ paramnames          : chr [1:12] "mu_1" "mu_2" "mu_3" "phi_11" ...</span></span>
 <span><span class="co">##   .. .. ..@ formula             :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 3</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ param[3] * (param[0] - eta_1) + param[6] * (param[1] - eta_2) +      param[9] * (param[2] - eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x56363023bf88&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced041410&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ param[4] * (param[0] - eta_1) + param[7] * (param[1] - eta_2) +      param[10] * (param[2] - eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x56363023bf88&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced041410&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ param[5] * (param[0] - eta_1) + param[8] * (param[1] - eta_2) +      param[11] * (param[2] - eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x56363023bf88&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced041410&gt; </span></span>
 <span><span class="co">##   .. .. ..@ jacobian            :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 9</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -param[3]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -param[6]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_3 ~ -param[9]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -param[4]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -param[7]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_3 ~ -param[10]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_1 ~ -param[5]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_2 ~ -param[8]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_3 ~ -param[11]</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x5636301bffb0&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561ced016398&gt; </span></span>
 <span><span class="co">##   .. .. ..@ formulaOriginal     :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 3</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ phi_11 * (mu_1 - eta_1) + phi_12 * (mu_2 - eta_2) + phi_13 * (mu_3 -      eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x56363337f288&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cf0174268&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ phi_21 * (mu_1 - eta_1) + phi_22 * (mu_2 - eta_2) + phi_23 * (mu_3 -      eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x56363337f288&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cf0174268&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ phi_31 * (mu_1 - eta_1) + phi_32 * (mu_2 - eta_2) + phi_33 * (mu_3 -      eta_3)</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x56363337f288&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cf0174268&gt; </span></span>
 <span><span class="co">##   .. .. ..@ jacobianOriginal    :List of 1</span></span>
 <span><span class="co">##   .. .. .. ..$ :List of 9</span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_1 ~ -phi_11</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_2 ~ -phi_12</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_1 ~ eta_3 ~ -phi_13</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_1 ~ -phi_21</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_2 ~ -phi_22</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_2 ~ eta_3 ~ -phi_23</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_1 ~ -phi_31</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_2 ~ -phi_32</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. .. .. ..$ :Class 'formula'  language eta_3 ~ eta_3 ~ -phi_33</span></span>
-<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x563632e79718&gt; </span></span>
+<span><span class="co">##   .. .. .. .. .. .. ..- attr(*, ".Environment")=&lt;environment: 0x561cefcd6190&gt; </span></span>
 <span><span class="co">##   .. .. ..@ random.names        : chr(0) </span></span>
 <span><span class="co">##   .. .. ..@ theta.formula       : list()</span></span>
 <span><span class="co">##   .. .. ..@ isContinuousTime    : logi TRUE</span></span>
@@ -575,10 +575,10 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">##   .. ..$ timeVar       : chr "time"</span></span>
 <span><span class="co">##   ..@ num_regime    : int 1</span></span>
 <span><span class="co">##   ..@ dim_latent_var: int 3</span></span>
-<span><span class="co">##   ..@ outfile       : chr "/tmp/Rtmpn0gf3F/file71b2e5a475b.c"</span></span>
+<span><span class="co">##   ..@ outfile       : chr "/tmp/RtmpknFpOv/file989652637fe.c"</span></span>
 <span><span class="co">##   ..@ verbose       : logi TRUE</span></span>
 <span><span class="co">##   ..@ compileLib    : logi TRUE</span></span>
-<span><span class="co">##   ..@ xstart        : Named num [1:30] -2.06e-18 7.32e-18 -4.31e-18 1.00e-01 1.00e-01 ...</span></span>
+<span><span class="co">##   ..@ xstart        : Named num [1:30] 1.34e-17 1.21e-17 -3.01e-18 1.00e-01 1.00e-01 ...</span></span>
 <span><span class="co">##   .. ..- attr(*, "names")= chr [1:30] "mu_1" "mu_2" "mu_3" "phi_11" ...</span></span>
 <span><span class="co">##   ..@ ub            : Named num [1:30] NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##   .. ..- attr(*, "names")= chr [1:30] "mu_1" "mu_2" "mu_3" "phi_11" ...</span></span>
@@ -610,22 +610,22 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="co">## Original exit flag:  3 </span></span>
 <span><span class="co">## Modified exit flag:  3 </span></span>
 <span><span class="co">## Optimization terminated successfully: ftol_rel or ftol_abs was reached. </span></span>
-<span><span class="co">## Original fitted parameters:  0.0004379577 0.01441749 -0.0001232218 0.6173223 </span></span>
-<span><span class="co">## -0.5302659 0.3832594 0.007924459 0.4692759 -0.7381519 0.02746771 0.05964942 </span></span>
+<span><span class="co">## Original fitted parameters:  0.0004379571 0.01441749 -0.0001232231 0.6173223 </span></span>
+<span><span class="co">## -0.5302659 0.3832594 0.007924458 0.4692759 -0.7381519 0.02746771 0.05964942 </span></span>
 <span><span class="co">## 0.6847355 -0.2562998 -0.02483386 -0.1080333 -0.7944983 -0.1415563 -0.6766126 </span></span>
-<span><span class="co">## -0.9918082 -1.443941 -1.262779 0.003718148 -0.1016923 0.8071665 -0.1437084 </span></span>
-<span><span class="co">## -0.4936282 0.1650513 -0.3476991 0.09845753 -0.6657819 </span></span>
+<span><span class="co">## -0.9918082 -1.443941 -1.262779 0.00371814 -0.1016923 0.8071665 -0.1437084 </span></span>
+<span><span class="co">## -0.4936282 0.1650513 -0.347699 0.09845752 -0.6657819 </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Transformed fitted parameters:  0.0004379577 0.01441749 -0.0001232218 0.6173223 </span></span>
-<span><span class="co">## -0.5302659 0.3832594 0.007924459 0.4692759 -0.7381519 0.02746771 0.05964942 </span></span>
+<span><span class="co">## Transformed fitted parameters:  0.0004379571 0.01441749 -0.0001232231 0.6173223 </span></span>
+<span><span class="co">## -0.5302659 0.3832594 0.007924458 0.4692759 -0.7381519 0.02746771 0.05964942 </span></span>
 <span><span class="co">## 0.6847355 0.7739099 -0.01921917 -0.083608 0.4522852 -0.06187994 0.5264219 </span></span>
-<span><span class="co">## 0.3709054 0.2359958 0.2828668 0.003718148 -0.1016923 0.8071665 0.8661403 </span></span>
-<span><span class="co">## -0.4275513 0.1429575 0.9173628 -0.001026201 0.5443138 </span></span>
+<span><span class="co">## 0.3709054 0.2359958 0.2828668 0.00371814 -0.1016923 0.8071665 0.8661403 </span></span>
+<span><span class="co">## -0.4275513 0.1429575 0.9173628 -0.001026205 0.5443138 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Doing end processing</span></span>
 <span><span class="co">## Successful trial</span></span>
-<span><span class="co">## Total Time: 2.918194 </span></span>
-<span><span class="co">## Backend Time: 2.909105</span></span></code></pre>
+<span><span class="co">## Total Time: 2.154597 </span></span>
+<span><span class="co">## Backend Time: 2.147077</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -634,77 +634,77 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Coefficients:</span></span>
 <span><span class="co">##             Estimate Std. Error t value   ci.lower   ci.upper Pr(&gt;|t|)    </span></span>
-<span><span class="co">## mu_1       0.0004380  0.0885593   0.005 -0.1731351  0.1740110   0.4980    </span></span>
-<span><span class="co">## mu_2       0.0144175  0.1194742   0.121 -0.2197477  0.2485826   0.4520    </span></span>
-<span><span class="co">## mu_3      -0.0001232  0.1036323  -0.001 -0.2032388  0.2029923   0.4995    </span></span>
-<span><span class="co">## phi_11     0.6173223  0.1282184   4.815  0.3660188  0.8686258   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_21    -0.5302659  0.0944381  -5.615 -0.7153612 -0.3451707   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_31     0.3832594  0.1009640   3.796  0.1853737  0.5811452   0.0001 ***</span></span>
-<span><span class="co">## phi_12     0.0079245  0.1073591   0.074 -0.2024955  0.2183444   0.4706    </span></span>
-<span><span class="co">## phi_22     0.4692759  0.0874072   5.369  0.2979610  0.6405908   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_32    -0.7381519  0.0900430  -8.198 -0.9146329 -0.5616709   &lt;2e-16 ***</span></span>
-<span><span class="co">## phi_13     0.0274677  0.0962564   0.285 -0.1611914  0.2161268   0.3877    </span></span>
-<span><span class="co">## phi_23     0.0596494  0.0757132   0.788 -0.0887458  0.2080446   0.2154    </span></span>
-<span><span class="co">## phi_33     0.6847355  0.0853966   8.018  0.5173613  0.8521097   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_11   0.7739099  0.0988683   7.828  0.5801316  0.9676882   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_12  -0.0192192  0.0466238  -0.412 -0.1106001  0.0721617   0.3401    </span></span>
-<span><span class="co">## sigma_13  -0.0836080  0.0499341  -1.674 -0.1814770  0.0142610   0.0471 *  </span></span>
-<span><span class="co">## sigma_22   0.4522852  0.0562172   8.045  0.3421016  0.5624687   &lt;2e-16 ***</span></span>
-<span><span class="co">## sigma_23  -0.0618799  0.0379439  -1.631 -0.1362487  0.0124888   0.0515 .  </span></span>
-<span><span class="co">## sigma_33   0.5264219  0.0651789   8.077  0.3986736  0.6541702   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_11   0.3709054  0.0145843  25.432  0.3423208  0.3994900   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_22   0.2359958  0.0092720  25.452  0.2178230  0.2541686   &lt;2e-16 ***</span></span>
-<span><span class="co">## theta_33   0.2828668  0.0110438  25.613  0.2612213  0.3045123   &lt;2e-16 ***</span></span>
-<span><span class="co">## mu0_1      0.0037181  0.4584483   0.008 -0.8948240  0.9022603   0.4968    </span></span>
-<span><span class="co">## mu0_2     -0.1016923  0.4550793  -0.223 -0.9936314  0.7902467   0.4116    </span></span>
-<span><span class="co">## mu0_3      0.8071665  0.3636604   2.220  0.0944053  1.5199277   0.0133 *  </span></span>
-<span><span class="co">## sigma0_11  0.8661403  0.6420502   1.349 -0.3922549  2.1245355   0.0887 .  </span></span>
-<span><span class="co">## sigma0_12 -0.4275513  0.4882472  -0.876 -1.3844981  0.5293956   0.1906    </span></span>
-<span><span class="co">## sigma0_13  0.1429575  0.3736756   0.383 -0.5894332  0.8753483   0.3510    </span></span>
-<span><span class="co">## sigma0_22  0.9173628  0.6479921   1.416 -0.3526784  2.1874039   0.0785 .  </span></span>
-<span><span class="co">## sigma0_23 -0.0010262  0.3664452  -0.003 -0.7192456  0.7171932   0.4989    </span></span>
-<span><span class="co">## sigma0_33  0.5443138  0.4246690   1.282 -0.2880221  1.3766497   0.1000 .  </span></span>
+<span><span class="co">## mu_1       0.0004380  0.0886259   0.005 -0.1732657  0.1741416   0.4980    </span></span>
+<span><span class="co">## mu_2       0.0144175  0.1195914   0.121 -0.2199774  0.2488124   0.4520    </span></span>
+<span><span class="co">## mu_3      -0.0001232  0.1036750  -0.001 -0.2033225  0.2030760   0.4995    </span></span>
+<span><span class="co">## phi_11     0.6173223  0.1271460   4.855  0.3681206  0.8665240   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_21    -0.5302659  0.0941433  -5.633 -0.7147834 -0.3457484   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_31     0.3832594  0.1009694   3.796  0.1853631  0.5811558   0.0001 ***</span></span>
+<span><span class="co">## phi_12     0.0079245  0.1064926   0.074 -0.2007971  0.2166460   0.4703    </span></span>
+<span><span class="co">## phi_22     0.4692759  0.0869822   5.395  0.2987938  0.6397579   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_32    -0.7381519  0.0901096  -8.192 -0.9147635 -0.5615403   &lt;2e-16 ***</span></span>
+<span><span class="co">## phi_13     0.0274677  0.0958918   0.286 -0.1604768  0.2154122   0.3873    </span></span>
+<span><span class="co">## phi_23     0.0596494  0.0754496   0.791 -0.0882290  0.2075278   0.2146    </span></span>
+<span><span class="co">## phi_33     0.6847355  0.0854273   8.015  0.5173010  0.8521700   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_11   0.7739099  0.0982506   7.877  0.5813422  0.9664776   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_12  -0.0192192  0.0464855  -0.413 -0.1103291  0.0718907   0.3397    </span></span>
+<span><span class="co">## sigma_13  -0.0836080  0.0499429  -1.674 -0.1814944  0.0142784   0.0471 *  </span></span>
+<span><span class="co">## sigma_22   0.4522852  0.0559328   8.086  0.3426588  0.5619115   &lt;2e-16 ***</span></span>
+<span><span class="co">## sigma_23  -0.0618799  0.0378637  -1.634 -0.1360914  0.0123315   0.0512 .  </span></span>
+<span><span class="co">## sigma_33   0.5264219  0.0650739   8.090  0.3988793  0.6539644   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_11   0.3709054  0.0145613  25.472  0.3423658  0.3994450   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_22   0.2359958  0.0092590  25.488  0.2178486  0.2541430   &lt;2e-16 ***</span></span>
+<span><span class="co">## theta_33   0.2828668  0.0110352  25.633  0.2612382  0.3044954   &lt;2e-16 ***</span></span>
+<span><span class="co">## mu0_1      0.0037181  0.4492515   0.008 -0.8767986  0.8842349   0.4967    </span></span>
+<span><span class="co">## mu0_2     -0.1016923  0.4451411  -0.228 -0.9741528  0.7707682   0.4097    </span></span>
+<span><span class="co">## mu0_3      0.8071665  0.3630376   2.223  0.0956259  1.5187070   0.0131 *  </span></span>
+<span><span class="co">## sigma0_11  0.8661403  0.6386202   1.356 -0.3855323  2.1178129   0.0876 .  </span></span>
+<span><span class="co">## sigma0_12 -0.4275513  0.4876741  -0.877 -1.3833749  0.5282724   0.1904    </span></span>
+<span><span class="co">## sigma0_13  0.1429575  0.3732023   0.383 -0.5885055  0.8744206   0.3509    </span></span>
+<span><span class="co">## sigma0_22  0.9173628  0.6423779   1.428 -0.3416747  2.1764003   0.0767 .  </span></span>
+<span><span class="co">## sigma0_23 -0.0010262  0.3641779  -0.003 -0.7148017  0.7127493   0.4989    </span></span>
+<span><span class="co">## sigma0_33  0.5443138  0.4160153   1.308 -0.2710611  1.3596888   0.0954 .  </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## -2 log-likelihood value at convergence = 14935.85</span></span>
 <span><span class="co">## AIC = 14995.85</span></span>
 <span><span class="co">## BIC = 15170.57</span></span></code></pre>
-<pre><code><span><span class="co">## [1]  0.003718148 -0.101692318  0.807166477</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  0.00371814 -0.10169231  0.80716648</span></span></code></pre>
 <div class="section level3">
 <h3 id="estimated-coefficients">Estimated Coefficients<a class="anchor" aria-label="anchor" href="#estimated-coefficients"></a>
 </h3>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1]  0.0004379577  0.0144174939 -0.0001232218</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  0.0004379571  0.0144174928 -0.0001232231</span></span></code></pre>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">phi_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]         [,2]       [,3]</span></span>
-<span><span class="co">## [1,]  0.6173223  0.007924459 0.02746771</span></span>
-<span><span class="co">## [2,] -0.5302659  0.469275891 0.05964942</span></span>
-<span><span class="co">## [3,]  0.3832594 -0.738151900 0.68473547</span></span></code></pre>
+<span><span class="co">## [1,]  0.6173223  0.007924458 0.02746771</span></span>
+<span><span class="co">## [2,] -0.5302659  0.469275890 0.05964942</span></span>
+<span><span class="co">## [3,]  0.3832594 -0.738151902 0.68473548</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]        [,3]</span></span>
-<span><span class="co">## [1,]  0.77390990 -0.01921917 -0.08360800</span></span>
+<span><span class="co">## [1,]  0.77390991 -0.01921917 -0.08360800</span></span>
 <span><span class="co">## [2,] -0.01921917  0.45228516 -0.06187994</span></span>
 <span><span class="co">## [3,] -0.08360800 -0.06187994  0.52642187</span></span></code></pre>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu0_hat</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1]  0.003718148 -0.101692318  0.807166477</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  0.00371814 -0.10169231  0.80716648</span></span></code></pre>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sigma0_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]         [,2]         [,3]</span></span>
-<span><span class="co">## [1,]  0.8661403 -0.427551269  0.142957545</span></span>
-<span><span class="co">## [2,] -0.4275513  0.917362768 -0.001026201</span></span>
-<span><span class="co">## [3,]  0.1429575 -0.001026201  0.544313802</span></span></code></pre>
+<span><span class="co">## [1,]  0.8661403 -0.427551261  0.142957550</span></span>
+<span><span class="co">## [2,] -0.4275513  0.917362766 -0.001026205</span></span>
+<span><span class="co">## [3,]  0.1429575 -0.001026205  0.544313820</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beta_var1_hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/expm.html" class="external-link">expm</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="va">phi_hat</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">beta_var1_hat</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]        [,2]        [,3]</span></span>
-<span><span class="co">## [1,]  0.53996489 -0.01018005 -0.01409553</span></span>
+<span><span class="co">## [1,]  0.53996489 -0.01018005 -0.01409552</span></span>
 <span><span class="co">## [2,]  0.31253339  0.61037874 -0.03736024</span></span>
 <span><span class="co">## [3,] -0.09031585  0.41334956  0.49404194</span></span></code></pre>
 </div>
@@ -713,23 +713,23 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 </h3>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mu_hat</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 0.0004379577 0.0144174939 0.0001232218</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 0.0004379571 0.0144174928 0.0001232231</span></span></code></pre>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">phi</span> <span class="op">-</span> <span class="va">phi_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]        [,2]        [,3]</span></span>
-<span><span class="co">## [1,] 0.26032230 0.007924459 0.027467711</span></span>
-<span><span class="co">## [2,] 0.24073407 0.041724109 0.059649418</span></span>
-<span><span class="co">## [3,] 0.06674055 0.009151900 0.008264526</span></span></code></pre>
+<span><span class="co">## [1,] 0.26032230 0.007924458 0.027467711</span></span>
+<span><span class="co">## [2,] 0.24073407 0.041724110 0.059649419</span></span>
+<span><span class="co">## [3,] 0.06674055 0.009151902 0.008264524</span></span></code></pre>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta_var1</span> <span class="op">-</span> <span class="va">beta_var1_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             [,1]       [,2]        [,3]</span></span>
-<span><span class="co">## [1,] 0.159807611 0.01018005 0.014095525</span></span>
-<span><span class="co">## [2,] 0.187500738 0.01048335 0.037360243</span></span>
-<span><span class="co">## [3,] 0.009722529 0.01351394 0.006031657</span></span></code></pre>
+<span><span class="co">## [1,] 0.159807612 0.01018005 0.014095525</span></span>
+<span><span class="co">## [2,] 0.187500739 0.01048335 0.037360243</span></span>
+<span><span class="co">## [3,] 0.009722528 0.01351394 0.006031658</span></span></code></pre>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sigma</span> <span class="op">-</span> <span class="va">sigma_hat</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##            [,1]       [,2]       [,3]</span></span>
-<span><span class="co">## [1,] 0.22609010 0.01921917 0.08360800</span></span>
+<span><span class="co">## [1,] 0.22609009 0.01921917 0.08360800</span></span>
 <span><span class="co">## [2,] 0.01921917 0.54771484 0.06187994</span></span>
 <span><span class="co">## [3,] 0.08360800 0.06187994 0.47357813</span></span></code></pre>
 </div>
@@ -750,8 +750,8 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span>  def <span class="op">=</span> <span class="va">def</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                      est     se     R   2.5% 97.5%</span></span>
-<span><span class="co">## -phi_21 * -phi_32 0.3914 0.0884 20000 0.2319 0.577</span></span></code></pre>
+<pre><code><span><span class="co">##                      est     se     R  2.5%  97.5%</span></span>
+<span><span class="co">## -phi_21 * -phi_32 0.3914 0.0882 20000 0.232 0.5768</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="delta-method-confidence-interval-for-functions-of-parameters">Delta Method Confidence Interval for Functions of Parameters<a class="anchor" aria-label="anchor" href="#delta-method-confidence-interval-for-functions-of-parameters"></a>
@@ -766,8 +766,8 @@ Data<a class="anchor" aria-label="anchor" href="#using-the-simstatespacesimssmva
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Call:</span></span>
 <span><span class="co">## betaDelta::DeltaGeneric(object = results, def = def, alpha = 0.05)</span></span>
-<span><span class="co">##                      est     se      z p   2.5%  97.5%</span></span>
-<span><span class="co">## -phi_21 * -phi_32 0.3914 0.0872 4.4901 0 0.2206 0.5623</span></span></code></pre>
+<span><span class="co">##                      est    se      z p   2.5%  97.5%</span></span>
+<span><span class="co">## -phi_21 * -phi_32 0.3914 0.087 4.4993 0 0.2209 0.5619</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
