@@ -7,6 +7,7 @@
 DataOU(
   data,
   observed,
+  covariates = NULL,
   id,
   time,
   insert_na = FALSE,
@@ -29,6 +30,10 @@ at least one column of observed values.}
 \item{observed}{Character vector.
 A vector of character strings
 of the names of the observed variables in the data.}
+
+\item{covariates}{Character vector.
+A vector of character strings
+of the names of the covariates in the data.}
 
 \item{id}{Character string.
 A character string of the name of the ID variable in the data.}
