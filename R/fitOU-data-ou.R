@@ -1,19 +1,32 @@
 .Subset <- function(data,
                     id,
                     time,
-                    observed) {
+                    observed,
+                    covariates = NULL) {
   data <- as.matrix(data)
   data <- data[order(data[, time]), , drop = FALSE]
   data <- data[order(data[, id]), , drop = FALSE]
-  data <- cbind(
-    id = data[, id],
-    time = data[, time],
-    data[
-      ,
-      observed,
-      drop = FALSE
-    ]
-  )
+  if (is.null(covariates)) {
+    data <- cbind(
+      id = data[, id],
+      time = data[, time],
+      data[
+        ,
+        observed,
+        drop = FALSE
+      ]
+    )
+  } else {
+    data <- cbind(
+      id = data[, id],
+      time = data[, time],
+      data[
+        ,
+        c(observed, covariates),
+        drop = FALSE
+      ]
+    )
+  }
   ids <- unique(data[, "id"])
   data <- lapply(
     X = ids,
@@ -192,11 +205,11 @@
             FUN = function(y) {
               (
                 y - mean(y, na.rm = TRUE)
-              ) / sd(
+              ) / stats::sd(
                 y,
                 na.rm = TRUE
               )^as.logical(
-                sd(
+                stats::sd(
                   y,
                   na.rm = TRUE
                 )
@@ -254,6 +267,9 @@
 #' @param observed Character vector.
 #'   A vector of character strings
 #'   of the names of the observed variables in the data.
+#' @param covariates Character vector.
+#'   A vector of character strings
+#'   of the names of the covariates in the data.
 #' @param id Character string.
 #'   A character string of the name of the ID variable in the data.
 #' @param time Character string.
@@ -273,6 +289,7 @@
 #' @export
 DataOU <- function(data,
                    observed,
+                   covariates = NULL,
                    id,
                    time,
                    insert_na = FALSE,
@@ -284,7 +301,8 @@ DataOU <- function(data,
     data = data,
     id = id,
     time = time,
-    observed = observed
+    observed = observed,
+    covariates = covariates
   )
   if (insert_na) {
     data <- .InsertNA(
@@ -311,15 +329,33 @@ DataOU <- function(data,
     what = "rbind",
     args = data
   )
-  data <- data[
-    ,
-    c(
-      "id",
-      "time",
-      observed
-    ),
-    drop = FALSE
-  ]
+  if (is.null(covariates)) {
+    data <- data[
+      ,
+      c(
+        "id",
+        "time",
+        observed
+      ),
+      drop = FALSE
+    ]
+  } else {
+    data <- data[
+      ,
+      c(
+        "id",
+        "time",
+        observed,
+        covariates
+      ),
+      drop = FALSE
+    ]
+    if (any(is.na(data[, covariates]))) {
+      warning(
+        "There are missing values in the covariates.\n"
+      )
+    }
+  }
   return(
     as.data.frame(
       data
